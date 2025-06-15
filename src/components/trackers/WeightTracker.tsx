@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -20,6 +19,17 @@ import {
   PopoverContent
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
+// ---- AJOUT Import explicites de recharts ----
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  CartesianGrid,
+} from "recharts";
 
 const WeightTracker = () => {
   const [weightHistory, setWeightHistory] = useState<{ date: string, value: number }[]>([]);
@@ -132,7 +142,7 @@ const WeightTracker = () => {
                 }}
                 className="h-48"
               >
-                {({ ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, Legend, CartesianGrid }) => (
+                <ResponsiveContainer>
                   <LineChart data={chartData}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="date" />
@@ -144,7 +154,7 @@ const WeightTracker = () => {
                     <Legend content={<ChartLegend />} />
                     <Line type="monotone" dataKey="poids" stroke="var(--primary)" dot />
                   </LineChart>
-                )}
+                </ResponsiveContainer>
               </ChartContainer>
             </div>
           )}
