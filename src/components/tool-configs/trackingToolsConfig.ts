@@ -5,6 +5,7 @@ import MeasurementsTracker from '../trackers/MeasurementsTracker';
 import PerformanceTracker from '../trackers/PerformanceTracker';
 import BodyCompositionTracker from '../trackers/BodyCompositionTracker';
 import HydrationTracker from '../trackers/HydrationTracker';
+import SleepTracker from '../trackers/SleepTracker';
 
 const trackingToolsConfig: Tool[] = [
   {
@@ -52,7 +53,8 @@ const trackingToolsConfig: Tool[] = [
     name: 'Tracker de Sommeil',
     description: 'Impact du sommeil sur votre récupération',
     category: 'tracking',
-    icon: 'fa-bed'
+    icon: 'fa-bed',
+    component: SleepTracker
   },
   {
     id: 'fatigue-tracker',
