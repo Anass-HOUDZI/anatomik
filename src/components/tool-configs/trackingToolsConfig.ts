@@ -6,6 +6,7 @@ import PerformanceTracker from '../trackers/PerformanceTracker';
 import BodyCompositionTracker from '../trackers/BodyCompositionTracker';
 import HydrationTracker from '../trackers/HydrationTracker';
 import SleepTracker from '../trackers/SleepTracker';
+import FatigueTracker from '../trackers/FatigueTracker';
 
 const trackingToolsConfig: Tool[] = [
   {
@@ -61,7 +62,8 @@ const trackingToolsConfig: Tool[] = [
     name: 'Tracker de Fatigue',
     description: 'Échelle de perception de l\'effort et fatigue',
     category: 'tracking',
-    icon: 'fa-battery-quarter'
+    icon: 'fa-battery-quarter',
+    component: FatigueTracker
   }
 ];
 

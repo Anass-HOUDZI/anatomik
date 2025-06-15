@@ -1,4 +1,3 @@
-
 import { UserProfile, Demographics, FitnessGoals, UserPreferences, AppSettings } from '../types';
 
 // On ajoute le type SleepEntry pour typings solides (copié de SleepTracker)
@@ -8,6 +7,15 @@ type SleepEntry = {
   wakeup: string;      // HH:MM
   duration: number;    // heures décimal (calculé)
   quality: number;     // 1-10
+  notes?: string;
+};
+
+// Ajout de FatigueEntry pour typings solides (copié du tracker)
+type FatigueEntry = {
+  date: string;
+  fatigue: number;
+  soreness: number;
+  motivation: number;
   notes?: string;
 };
 
@@ -22,6 +30,8 @@ export interface TrackingData {
   bodyFat?: Array<{ date: string; value: number }>;
   // Ajout de la clé sleep pour le tracker de sommeil :
   sleep?: SleepEntry[]; // <-- AJOUT
+  // ---- CLÉ 'fatigue' ---
+  fatigue?: FatigueEntry[];
 }
 
 export class StorageManager {
@@ -104,7 +114,8 @@ export class StorageManager {
         hydration: [],
         performance: {},
         bodyFat: [],
-        sleep: [] // <-- DEFAULT SLEEP LIST AJOUTÉE
+        sleep: [],
+        fatigue: [] // <-- Valeur par défaut fatigue
       };
     } catch (error) {
       console.error('Error loading tracking data:', error);
@@ -116,7 +127,8 @@ export class StorageManager {
         hydration: [],
         performance: {},
         bodyFat: [],
-        sleep: [] // <-- DEFAULT SLEEP LIST AJOUTÉE
+        sleep: [],
+        fatigue: [] // <-- Valeur par défaut fatigue
       };
     }
   }
@@ -133,7 +145,9 @@ export class StorageManager {
         hydration: data.hydration ?? existing.hydration,
         performance: data.performance ?? existing.performance,
         bodyFat: data.bodyFat ?? existing.bodyFat,
-        sleep: data.sleep ?? existing.sleep // <--- CLÉ SLEEP FUSIONNÉE
+        sleep: data.sleep ?? existing.sleep,
+        // Ajout fusion fatigue
+        fatigue: data.fatigue ?? existing.fatigue
       };
       localStorage.setItem(this.TRACKING_DATA_KEY, JSON.stringify(updated));
       console.log('Tracking data saved');
