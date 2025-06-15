@@ -14,12 +14,27 @@ interface MuscleGroup {
   priority: 'high' | 'medium' | 'low';
 }
 
+// Define type for Recommendations
+type Recommendations = {
+  volume: string;
+  intensity: string;
+  tips: string[];
+};
+
+// Update state typing for results
+interface FrequencyResults {
+  frequencies: Record<string, number>;
+  totalSessions: number;
+  splits: any[];
+  recommendations: Recommendations;
+}
+
 const FrequencyCalculator = () => {
   const [level, setLevel] = useState<string>('');
   const [timeAvailable, setTimeAvailable] = useState<string>('');
   const [objective, setObjective] = useState<string>('');
   const [recoveryCapacity, setRecoveryCapacity] = useState<string>('');
-  const [results, setResults] = useState<any>(null);
+  const [results, setResults] = useState<FrequencyResults | null>(null);
 
   const calculateFrequency = () => {
     if (!level || !timeAvailable || !objective || !recoveryCapacity) return;
@@ -306,13 +321,12 @@ const FrequencyCalculator = () => {
                 <div>
                   <h4 className="font-semibold mb-2">Conseils Clés</h4>
                   <ul className="text-sm space-y-1">
-                    {Array.isArray(results.recommendations.tips) &&
-                      results.recommendations.tips.map((tip: string, i: number) => (
-                        <li key={i} className="flex items-center space-x-2">
-                          <i className="fas fa-check text-green-500 text-xs"></i>
-                          <span>{tip}</span>
-                        </li>
-                      ))}
+                    {results.recommendations.tips.map((tip, i) => (
+                      <li key={i} className="flex items-center space-x-2">
+                        <i className="fas fa-check text-green-500 text-xs"></i>
+                        <span>{tip}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
