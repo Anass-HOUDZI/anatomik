@@ -1,5 +1,7 @@
 
-const generatorToolsConfig = [
+import type { Tool } from '../../App';
+
+const generatorToolsConfig: Tool[] = [
   {
     id: 'workout-generator',
     name: 'Générateur de Programmes',

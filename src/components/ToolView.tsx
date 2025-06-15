@@ -1,4 +1,3 @@
-
 import React from 'react';
 import type { Category, Tool } from '../App';
 
@@ -33,7 +32,7 @@ const getToolsForCategory = (categoryId: string) => {
 };
 
 const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
-  const tools = getToolsForCategory(category.id);
+  const tools = getToolsForCategory(category.id) as import('../App').Tool[];
 
   // Count implemented tools
   const implementedCount = tools.filter(tool => tool.component).length;

@@ -1,4 +1,5 @@
 
+import type { Tool } from '../../App';
 import BMRCalculator from '../calculators/BMRCalculator';
 import MacroCalculator from '../calculators/MacroCalculator';
 import HydrationCalculator from '../calculators/HydrationCalculator';
@@ -15,7 +16,7 @@ import VitaminsCalculator from '../calculators/VitaminsCalculator';
 import MineralsCalculator from '../calculators/MineralsCalculator';
 import NutrientDensityCalculator from '../calculators/NutrientDensityCalculator';
 
-const nutritionalToolsConfig = [
+const nutritionalToolsConfig: Tool[] = [
   {
     id: 'bmr-calculator',
     name: 'Calculateur BMR',

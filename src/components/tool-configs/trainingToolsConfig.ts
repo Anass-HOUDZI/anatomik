@@ -1,4 +1,5 @@
 
+import type { Tool } from '../../App';
 import OneRMCalculator from '../calculators/OneRMCalculator';
 import LoadCalculator from '../calculators/LoadCalculator';
 import VolumeCalculator from '../calculators/VolumeCalculator';
@@ -15,7 +16,7 @@ import HIITCalculator from '../calculators/HIITCalculator';
 import RecoveryCalculator from '../calculators/RecoveryCalculator';
 import DeloadCalculator from '../calculators/DeloadCalculator';
 
-const trainingToolsConfig = [
+const trainingToolsConfig: Tool[] = [
   {
     id: 'one-rm-calculator',
     name: 'Calculateur 1RM',

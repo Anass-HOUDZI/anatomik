@@ -1,8 +1,9 @@
 
+import type { Tool } from '../../App';
 import WeightTracker from '../trackers/WeightTracker';
 import MeasurementsTracker from '../trackers/MeasurementsTracker';
 
-const trackingToolsConfig = [
+const trackingToolsConfig: Tool[] = [
   {
     id: 'weight-tracker',
     name: 'Tracker de Poids',
