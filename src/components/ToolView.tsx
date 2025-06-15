@@ -81,7 +81,7 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
               <div className="flex items-center w-full gap-2 justify-between">
                 <h3 className="text-lg font-bold text-white drop-shadow-lg">{tool.name}</h3>
                 <Badge
-                  variant={tool.component ? "success" : "warning"}
+                  variant={tool.component ? "default" : "secondary"}
                   className={`ml-2 px-3 py-1 text-xs font-bold rounded-full
                     ${tool.component
                       ? "bg-emerald-500 text-white"
@@ -118,3 +118,4 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
 };
 
 export default ToolView;
+
