@@ -1,4 +1,3 @@
-
 import React from 'react';
 import type { Category, Tool } from '../App';
 import BMRCalculator from './calculators/BMRCalculator';
@@ -6,6 +5,9 @@ import MacroCalculator from './calculators/MacroCalculator';
 import OneRMCalculator from './calculators/OneRMCalculator';
 import HydrationCalculator from './calculators/HydrationCalculator';
 import ProteinCalculator from './calculators/ProteinCalculator';
+import BulkCalculator from './calculators/BulkCalculator';
+import CutCalculator from './calculators/CutCalculator';
+import GICalculator from './calculators/GICalculator';
 
 interface ToolViewProps {
   category: Category;
@@ -52,21 +54,24 @@ const toolsConfig: Record<string, Tool[]> = {
       name: 'Calculateur de Prise de Masse',
       description: 'Surplus calorique optimal pour une prise de masse propre',
       category: 'nutritional',
-      icon: 'fa-plus-circle'
+      icon: 'fa-plus-circle',
+      component: BulkCalculator
     },
     {
       id: 'cut-calculator',
       name: 'Calculateur de Sèche',
       description: 'Déficit calorique progressif pour perdre du gras en préservant le muscle',
       category: 'nutritional',
-      icon: 'fa-minus-circle'
+      icon: 'fa-minus-circle',
+      component: CutCalculator
     },
     {
       id: 'gi-calculator',
       name: 'Calculateur d\'Index Glycémique',
       description: 'Impact des glucides sur votre glycémie et énergie',
       category: 'nutritional',
-      icon: 'fa-chart-line'
+      icon: 'fa-chart-line',
+      component: GICalculator
     },
     {
       id: 'timing-calculator',
