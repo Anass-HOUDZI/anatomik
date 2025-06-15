@@ -3,6 +3,7 @@ import type { Tool } from '../../App';
 import WorkoutGenerator from '../generators/WorkoutGenerator';
 import NutritionGenerator from '../generators/NutritionGenerator';
 import MealPlannerGenerator from '../generators/MealPlannerGenerator';
+import ExerciseGenerator from '../generators/ExerciseGenerator';
 
 const generatorToolsConfig: Tool[] = [
   {
@@ -34,7 +35,8 @@ const generatorToolsConfig: Tool[] = [
     name: "Générateur d'Exercices",
     description: 'Alternatives d\'exercices par groupe musculaire',
     category: 'generators',
-    icon: 'fa-random'
+    icon: 'fa-random',
+    component: ExerciseGenerator
   },
   {
     id: 'periodization-planner',
@@ -53,4 +55,3 @@ const generatorToolsConfig: Tool[] = [
 ];
 
 export default generatorToolsConfig;
-
