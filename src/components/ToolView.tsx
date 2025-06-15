@@ -44,17 +44,17 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
   const totalCount = tools.length;
   const completionPercentage = Math.round((implementedCount / totalCount) * 100);
 
-  // Ajout icône Lucide si présent (option : améliorable + tard)
+  // Pas de bandeau haut, titres noirs, description noire, design sobre
   return (
     <div className="max-w-6xl mx-auto px-2">
-      {/* Titre de la page (toujours blanc) */}
+      {/* Titre et description en noir */}
       <div className="text-center mb-10">
-        <h2 className="text-4xl font-bold page-title mb-3">{category.name}</h2>
-        <p className="text-lg text-white/80 mb-4">{category.description}</p>
+        <h2 className="text-4xl font-bold page-title mb-3 text-[#111] drop-shadow-none" style={{textShadow: "none"}}>{category.name}</h2>
+        <p className="text-lg mb-4 text-[#222] font-medium" style={{color:'#222', background:'none'}}>{category.description}</p>
         {/* Barre de progression */}
         <div className="flex flex-col items-center mb-2 w-full max-w-lg mx-auto gap-1">
           <Progress value={completionPercentage} className="w-full h-5 rounded-lg bg-white/20 shadow" />
-          <span className="text-white font-semibold text-sm mt-1 bg-black/20 rounded-full px-4 py-0.5">
+          <span className="text-gray-500 font-semibold text-sm mt-1 bg-gray-200 rounded-full px-4 py-0.5">
             {implementedCount}/{totalCount} outils disponibles ({completionPercentage}%)
           </span>
         </div>
@@ -67,7 +67,7 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
             key={tool.id}
             className={`
               group relative rounded-2xl shadow-xl
-              bg-gradient-to-br ${cardGradients[category.id]} 
+              bg-gradient-to-br ${cardGradients[category.id]}
               flex flex-col items-start justify-between p-6 min-h-[195px]
               cursor-pointer tool-modern-card animate-fade-in transition-all duration-200
               hover:scale-[1.025] active:scale-98
@@ -118,4 +118,3 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
 };
 
 export default ToolView;
-
