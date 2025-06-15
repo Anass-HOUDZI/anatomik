@@ -1,4 +1,3 @@
-
 import React from 'react';
 import type { Category, Tool } from '../App';
 import BMRCalculator from './calculators/BMRCalculator';
@@ -21,6 +20,10 @@ import LoadCalculator from './calculators/LoadCalculator';
 import VolumeCalculator from './calculators/VolumeCalculator';
 import ProgressionCalculator from './calculators/ProgressionCalculator';
 import RestCalculator from './calculators/RestCalculator';
+import FrequencyCalculator from './calculators/FrequencyCalculator';
+import PeriodizationCalculator from './calculators/PeriodizationCalculator';
+import RMZoneCalculator from './calculators/RMZoneCalculator';
+import TempoCalculator from './calculators/TempoCalculator';
 
 interface ToolViewProps {
   category: Category;
@@ -197,21 +200,74 @@ const toolsConfig: Record<string, Tool[]> = {
       name: 'Calculateur de Fréquence',
       description: 'Nombre optimal de séances par groupe musculaire',
       category: 'training',
-      icon: 'fa-calendar-week'
+      icon: 'fa-calendar-week',
+      component: FrequencyCalculator
     },
     {
       id: 'periodization-calculator',
       name: 'Calculateur de Périodisation',
-      description: 'Planification des cycles d\'entraînement',
+      description: 'Planification des cycles d\'entraînement long terme',
       category: 'training',
-      icon: 'fa-sync-alt'
+      icon: 'fa-sync-alt',
+      component: PeriodizationCalculator
     },
     {
       id: 'rm-zone-calculator',
       name: 'Calculateur RM par Zone',
       description: 'Calculs 3RM, 5RM, 10RM selon vos objectifs',
       category: 'training',
-      icon: 'fa-layer-group'
+      icon: 'fa-layer-group',
+      component: RMZoneCalculator
+    },
+    {
+      id: 'tempo-calculator',
+      name: 'Calculateur de Tempo',
+      description: 'Vitesse d\'exécution optimale selon vos objectifs',
+      category: 'training',
+      icon: 'fa-stopwatch',
+      component: TempoCalculator
+    },
+    {
+      id: 'drop-sets-calculator',
+      name: 'Calculateur de Drop Sets',
+      description: 'Séries dégressives automatisées pour intensification',
+      category: 'training',
+      icon: 'fa-level-down-alt'
+    },
+    {
+      id: 'superset-calculator',
+      name: 'Calculateur de Superset',
+      description: 'Combinaisons d\'exercices enchaînés optimales',
+      category: 'training',
+      icon: 'fa-link'
+    },
+    {
+      id: 'circuit-calculator',
+      name: 'Calculateur de Circuit',
+      description: 'Entraînement en stations avec timing précis',
+      category: 'training',
+      icon: 'fa-route'
+    },
+    {
+      id: 'hiit-calculator',
+      name: 'Calculateur HIIT',
+      description: 'Intervalles haute intensité personnalisés',
+      category: 'training',
+      icon: 'fa-running'
+    },
+    {
+      id: 'recovery-calculator',
+      name: 'Calculateur de Récupération',
+      description: 'Temps de repos entre séances selon fatigue',
+      category: 'training',
+      icon: 'fa-bed'
+    },
+    {
+      id: 'deload-calculator',
+      name: 'Calculateur de Deload',
+      description: 'Semaines de décharge programmées pour surcompensation',
+      category: 'training',
+      icon: 'fa-pause'
     }
   ],
   tracking: [
