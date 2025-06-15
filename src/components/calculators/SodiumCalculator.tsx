@@ -392,7 +392,7 @@ const SodiumCalculator: React.FC = () => {
                   <li>• <strong>Cuisine maison :</strong> Contrôle total du sodium ajouté</li>
                   <li>• <strong>Épices/herbes :</strong> Remplacer sel par aromates naturels</li>
                   <li>• <strong>Potassium :</strong> Bananes, épinards pour équilibre Na/K</li>
-                  <li>• <strong>Lecture étiquettes :</strong> <400mg/100g = acceptable</li>
+                  <li>• <strong>Lecture étiquettes :</strong> &lt;400mg/100g = acceptable</li>
                 </ul>
               </div>
 
