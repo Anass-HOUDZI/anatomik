@@ -2,6 +2,7 @@
 import type { Tool } from '../../App';
 import WorkoutGenerator from '../generators/WorkoutGenerator';
 import NutritionGenerator from '../generators/NutritionGenerator';
+import MealPlannerGenerator from '../generators/MealPlannerGenerator';
 
 const generatorToolsConfig: Tool[] = [
   {
@@ -25,7 +26,8 @@ const generatorToolsConfig: Tool[] = [
     name: 'Planificateur de Repas',
     description: 'Organisation de vos repas pour la semaine',
     category: 'generators',
-    icon: 'fa-calendar-week'
+    icon: 'fa-calendar-week',
+    component: MealPlannerGenerator
   },
   {
     id: 'exercise-generator',
@@ -51,3 +53,4 @@ const generatorToolsConfig: Tool[] = [
 ];
 
 export default generatorToolsConfig;
+
