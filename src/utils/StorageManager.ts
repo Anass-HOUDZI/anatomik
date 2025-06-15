@@ -1,5 +1,17 @@
+
 import { UserProfile, Demographics, FitnessGoals, UserPreferences, AppSettings } from '../types';
 
+// On ajoute le type SleepEntry pour typings solides (copié de SleepTracker)
+type SleepEntry = {
+  date: string;        // AAAA-MM-JJ
+  bedtime: string;     // HH:MM
+  wakeup: string;      // HH:MM
+  duration: number;    // heures décimal (calculé)
+  quality: number;     // 1-10
+  notes?: string;
+};
+
+// Ajout de sleep ici
 export interface TrackingData {
   weight: Array<{ date: string; value: number }>;
   measurements: Record<string, Array<{ date: string; value: number }>>;
@@ -8,6 +20,8 @@ export interface TrackingData {
   hydration?: Array<{ date: string; value: number; unit: string }>;
   performance?: Record<string, Array<{ date: string; value: number; notes?: string }>>;
   bodyFat?: Array<{ date: string; value: number }>;
+  // Ajout de la clé sleep pour le tracker de sommeil :
+  sleep?: SleepEntry[]; // <-- AJOUT
 }
 
 export class StorageManager {
@@ -81,6 +95,7 @@ export class StorageManager {
   static getTrackingData(): TrackingData {
     try {
       const data = localStorage.getItem(this.TRACKING_DATA_KEY);
+      // Valeurs par défaut, incluant sleep: []
       return data ? JSON.parse(data) : {
         weight: [],
         measurements: {},
@@ -88,7 +103,8 @@ export class StorageManager {
         nutrition: [],
         hydration: [],
         performance: {},
-        bodyFat: []
+        bodyFat: [],
+        sleep: [] // <-- DEFAULT SLEEP LIST AJOUTÉE
       };
     } catch (error) {
       console.error('Error loading tracking data:', error);
@@ -99,7 +115,8 @@ export class StorageManager {
         nutrition: [],
         hydration: [],
         performance: {},
-        bodyFat: []
+        bodyFat: [],
+        sleep: [] // <-- DEFAULT SLEEP LIST AJOUTÉE
       };
     }
   }
@@ -107,7 +124,17 @@ export class StorageManager {
   static saveTrackingData(data: Partial<TrackingData>) {
     try {
       const existing = this.getTrackingData();
-      const updated = { ...existing, ...data };
+      // Fusionne en priorité les clés des deux objets (notamment sleep)
+      const updated: TrackingData = {
+        weight: data.weight ?? existing.weight,
+        measurements: data.measurements ?? existing.measurements,
+        workouts: data.workouts ?? existing.workouts,
+        nutrition: data.nutrition ?? existing.nutrition,
+        hydration: data.hydration ?? existing.hydration,
+        performance: data.performance ?? existing.performance,
+        bodyFat: data.bodyFat ?? existing.bodyFat,
+        sleep: data.sleep ?? existing.sleep // <--- CLÉ SLEEP FUSIONNÉE
+      };
       localStorage.setItem(this.TRACKING_DATA_KEY, JSON.stringify(updated));
       console.log('Tracking data saved');
     } catch (error) {
