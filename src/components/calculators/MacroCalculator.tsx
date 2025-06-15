@@ -28,13 +28,21 @@ const MacroCalculator: React.FC = () => {
   useEffect(() => {
     // Try to load calories from BMR calculation
     const profile = StorageManager.getUserProfile();
-    if (profile && profile.weight && profile.height && profile.age) {
+    if (profile && profile.demographics && profile.demographics.weight && profile.demographics.height && profile.demographics.age) {
       // Estimate TDEE for maintenance
-      const bmr = profile.gender === 'M' 
-        ? (10 * profile.weight) + (6.25 * profile.height) - (5 * profile.age) + 5
-        : (10 * profile.weight) + (6.25 * profile.height) - (5 * profile.age) - 161;
+      const bmr = profile.demographics.gender === 'M' 
+        ? (10 * profile.demographics.weight) + (6.25 * profile.demographics.height) - (5 * profile.demographics.age) + 5
+        : (10 * profile.demographics.weight) + (6.25 * profile.demographics.height) - (5 * profile.demographics.age) - 161;
       
-      const activityLevel = parseFloat(profile.activityLevel || '1.375');
+      const activityMultipliers = {
+        sedentary: 1.2,
+        light: 1.375,
+        moderate: 1.55,
+        active: 1.725,
+        very_active: 1.9
+      };
+      
+      const activityLevel = activityMultipliers[profile.demographics.activityLevel] || 1.375;
       const estimatedTDEE = Math.round(bmr * activityLevel);
       
       setFormData(prev => ({ 
@@ -75,14 +83,14 @@ const MacroCalculator: React.FC = () => {
     const total = parseFloat(newRatios.proteinRatio) + parseFloat(newRatios.fatRatio) + parseFloat(newRatios.carbRatio);
     if (total !== 100) {
       const difference = 100 - total;
-      if (macro === 'carbs') {
+      if (macro !== 'carbs') {
+        // If protein or fat changed, adjust carbs
+        newRatios.carbRatio = Math.max(5, parseFloat(newRatios.carbRatio) + difference).toString();
+      } else {
         // If carbs changed, adjust protein and fat equally
         const adjustment = difference / 2;
         newRatios.proteinRatio = Math.max(5, parseFloat(newRatios.proteinRatio) + adjustment).toString();
         newRatios.fatRatio = Math.max(5, parseFloat(newRatios.fatRatio) + adjustment).toString();
-      } else {
-        // If protein or fat changed, adjust carbs
-        newRatios.carbRatio = Math.max(5, parseFloat(newRatios.carbRatio) + difference).toString();
       }
     }
     

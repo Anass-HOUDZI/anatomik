@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { StorageManager } from '../../utils/StorageManager';
 
@@ -30,14 +29,14 @@ const BMRCalculator: React.FC = () => {
   useEffect(() => {
     // Load user profile if exists
     const profile = StorageManager.getUserProfile();
-    if (profile) {
+    if (profile && profile.demographics) {
       setFormData(prev => ({
         ...prev,
-        age: profile.age?.toString() || '',
-        gender: profile.gender || 'M',
-        weight: profile.weight?.toString() || '',
-        height: profile.height?.toString() || '',
-        activityLevel: profile.activityLevel || '1.375'
+        age: profile.demographics.age?.toString() || '',
+        gender: profile.demographics.gender || 'M',
+        weight: profile.demographics.weight?.toString() || '',
+        height: profile.demographics.height?.toString() || '',
+        activityLevel: profile.demographics.activityLevel || '1.375'
       }));
     }
   }, []);
@@ -88,12 +87,22 @@ const BMRCalculator: React.FC = () => {
   };
 
   const saveProfile = () => {
+    const activityLevelMap: Record<string, 'sedentary' | 'light' | 'moderate' | 'active' | 'very_active'> = {
+      '1.2': 'sedentary',
+      '1.375': 'light',
+      '1.55': 'moderate',
+      '1.725': 'active',
+      '1.9': 'very_active'
+    };
+
     StorageManager.saveUserProfile({
-      age: parseFloat(formData.age),
-      gender: formData.gender as 'M' | 'F',
-      weight: parseFloat(formData.weight),
-      height: parseFloat(formData.height),
-      activityLevel: formData.activityLevel
+      demographics: {
+        age: parseFloat(formData.age),
+        gender: formData.gender as 'M' | 'F',
+        weight: parseFloat(formData.weight),
+        height: parseFloat(formData.height),
+        activityLevel: activityLevelMap[formData.activityLevel] || 'moderate'
+      }
     });
     
     // Show success message (you could use a toast here)
