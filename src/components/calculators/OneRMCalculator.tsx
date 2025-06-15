@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 
 const OneRMCalculator: React.FC = () => {
@@ -96,7 +95,7 @@ const OneRMCalculator: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Input Form */}
         <div className="space-y-6">
-          <h3 className="text-2xl font-bold mb-6">Informations de performance</h3>
+          <h3 className="text-2xl font-bold mb-6 text-black">Informations de performance</h3>
           
           <div className="input-group-custom">
             <label htmlFor="exercise">Exercice</label>
@@ -164,7 +163,7 @@ const OneRMCalculator: React.FC = () => {
           )}
 
           <div className="bg-card border border-custom rounded-lg p-4">
-            <h4 className="font-semibold mb-3 flex items-center">
+            <h4 className="font-semibold mb-3 flex items-center text-black">
               <i className="fas fa-info-circle text-info mr-2"></i>
               À propos du calcul
             </h4>
@@ -179,7 +178,7 @@ const OneRMCalculator: React.FC = () => {
 
         {/* Results */}
         <div className="lg:col-span-2 space-y-6">
-          <h3 className="text-2xl font-bold mb-6">Votre 1RM et charges d'entraînement</h3>
+          <h3 className="text-2xl font-bold mb-6 text-black">Votre 1RM et charges d'entraînement</h3>
           
           {results.oneRM > 0 ? (
             <div className="space-y-6">
