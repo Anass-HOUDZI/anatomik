@@ -4,6 +4,7 @@ import WorkoutGenerator from '../generators/WorkoutGenerator';
 import NutritionGenerator from '../generators/NutritionGenerator';
 import MealPlannerGenerator from '../generators/MealPlannerGenerator';
 import ExerciseGenerator from '../generators/ExerciseGenerator';
+import PeriodizationPlanner from '../generators/PeriodizationPlanner';
 
 const generatorToolsConfig: Tool[] = [
   {
@@ -43,7 +44,8 @@ const generatorToolsConfig: Tool[] = [
     name: 'Planificateur de Périodes',
     description: 'Cycles de masse, sèche et maintien',
     category: 'generators',
-    icon: 'fa-calendar-alt'
+    icon: 'fa-calendar-alt',
+    component: PeriodizationPlanner
   },
   {
     id: 'recovery-planner',
