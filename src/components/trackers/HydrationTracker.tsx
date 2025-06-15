@@ -1,84 +1,171 @@
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import React, { useState, useMemo } from "react";
+import { Table, TableHeader, TableBody, TableRow, TableCell, TableHead } from "../ui/table";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { ChartContainer } from "../ui/chart";
+import { StorageManager } from "../../utils/StorageManager";
+import { useToast } from "../ui/use-toast";
 
-const HydrationTracker = () => {
-  const [dailyGoal, setDailyGoal] = useState(2000); // Default to 2000ml
-  const [currentIntake, setCurrentIntake] = useState(0);
-  const [newIntake, setNewIntake] = useState('');
-  const [hydrationPercentage, setHydrationPercentage] = useState(0);
+/**
+ * Calcul cible hydratation : valeur par défaut vers 35 ml/kg, ajustable plus tard.
+ */
+function getHydrationTarget(weight: number) {
+  return Math.round(weight * 35); // en ml
+}
 
-  useEffect(() => {
-    // Update hydration percentage whenever currentIntake or dailyGoal changes
-    setHydrationPercentage(Math.min(100, (currentIntake / dailyGoal) * 100));
-  }, [currentIntake, dailyGoal]);
+export default function HydrationTracker() {
+  const { toast } = useToast();
+  const todayStr = new Date().toISOString().slice(0, 10);
 
-  const handleAddIntake = () => {
-    const intake = parseInt(newIntake, 10);
-    if (!isNaN(intake) && intake > 0) {
-      setCurrentIntake(currentIntake + intake);
-      setNewIntake(''); // Reset input field
-    } else {
-      alert("Please enter a valid positive number for intake.");
+  // Récupérer profil/données existantes
+  const trackingData = StorageManager.getTrackingData();
+  const userProfile = StorageManager.getUserProfile();
+  const [date, setDate] = useState(todayStr);
+  const [input, setInput] = useState<number | "">("");
+  const [unit, setUnit] = useState<"ml" | "verre">("ml");
+  const [reload, setReload] = useState(false);
+
+  // Liste des entrées stockées
+  const hydrationArray: Array<{ date: string; value: number; unit: string }> = useMemo(() => {
+    // Migration des anciennes valeurs au besoin
+    if (trackingData.hydration && Array.isArray(trackingData.hydration)) {
+      return trackingData.hydration.map(e => ({
+        date: e.date?.slice(0,10) || "",
+        value: Number(e.value ?? 0),
+        unit: e.unit ?? "ml"
+      }));
     }
-  };
+    return [];
+  }, [reload, trackingData.hydration]);
 
-  const handleReset = () => {
-    setCurrentIntake(0);
-  };
+  // Calcul cible hydratation utilisateur
+  const weight = userProfile?.demographics?.weight || 70;
+  const hydrationTarget = getHydrationTarget(weight);
 
-  const handleGoalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const goal = parseInt(e.target.value, 10);
-    if (!isNaN(goal) && goal > 0) {
-      setDailyGoal(goal);
-    } else {
-      alert("Please enter a valid positive number for daily goal.");
+  // Ajout d'une entrée hydratation
+  function handleAddEntry(e: React.FormEvent) {
+    e.preventDefault();
+    if (!input || Number(input) <= 0) {
+      toast({ title: "Valeur incorrecte", description: "Merci de saisir une quantité supérieure à zéro." });
+      return;
     }
-  };
+    // Conversion en ml si input = verres (1 verre = 250ml)
+    let valueMl = unit === "ml" ? Number(input) : Number(input) * 250;
+
+    // Vérifie si entrée déjà présente pour la date
+    let updatedArray = hydrationArray.filter(e => e.date !== date);
+    updatedArray.push({ date, value: valueMl, unit: "ml" });
+    updatedArray = updatedArray.sort((a, b) => b.date.localeCompare(a.date));
+
+    // Sauvegarde
+    StorageManager.saveTrackingData({
+      ...trackingData,
+      hydration: updatedArray,
+    });
+
+    setInput("");
+    setReload(v => !v);
+    toast({
+      title: "Hydratation enregistrée",
+      description: `Consommation de ${valueMl} ml sauvegardée pour le ${date}.`
+    });
+  }
+
+  // Préparation données graphiques - 14 derniers jours
+  const labels = [];
+  const values = [];
+  for (let i = 13; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const dStr = d.toISOString().slice(0,10);
+    const entry = hydrationArray.find(e => e.date === dStr);
+    labels.push(dStr.slice(5, 10));
+    values.push(entry ? entry.value : 0);
+  }
 
   return (
-    <div className="calculator-container">
-      <h2 className="text-2xl font-bold mb-2 text-[#111] drop-shadow-none" style={{textShadow: "none"}}>Tracker d’Hydratation</h2>
-      <p className="text-base mb-4 text-[#222] font-medium" style={{color:'#222', background:'none'}}>Consignez facilement votre apport hydrique journalier.</p>
-      
-      <Card className="w-full max-w-md mx-auto">
-        <CardHeader>
-          <CardTitle>Hydration Tracker</CardTitle>
-          <CardDescription>Track your daily water intake.</CardDescription>
-        </CardHeader>
-        <CardContent className="grid gap-4">
-          <div className="grid gap-2">
-            <Label htmlFor="daily-goal">Daily Goal (ml)</Label>
-            <Input
-              type="number"
-              id="daily-goal"
-              value={dailyGoal}
-              onChange={handleGoalChange}
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="new-intake">Add Intake (ml)</Label>
-            <div className="flex items-center space-x-2">
-              <Input
-                type="number"
-                id="new-intake"
-                placeholder="Enter amount"
-                value={newIntake}
-                onChange={(e) => setNewIntake(e.target.value)}
-              />
-              <Button onClick={handleAddIntake}>Add</Button>
-            </div>
-          </div>
-          <div>
-            <p>Current Intake: {currentIntake} ml</p>
-            <p>Hydration: {hydrationPercentage.toFixed(1)}%</p>
-          </div>
-          <Button variant="secondary" onClick={handleReset}>Reset</Button>
-        </CardContent>
-      </Card>
+    <div className="max-w-2xl mx-auto bg-white dark:bg-muted rounded-xl p-6 shadow space-y-8">
+      <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+        <i className="fas fa-glass-water text-primary" /> Tracker d’Hydratation
+      </h2>
+      <p className="text-muted-foreground mb-4">
+        Suivez au quotidien votre consommation d'eau et comparez-la à votre besoin recommandé (<span className="font-semibold">{hydrationTarget} ml</span> / jour).
+      </p>
+      {/* Formulaire input */}
+      <form className="flex flex-col md:flex-row gap-4 mb-6" onSubmit={handleAddEntry}>
+        <Input
+          type="number"
+          min={1}
+          step={1}
+          placeholder={unit === "ml" ? "Quantité (ml)" : "Nombre de verres"}
+          value={input}
+          onChange={e => setInput(e.target.value === "" ? "" : Number(e.target.value))}
+        />
+        <select
+          className="border rounded px-3 py-2"
+          value={unit}
+          onChange={e => setUnit(e.target.value as "ml" | "verre")}
+        >
+          <option value="ml">ml</option>
+          <option value="verre">verres (250ml/unité)</option>
+        </select>
+        <Input
+          type="date"
+          value={date}
+          onChange={e => setDate(e.target.value)}
+        />
+        <Button type="submit" className="bg-primary text-white">
+          + Ajouter
+        </Button>
+      </form>
+
+      {/* Graphe simplifié */}
+      <ChartContainer
+        config={{
+          "Hydratation": { label: "Cons.H2O (ml)", color: "#3BB2F6" }
+        }}
+        className="bg-muted p-2 mb-4"
+      >
+        <div className="w-full h-32 flex flex-col items-center justify-center text-sm text-muted-foreground">
+          (Prévisualisation : {values.map(v => v > 0 ? "💧" : "·").join(" ")} )
+          <br />
+          <span className="opacity-40">Graphique détaillé bientôt !</span>
+        </div>
+      </ChartContainer>
+
+      {/* Tableau des entrées */}
+      <div className="overflow-x-auto">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Date</TableHead>
+              <TableHead>Consommation (ml)</TableHead>
+              <TableHead>% objectif</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {hydrationArray.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={3} className="text-center">
+                  Aucune donnée enregistrée.
+                </TableCell>
+              </TableRow>
+            ) : (
+              hydrationArray.map((item, idx) => (
+                <TableRow key={item.date + idx}>
+                  <TableCell>{item.date}</TableCell>
+                  <TableCell>
+                    {item.value ? `${item.value} ml` : "–"}
+                  </TableCell>
+                  <TableCell>
+                    {hydrationTarget ? Math.round((item.value / hydrationTarget) * 100) : 0} %
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
-};
-export default HydrationTracker;
+}
