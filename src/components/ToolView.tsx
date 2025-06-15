@@ -24,6 +24,12 @@ import FrequencyCalculator from './calculators/FrequencyCalculator';
 import PeriodizationCalculator from './calculators/PeriodizationCalculator';
 import RMZoneCalculator from './calculators/RMZoneCalculator';
 import TempoCalculator from './calculators/TempoCalculator';
+import DropSetsCalculator from './calculators/DropSetsCalculator';
+import SupersetCalculator from './calculators/SupersetCalculator';
+import CircuitCalculator from './calculators/CircuitCalculator';
+import HIITCalculator from './calculators/HIITCalculator';
+import RecoveryCalculator from './calculators/RecoveryCalculator';
+import DeloadCalculator from './calculators/DeloadCalculator';
 
 interface ToolViewProps {
   category: Category;
@@ -232,42 +238,48 @@ const toolsConfig: Record<string, Tool[]> = {
       name: 'Calculateur de Drop Sets',
       description: 'Séries dégressives automatisées pour intensification',
       category: 'training',
-      icon: 'fa-level-down-alt'
+      icon: 'fa-level-down-alt',
+      component: DropSetsCalculator
     },
     {
       id: 'superset-calculator',
       name: 'Calculateur de Superset',
       description: 'Combinaisons d\'exercices enchaînés optimales',
       category: 'training',
-      icon: 'fa-link'
+      icon: 'fa-link',
+      component: SupersetCalculator
     },
     {
       id: 'circuit-calculator',
       name: 'Calculateur de Circuit',
       description: 'Entraînement en stations avec timing précis',
       category: 'training',
-      icon: 'fa-route'
+      icon: 'fa-route',
+      component: CircuitCalculator
     },
     {
       id: 'hiit-calculator',
       name: 'Calculateur HIIT',
       description: 'Intervalles haute intensité personnalisés',
       category: 'training',
-      icon: 'fa-running'
+      icon: 'fa-running',
+      component: HIITCalculator
     },
     {
       id: 'recovery-calculator',
       name: 'Calculateur de Récupération',
       description: 'Temps de repos entre séances selon fatigue',
       category: 'training',
-      icon: 'fa-bed'
+      icon: 'fa-bed',
+      component: RecoveryCalculator
     },
     {
       id: 'deload-calculator',
       name: 'Calculateur de Deload',
       description: 'Semaines de décharge programmées pour surcompensation',
       category: 'training',
-      icon: 'fa-pause'
+      icon: 'fa-pause',
+      component: DeloadCalculator
     }
   ],
   tracking: [
