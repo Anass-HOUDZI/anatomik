@@ -299,7 +299,7 @@ const toolsConfig: Record<string, Tool[]> = {
       description: 'Évolution de vos mensurations corporelles',
       category: 'tracking',
       icon: 'fa-ruler',
-      component: require('./trackers/MeasurementsTracker').default
+      component: MeasurementsTracker
     },
     {
       id: 'performance-tracker',
