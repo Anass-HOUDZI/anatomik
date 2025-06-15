@@ -1,3 +1,126 @@
+/* === GOOGLE FONTS === */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Cal+Sans:wght@400;700&display=swap');
+
+/* === TAILWIND === */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* === FitMASTER PRO Modern Design System === */
+@layer base {
+  :root {
+    /* Palette raffinée */
+    --color-dark: #171924;
+    --color-light: #fafbfc;
+    --color-blue: #2563eb;
+    --color-blue-deep: #1d315b;
+    --color-accent: #afecfe;
+    --color-gray: #e4e7ec;
+    --color-gray-dark: #282b35;
+    --shadow-3d: 0 8px 24px 0 rgba(10,22,50,0.10), 0 0.5px 1.5px rgba(20,25,51,0.15);
+
+    /* Ombres douces */
+    --shadow-md-soft: 0 4px 32px rgba(50,68,130,0.10);
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+    --gradient-radial: radial-gradient(ellipse at 50% 20%, #4386f9 20%, #afecfe 100%);
+    --gradient-shimmer: linear-gradient(90deg, #f1f3f6 25%, #eaf2fb 50%, #f1f3f6 75%);
+  }
+
+  body {
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    background: var(--color-light);
+    color: var(--color-dark);
+    min-height: 100vh;
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, .font-display, .title, .dashboard-title {
+    font-family: 'Cal Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  h2, h3 {
+    font-family: 'Cal Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  }
+}
+
+/* BACKDROP BLUR modern */
+.backdrop-blur-modern {
+  @apply backdrop-blur-xl bg-white/70 dark:bg-[#171924]/80;
+  border-radius: 1.5rem;
+  border: 1.5px solid rgba(67, 134, 249, 0.08);
+}
+
+.bg-gradient-animated {
+  background: linear-gradient(270deg, #4386f9 0%, #afecfe 50%, #2563eb 100%);
+  background-size: 200% 200%;
+  animation: gradient-shift 6s ease infinite;
+}
+
+.radial-bg-modern {
+  background: radial-gradient(circle at 50% 20%, #4386f9 0%, #afecfe 90%);
+}
+
+/* CARD MODERN 3D */
+.card-modern {
+  @apply rounded-2xl bg-white dark:bg-[#1d315b] shadow-3d border border-gray-200/70;
+  transition: transform 0.2s cubic-bezier(.21,.8,.32,1), box-shadow 0.2s, background 0.3s;
+}
+.card-modern:hover {
+  transform: translateY(-8px) rotateX(2deg) scale(1.03);
+  box-shadow: 0 16px 40px 0 rgba(50,68,130,.18);
+  background: linear-gradient(120deg, #3b82f611 0%, #2563eb11 100%);
+}
+
+/* SHIMMER LOADER */
+.shimmer {
+  @apply relative overflow-hidden bg-gradient-shimmer;
+  background-size: 1400px 100%;
+  animation: shimmer 2s linear infinite;
+  color: transparent !important;
+}
+
+/* Effects pulse and float */
+.pulse-glow {
+  animation: pulse-glow 2.5s infinite;
+}
+.float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Gradient text & animated gradient */
+.gradient-text {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.gradient-card-outline {
+  border: 2px solid transparent;
+  background-image: linear-gradient(#fff, #fff), var(--gradient-primary);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+/* === UTILITIES === */
+
+@media (max-width: 520px) {
+  .card-modern {
+    border-radius: 1.1rem;
+    padding: 18px 12px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .container {
+    max-width: 1536px;
+  }
+}
 
 @tailwind base;
 @tailwind components;
