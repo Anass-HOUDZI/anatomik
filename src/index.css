@@ -77,7 +77,9 @@
 
 /* SHIMMER LOADER */
 .shimmer {
-  @apply relative overflow-hidden bg-gradient-shimmer;
+  position: relative;
+  overflow: hidden;
+  background: var(--gradient-shimmer);
   background-size: 1400px 100%;
   animation: shimmer 2s linear infinite;
   color: transparent !important;
