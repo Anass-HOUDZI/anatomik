@@ -6,9 +6,19 @@
 @tailwind components;
 @tailwind utilities;
 
-/* === FitMASTER PRO Modern Design System === */
+/* === FitMASTER PRO Responsive Design System === */
 @layer base {
   :root {
+    /* Variables CSS pour responsive */
+    --mobile-padding: 1rem;
+    --tablet-padding: 2rem;
+    --desktop-padding: 3rem;
+    --touch-target-size: 44px;
+    --safe-area-top: env(safe-area-inset-top);
+    --safe-area-bottom: env(safe-area-inset-bottom);
+    --safe-area-left: env(safe-area-inset-left);
+    --safe-area-right: env(safe-area-inset-right);
+    
     /* Palette raffinée */
     --color-dark: #171924;
     --color-light: #fafbfc;
@@ -28,13 +38,74 @@
     --gradient-shimmer: linear-gradient(90deg, #f1f3f6 25%, #eaf2fb 50%, #f1f3f6 75%);
   }
 
+  * {
+    /* Améliorer les performances de scroll sur mobile */
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  html {
+    /* Fixer la taille de police sur mobile */
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
   body {
     font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
     background: var(--color-light);
     color: var(--color-dark);
     min-height: 100vh;
+    min-height: 100dvh; /* Support pour les nouvelles unités viewport */
     letter-spacing: 0.01em;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    /* Optimisations tactiles */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* Support des zones sûres (encoches) */
+  .safe-area-container {
+    padding-top: var(--safe-area-top);
+    padding-bottom: var(--safe-area-bottom);
+    padding-left: var(--safe-area-left);
+    padding-right: var(--safe-area-right);
+  }
+
+  /* Optimisations pour les appareils tactiles */
+  @media (pointer: coarse) {
+    /* Cibles tactiles plus grandes */
+    button, [role="button"], a, input, select, textarea {
+      min-height: var(--touch-target-size);
+      min-width: var(--touch-target-size);
+    }
+    
+    /* Espacement amélioré pour les doigts */
+    .touch-friendly {
+      padding: 0.75rem;
+      margin: 0.25rem;
+    }
+  }
+
+  /* Responsive typography */
+  @media (max-width: 480px) {
+    html { font-size: 14px; }
+  }
+  
+  @media (min-width: 481px) and (max-width: 768px) {
+    html { font-size: 15px; }
+  }
+  
+  @media (min-width: 769px) {
+    html { font-size: 16px; }
   }
 
   h1, .font-display, .title, .dashboard-title {
@@ -44,6 +115,242 @@
   }
   h2, h3 {
     font-family: 'Cal Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  /* Composants responsifs */
+  .responsive-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+  }
+  
+  @media (min-width: 640px) {
+    .responsive-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .responsive-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .responsive-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* Navigation mobile */
+  .mobile-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0.5rem;
+    padding-bottom: calc(0.5rem + var(--safe-area-bottom));
+    z-index: 1000;
+  }
+
+  /* Cartes adaptatives */
+  .adaptive-card {
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease;
+  }
+  
+  @media (max-width: 768px) {
+    .adaptive-card {
+      border-radius: 1rem;
+      margin: 0.5rem;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+    }
+  }
+  
+  @media (hover: hover) {
+    .adaptive-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  /* Boutons adaptatifs */
+  .adaptive-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    min-height: var(--touch-target-size);
+    padding: 0.5rem 1rem;
+  }
+  
+  @media (max-width: 768px) {
+    .adaptive-button {
+      border-radius: 0.75rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      min-height: 48px;
+    }
+  }
+  
+  @media (pointer: coarse) {
+    .adaptive-button:active {
+      transform: scale(0.98);
+    }
+  }
+
+  /* Inputs adaptatifs */
+  .adaptive-input {
+    width: 100%;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+  }
+  
+  @media (max-width: 768px) {
+    .adaptive-input {
+      border-radius: 0.75rem;
+      padding: 0.75rem 1rem;
+      font-size: 16px; /* Évite le zoom sur iOS */
+      min-height: 48px;
+    }
+  }
+
+  /* Layout responsive */
+  .responsive-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--mobile-padding);
+  }
+  
+  @media (min-width: 768px) {
+    .responsive-container {
+      padding: 0 var(--tablet-padding);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .responsive-container {
+      padding: 0 var(--desktop-padding);
+    }
+  }
+
+  /* Animations optimisées pour mobile */
+  @media (prefers-reduced-motion: no-preference) {
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+    }
+    
+    .animate-on-scroll.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .animate-on-scroll {
+      transition: none;
+    }
+  }
+}
+
+@layer utilities {
+  /* Utilitaires responsive */
+  .text-responsive {
+    font-size: clamp(0.875rem, 2.5vw, 1.125rem);
+  }
+  
+  .heading-responsive {
+    font-size: clamp(1.5rem, 4vw, 3rem);
+  }
+  
+  .padding-responsive {
+    padding: clamp(1rem, 3vw, 2rem);
+  }
+  
+  .gap-responsive {
+    gap: clamp(0.5rem, 2vw, 1.5rem);
+  }
+
+  /* Utilitaires pour gestes tactiles */
+  .swipe-indicator {
+    position: relative;
+  }
+  
+  .swipe-indicator::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+  }
+
+  /* Mode sombre adaptatif */
+  @media (prefers-color-scheme: dark) {
+    .auto-dark {
+      background: #1a1a1a;
+      color: #ffffff;
+    }
+  }
+
+  /* Orientation */
+  @media (orientation: landscape) and (max-height: 500px) {
+    .landscape-compact {
+      padding: 0.5rem;
+    }
+  }
+
+  /* Densité d'écran */
+  @media (-webkit-min-device-pixel-ratio: 2) {
+    .retina-optimized {
+      image-rendering: -webkit-optimize-contrast;
+    }
+  }
+}
+
+/* Optimisations spécifiques aux appareils */
+@supports (display: -webkit-box) {
+  .webkit-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .webkit-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+}
+
+/* Support des nouvelles unités CSS */
+@supports (height: 100dvh) {
+  .full-viewport {
+    height: 100dvh;
+  }
+}
+
+@supports not (height: 100dvh) {
+  .full-viewport {
+    height: 100vh;
   }
 }
 
