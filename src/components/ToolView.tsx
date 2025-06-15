@@ -30,6 +30,7 @@ import CircuitCalculator from './calculators/CircuitCalculator';
 import HIITCalculator from './calculators/HIITCalculator';
 import RecoveryCalculator from './calculators/RecoveryCalculator';
 import DeloadCalculator from './calculators/DeloadCalculator';
+import WeightTracker from './trackers/WeightTracker';
 
 interface ToolViewProps {
   category: Category;
@@ -288,7 +289,8 @@ const toolsConfig: Record<string, Tool[]> = {
       name: 'Tracker de Poids',
       description: 'Suivez l\'évolution de votre poids corporel avec graphiques',
       category: 'tracking',
-      icon: 'fa-weight'
+      icon: 'fa-weight',
+      component: WeightTracker
     },
     {
       id: 'measurements-tracker',
