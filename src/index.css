@@ -289,6 +289,7 @@
   .category-card:hover {
     transform: translateY(-8px);
     box-shadow: var(--shadow-xl);
+    border-color: var(--primary);
   }
 
   .category-card.nutritional {
@@ -643,3 +644,28 @@ h2, .page-title, .main-title, .dashboard-title, .category-page-title {
   50% { transform: translateY(-8px);}
 }
 .animate-float { animation: float 2.9s ease-in-out infinite; }
+
+@layer base {
+  /* Titres des pages en blanc */
+  h2, .page-title, .main-title, .dashboard-title, .category-page-title {
+    color: #fff !important;
+    text-shadow: 0 3px 12px rgba(0,0,0,0.09);
+    letter-spacing: -0.5px;
+    font-family: 'Cal Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  }
+}
+
+/* Style cartes outils modernes pour ToolView */
+.tool-modern-card {
+  background-blend-mode: lighten;
+  border: none;
+  border-radius: 1.35rem !important;
+  box-shadow: 0 8px 36px 0 rgba(30,40,80,0.17), 0 2px 8px 0 rgba(20,29,67,0.10);
+  min-height: 180px;
+  transition: transform 0.17s cubic-bezier(.21,.8,.32,1), box-shadow 0.19s, background 0.26s;
+}
+.tool-modern-card:hover {
+  transform: translateY(-6px) scale(1.033) rotateX(1deg);
+  box-shadow: 0 16px 42px 0 rgba(67,134,249,.14);
+  background-blend-mode: screen;
+}

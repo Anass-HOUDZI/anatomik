@@ -1,21 +1,23 @@
+
 import React from 'react';
 import type { Category, Tool } from '../App';
+import { Badge } from "./ui/badge";
+import { Progress } from "./ui/progress";
 
-// Import tool configs désormais externalisés
+// Import configs
 import nutritionalToolsConfig from './tool-configs/nutritionalToolsConfig';
 import trainingToolsConfig from './tool-configs/trainingToolsConfig';
 import trackingToolsConfig from './tool-configs/trackingToolsConfig';
 import generatorToolsConfig from './tool-configs/generatorToolsConfig';
 
-interface ToolViewProps {
-  category: Category;
-  onToolSelect: (tool: Tool) => void;
-}
+// Map gradient classes by category
+const cardGradients: Record<string, string> = {
+  nutritional: "from-green-400 via-teal-400 to-emerald-200",
+  training: "from-blue-600 via-blue-400 to-indigo-300",
+  tracking: "from-orange-400 via-yellow-400 to-amber-200",
+  generators: "from-purple-400 via-violet-500 to-indigo-200",
+};
 
-/** 
- * Récupère la config d’outils adaptée à la catégorie.
- * On pourra facilement faire du code-splitting plus tard si besoin.
- */
 const getToolsForCategory = (categoryId: string) => {
   switch (categoryId) {
     case "nutritional":
@@ -31,91 +33,85 @@ const getToolsForCategory = (categoryId: string) => {
   }
 };
 
-const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
-  const tools = getToolsForCategory(category.id) as import('../App').Tool[];
+interface ToolViewProps {
+  category: Category;
+  onToolSelect: (tool: Tool) => void;
+}
 
-  // Count implemented tools
+const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
+  const tools = getToolsForCategory(category.id) as Tool[];
   const implementedCount = tools.filter(tool => tool.component).length;
   const totalCount = tools.length;
   const completionPercentage = Math.round((implementedCount / totalCount) * 100);
 
+  // Ajout icône Lucide si présent (option : améliorable + tard)
   return (
-    <div className="max-w-6xl mx-auto">
-      {/* Category Header */}
-      <div className="text-center mb-12">
-        <div className={`inline-flex items-center justify-center w-20 h-20 rounded-full category-card ${category.color} mb-6`}>
-          <i className={`fas ${category.icon} text-4xl text-white`}></i>
-        </div>
-        <h2 className="text-4xl font-bold mb-4">{category.name}</h2>
-        <p className="text-xl text-muted-foreground mb-6">{category.description}</p>
-        <div className="inline-flex items-center space-x-2 bg-gradient-primary text-white px-6 py-3 rounded-full">
-          <span className="font-semibold">{implementedCount}/{totalCount} outils disponibles ({completionPercentage}%)</span>
+    <div className="max-w-6xl mx-auto px-2">
+      {/* Titre de la page (toujours blanc) */}
+      <div className="text-center mb-10">
+        <h2 className="text-4xl font-bold page-title mb-3">{category.name}</h2>
+        <p className="text-lg text-white/80 mb-4">{category.description}</p>
+        {/* Barre de progression */}
+        <div className="flex flex-col items-center mb-2 w-full max-w-lg mx-auto gap-1">
+          <Progress value={completionPercentage} className="w-full h-5 rounded-lg bg-white/20 shadow" />
+          <span className="text-white font-semibold text-sm mt-1 bg-black/20 rounded-full px-4 py-0.5">
+            {implementedCount}/{totalCount} outils disponibles ({completionPercentage}%)
+          </span>
         </div>
       </div>
-
-      {/* Tools Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {tools.map((tool, index) => (
+      
+      {/* Grille des outils */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {tools.map((tool, idx) => (
           <div
             key={tool.id}
-            className="tool-card slide-up cursor-pointer"
-            style={{ animationDelay: `${index * 0.1}s` }}
-            onClick={() => onToolSelect(tool)}
+            className={`
+              group relative rounded-2xl shadow-xl
+              bg-gradient-to-br ${cardGradients[category.id]} 
+              flex flex-col items-start justify-between p-6 min-h-[195px]
+              cursor-pointer tool-modern-card animate-fade-in transition-all duration-200
+              hover:scale-[1.025] active:scale-98
+            `}
+            style={{ animationDelay: `${idx * 0.08}s` }}
+            onClick={() => tool.component && onToolSelect(tool)}
           >
-            <div className="flex-1">
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 rounded-lg bg-gradient-primary text-white flex items-center justify-center">
-                  <i className={`fas ${tool.icon}`}></i>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold mb-1">{tool.name}</h3>
-                  {tool.component && (
-                    <span className="inline-flex items-center text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
-                      <i className="fas fa-check-circle mr-1"></i>
-                      Disponible
-                    </span>
-                  )}
-                  {!tool.component && (
-                    <span className="inline-flex items-center text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
-                      <i className="fas fa-clock mr-1"></i>
-                      Bientôt
-                    </span>
-                  )}
-                </div>
+            {/* Header carte */}
+            <div className="flex flex-col items-start gap-2 w-full">
+              {/* Titre + badge état */}
+              <div className="flex items-center w-full gap-2 justify-between">
+                <h3 className="text-lg font-bold text-white drop-shadow-lg">{tool.name}</h3>
+                <Badge
+                  variant={tool.component ? "success" : "warning"}
+                  className={`ml-2 px-3 py-1 text-xs font-bold rounded-full
+                    ${tool.component
+                      ? "bg-emerald-500 text-white"
+                      : "bg-orange-400 text-white"
+                    }
+                  `}
+                >
+                  {tool.component ? "Disponible" : "Bientôt"}
+                </Badge>
               </div>
-              <p className="text-muted-foreground text-sm mb-4">
-                {tool.description}
-              </p>
+              <p className="text-sm text-white/90 mb-1">{tool.description}</p>
             </div>
-            
-            <div className="flex items-center justify-between pt-4 border-t border-border">
-              <span className="text-sm text-muted-foreground">
-                {tool.component ? 'Cliquez pour utiliser' : 'En développement'}
+            {/* Footer action */}
+            <div className="mt-4 flex w-full justify-between items-center">
+              <span className={`text-xs 
+                font-semibold rounded px-3 py-1 shadow
+                ${tool.component
+                  ? "bg-white/20 text-white"
+                  : "bg-white/10 text-white/70"
+                }
+              `}>
+                {tool.component ? "Cliquez pour utiliser" : "En développement"}
               </span>
-              <i className="fas fa-arrow-right text-primary"></i>
+              <svg width="22" height="22" className={`ml-2 ${tool.component ? "opacity-100" : "opacity-40"}`}>
+                <path d="M7 11h8m0 0-3-3m3 3-3 3"
+                  stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </div>
           </div>
         ))}
-      </div>
-
-      {/* Completion Status */}
-      <div className="text-center mt-12 p-8 bg-gradient-primary text-white rounded-xl">
-        <i className="fas fa-check-circle text-4xl mb-4"></i>
-        <h3 className="text-2xl font-bold mb-2">Progression du Développement</h3>
-        <div className="text-lg opacity-90 mb-4">
-          {category.id === 'nutritional' && 
-            `Phase 1 - Calculateurs Nutritionnels: 15/15 outils (100% complété)`
-          }
-          {category.id === 'training' && 
-            `Phase 2 - Calculateurs d'Entraînement: ${implementedCount}/15 outils (${completionPercentage}% complété)`
-          }
-          {category.id !== 'nutritional' && category.id !== 'training' && 
-            `Phase en cours d'implémentation.`
-          }
-        </div>
-        <p className="opacity-75">
-          Chaque outil intègre les dernières recherches scientifiques en nutrition et entraînement.
-        </p>
       </div>
     </div>
   );
