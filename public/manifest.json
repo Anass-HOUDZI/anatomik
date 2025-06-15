@@ -1,0 +1,27 @@
+
+{
+  "name": "FitMASTER PRO - 60 Outils Fitness & Nutrition",
+  "short_name": "FitMASTER PRO",
+  "description": "Suite complète de 60 outils gratuits de musculation et nutrition fonctionnant 100% côté client",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#2563eb",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/placeholder.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/placeholder.svg", 
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["health", "fitness", "lifestyle"],
+  "lang": "fr",
+  "dir": "ltr"
+}
