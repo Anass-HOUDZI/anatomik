@@ -1,4 +1,3 @@
-
 import React from 'react';
 import type { Category, Tool } from '../App';
 import { Badge } from "./ui/badge";
@@ -16,6 +15,19 @@ const cardGradients: Record<string, string> = {
   training: "from-blue-600 via-blue-400 to-indigo-300",
   tracking: "from-orange-400 via-yellow-400 to-amber-200",
   generators: "from-purple-400 via-violet-500 to-indigo-200",
+};
+
+const toolTextGradients: Record<string, string> = {
+  nutritional: "gradient-text-nutritional",
+  training: "gradient-text-training",
+  tracking: "gradient-text-tracking",
+  generators: "gradient-text-generators",
+};
+const toolBorderGradients: Record<string, string> = {
+  nutritional: "tool-border-nutritional",
+  training: "tool-border-training",
+  tracking: "tool-border-tracking",
+  generators: "tool-border-generators",
 };
 
 const getToolsForCategory = (categoryId: string) => {
@@ -71,6 +83,7 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
               flex flex-col items-start justify-between p-6 min-h-[195px]
               cursor-pointer tool-modern-card animate-fade-in transition-all duration-200
               hover:scale-[1.025] active:scale-98
+              ${toolBorderGradients[category.id]}
             `}
             style={{ animationDelay: `${idx * 0.08}s` }}
             onClick={() => tool.component && onToolSelect(tool)}
@@ -79,7 +92,9 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
             <div className="flex flex-col items-start gap-2 w-full">
               {/* Titre + badge état */}
               <div className="flex items-center w-full gap-2 justify-between">
-                <h3 className="text-lg font-bold text-white drop-shadow-lg">{tool.name}</h3>
+                <h3 className={`text-lg font-bold drop-shadow-lg ${toolTextGradients[category.id]}`}>
+                  {tool.name}
+                </h3>
                 <Badge
                   variant={tool.component ? "default" : "secondary"}
                   className={`ml-2 px-3 py-1 text-xs font-bold rounded-full
@@ -118,4 +133,3 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
 };
 
 export default ToolView;
-
