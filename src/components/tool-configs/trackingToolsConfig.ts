@@ -2,6 +2,7 @@
 import type { Tool } from '../../App';
 import WeightTracker from '../trackers/WeightTracker';
 import MeasurementsTracker from '../trackers/MeasurementsTracker';
+import PerformanceTracker from '../trackers/PerformanceTracker';
 
 const trackingToolsConfig: Tool[] = [
   {
@@ -25,7 +26,8 @@ const trackingToolsConfig: Tool[] = [
     name: 'Tracker de Performance',
     description: 'Progression de vos charges d\'entraînement',
     category: 'tracking',
-    icon: 'fa-chart-bar'
+    icon: 'fa-chart-bar',
+    component: PerformanceTracker
   },
   {
     id: 'body-composition-tracker',
