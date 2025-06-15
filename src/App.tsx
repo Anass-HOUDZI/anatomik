@@ -8,6 +8,7 @@ import CategoryGrid from './components/CategoryGrid';
 import ToolView from './components/ToolView';
 import { StorageManager } from './utils/StorageManager';
 import { ThemeProvider } from './context/ThemeContext';
+import PWAIndicator from './components/PWAIndicator';
 
 const queryClient = new QueryClient();
 
@@ -136,6 +137,9 @@ const App = () => {
                 {" "}– Tous droits réservés.
               </div>
             </footer>
+            
+            {/* Indicateur PWA */}
+            <PWAIndicator />
           </div>
         </TooltipProvider>
       </ThemeProvider>

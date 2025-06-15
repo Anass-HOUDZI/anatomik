@@ -3,29 +3,63 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <title>FitMASTER PRO - 60 Outils Fitness & Nutrition Gratuits</title>
     <meta name="description" content="Suite complète de 60 outils gratuits de musculation et nutrition fonctionnant 100% côté client. Calculateurs, trackers, planificateurs - tout en offline !" />
-    <meta name="author" content="FitMASTER PRO" />
+    <meta name="author" content="Anass Houdzi" />
     <meta name="theme-color" content="#2563eb" />
+    <meta name="keywords" content="fitness, musculation, nutrition, calculateur, tracker, PWA, offline, gratuit" />
     
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="/manifest.json" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="FitMASTER PRO" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="FitMASTER PRO" />
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="/placeholder.svg" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/placeholder.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/placeholder.svg" />
+    <link rel="apple-touch-icon" sizes="167x167" href="/placeholder.svg" />
+    
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-TileImage" content="/placeholder.svg" />
+    <meta name="msapplication-TileColor" content="#2563eb" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
     
     <!-- OpenGraph -->
     <meta property="og:title" content="FitMASTER PRO - 60 Outils Fitness Gratuits" />
-    <meta property="og:description" content="Suite complète de 60 outils gratuits de musculation et nutrition" />
+    <meta property="og:description" content="Suite complète de 60 outils gratuits de musculation et nutrition fonctionnant 100% côté client" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta property="og:url" content="https://fitmaster-pro.app" />
+    <meta property="og:site_name" content="FitMASTER PRO" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="FitMASTER PRO - 60 Outils Fitness Gratuits" />
+    <meta name="twitter:description" content="Suite complète d'outils fitness et nutrition" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    
+    <!-- Performance & SEO -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    
+    <!-- Critical CSS -->
+    <style>
+      /* Critical path CSS pour PWA */
+      .fade-in { animation: fadeIn 0.5s ease-in; }
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      .standalone-mode { padding-top: env(safe-area-inset-top); }
+      body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
+    </style>
 
-    <!-- Bootstrap CSS -->
+    <!-- External Resources -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
 
@@ -33,18 +67,18 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- PWA Service Worker -->
+    <!-- PWA Installation prompt for iOS -->
     <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .then((registration) => {
-              console.log('SW registered: ', registration);
-            })
-            .catch((registrationError) => {
-              console.log('SW registration failed: ', registrationError);
-            });
-        });
+      // Detection iOS pour prompt installation manuel
+      if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+        if (!window.navigator.standalone) {
+          document.addEventListener('DOMContentLoaded', () => {
+            const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches;
+            if (!isInStandaloneMode) {
+              console.log('📱 iOS détecté - Installation PWA disponible via Safari');
+            }
+          });
+        }
       }
     </script>
   </body>
