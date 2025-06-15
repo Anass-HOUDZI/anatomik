@@ -1,0 +1,59 @@
+
+import WeightTracker from '../trackers/WeightTracker';
+import MeasurementsTracker from '../trackers/MeasurementsTracker';
+
+const trackingToolsConfig = [
+  {
+    id: 'weight-tracker',
+    name: 'Tracker de Poids',
+    description: 'Suivez l\'évolution de votre poids corporel avec graphiques',
+    category: 'tracking',
+    icon: 'fa-weight',
+    component: WeightTracker
+  },
+  {
+    id: 'measurements-tracker',
+    name: 'Tracker de Mensurations',
+    description: 'Évolution de vos mensurations corporelles',
+    category: 'tracking',
+    icon: 'fa-ruler',
+    component: MeasurementsTracker
+  },
+  {
+    id: 'performance-tracker',
+    name: 'Tracker de Performance',
+    description: 'Progression de vos charges d\'entraînement',
+    category: 'tracking',
+    icon: 'fa-chart-bar'
+  },
+  {
+    id: 'body-composition-tracker',
+    name: 'Tracker de Composition',
+    description: 'Évolution de votre masse grasse et masse maigre',
+    category: 'tracking',
+    icon: 'fa-user'
+  },
+  {
+    id: 'hydration-tracker',
+    name: 'Tracker d\'Hydratation',
+    description: 'Suivi quotidien de votre consommation d\'eau',
+    category: 'tracking',
+    icon: 'fa-glass-water'
+  },
+  {
+    id: 'sleep-tracker',
+    name: 'Tracker de Sommeil',
+    description: 'Impact du sommeil sur votre récupération',
+    category: 'tracking',
+    icon: 'fa-bed'
+  },
+  {
+    id: 'fatigue-tracker',
+    name: 'Tracker de Fatigue',
+    description: 'Échelle de perception de l\'effort et fatigue',
+    category: 'tracking',
+    icon: 'fa-battery-quarter'
+  }
+];
+
+export default trackingToolsConfig;
