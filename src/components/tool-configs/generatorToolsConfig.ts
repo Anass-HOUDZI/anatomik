@@ -1,5 +1,6 @@
 
 import type { Tool } from '../../App';
+import WorkoutGenerator from '../generators/WorkoutGenerator';
 
 const generatorToolsConfig: Tool[] = [
   {
@@ -7,7 +8,8 @@ const generatorToolsConfig: Tool[] = [
     name: 'Générateur de Programmes',
     description: 'Création de programmes d\'entraînement personnalisés',
     category: 'generators',
-    icon: 'fa-list-alt'
+    icon: 'fa-list-alt',
+    component: WorkoutGenerator
   },
   {
     id: 'nutrition-generator',
