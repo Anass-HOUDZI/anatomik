@@ -5,6 +5,7 @@ import NutritionGenerator from '../generators/NutritionGenerator';
 import MealPlannerGenerator from '../generators/MealPlannerGenerator';
 import ExerciseGenerator from '../generators/ExerciseGenerator';
 import PeriodizationPlanner from '../generators/PeriodizationPlanner';
+import RecoveryPlanner from '../generators/RecoveryPlanner';
 
 const generatorToolsConfig: Tool[] = [
   {
@@ -52,7 +53,8 @@ const generatorToolsConfig: Tool[] = [
     name: 'Planificateur de Récupération',
     description: "Routines d'étirements et mobilité personnalisées",
     category: 'generators',
-    icon: 'fa-spa'
+    icon: 'fa-spa',
+    component: RecoveryPlanner
   }
 ];
 
