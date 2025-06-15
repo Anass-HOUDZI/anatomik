@@ -90,8 +90,8 @@ const HIITCalculator = () => {
     <div className="max-w-2xl mx-auto pt-6">
       <Card>
         <CardHeader>
-          <CardTitle>Calculateur HIIT</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-black">Calculateur HIIT</CardTitle>
+          <CardDescription className="text-black">
             Définissez votre protocole d'intervalles haute intensité et obtenez le planning précis avec conseils pros !
           </CardDescription>
         </CardHeader>

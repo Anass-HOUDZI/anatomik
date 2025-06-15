@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { StorageManager } from '../../utils/StorageManager';
 
@@ -117,7 +116,7 @@ const BulkCalculator: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Form */}
         <div className="space-y-6">
-          <h3 className="text-2xl font-bold mb-6">Paramètres de prise de masse</h3>
+          <h3 className="text-2xl font-bold mb-6 text-black">Paramètres de prise de masse</h3>
           
           <div className="input-group-custom">
             <label htmlFor="currentWeight">Poids actuel (kg)</label>
@@ -219,7 +218,7 @@ const BulkCalculator: React.FC = () => {
 
         {/* Results */}
         <div className="space-y-6">
-          <h3 className="text-2xl font-bold mb-6">Plan de prise de masse</h3>
+          <h3 className="text-2xl font-bold mb-6 text-black">Plan de prise de masse</h3>
           
           {results.weeklyGain > 0 ? (
             <div className="space-y-4">

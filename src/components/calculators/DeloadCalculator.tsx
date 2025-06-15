@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -79,8 +78,8 @@ const DeloadCalculator = () => {
     <div className="max-w-2xl mx-auto pt-6">
       <Card>
         <CardHeader>
-          <CardTitle>Calculateur de Deload</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-black">Calculateur de Deload</CardTitle>
+          <CardDescription className="text-black">
             Déterminez si une semaine de décharge est recommandée pour optimiser récupération et progression, et obtenez vos consignes personnalisées.
           </CardDescription>
         </CardHeader>

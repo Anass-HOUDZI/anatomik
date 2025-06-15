@@ -114,7 +114,7 @@ const BMRCalculator: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Form */}
         <div className="space-y-6">
-          <h3 className="text-2xl font-bold mb-6">Vos informations</h3>
+          <h3 className="text-2xl font-bold mb-6 text-black">Vos informations</h3>
           
           <div className="input-group-custom">
             <label htmlFor="age">Âge (années)</label>
@@ -204,7 +204,7 @@ const BMRCalculator: React.FC = () => {
 
         {/* Results */}
         <div className="space-y-6">
-          <h3 className="text-2xl font-bold mb-6">Vos résultats</h3>
+          <h3 className="text-2xl font-bold mb-6 text-black">Vos résultats</h3>
           
           {results.bmr > 0 ? (
             <div className="space-y-4">

@@ -53,8 +53,8 @@ const DropSetsCalculator: React.FC = () => {
     <div className="max-w-2xl mx-auto pt-6">
       <Card>
         <CardHeader>
-          <CardTitle>Calculateur de Drop Sets</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-black">Calculateur de Drop Sets</CardTitle>
+          <CardDescription className="text-black">
             Programme automatiquement votre série dégressive : poids, nombre de drops et estimation des répétitions.
           </CardDescription>
         </CardHeader>

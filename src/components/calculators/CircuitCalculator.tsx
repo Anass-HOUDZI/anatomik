@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   Card,
@@ -85,8 +84,8 @@ const CircuitCalculator: React.FC = () => {
     <div className="max-w-2xl mx-auto pt-6">
       <Card>
         <CardHeader>
-          <CardTitle>Calculateur de Circuit Training</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-black">Calculateur de Circuit Training</CardTitle>
+          <CardDescription className="text-black">
             Générez facilement votre circuit&nbsp;: sélectionnez les stations/exercices, le temps d'effort/repos et obtenez le planning détaillé.
           </CardDescription>
         </CardHeader>
@@ -245,4 +244,3 @@ const CircuitCalculator: React.FC = () => {
 };
 
 export default CircuitCalculator;
-

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   Card,
@@ -83,8 +82,8 @@ const RecoveryCalculator = () => {
     <div className="max-w-2xl mx-auto pt-6">
       <Card>
         <CardHeader>
-          <CardTitle>Calculateur de Récupération</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-black">Calculateur de Récupération</CardTitle>
+          <CardDescription className="text-black">
             Estimez le temps optimal à respecter entre deux séances pour maximiser vos progrès et éviter le surmenage.
           </CardDescription>
         </CardHeader>

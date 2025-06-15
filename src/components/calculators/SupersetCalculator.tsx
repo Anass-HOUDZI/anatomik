@@ -70,8 +70,8 @@ const SupersetCalculator: React.FC = () => {
     <div className="max-w-2xl mx-auto pt-6">
       <Card>
         <CardHeader>
-          <CardTitle>Calculateur de Superset</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-black">Calculateur de Superset</CardTitle>
+          <CardDescription className="text-black">
             Créez une superset intelligente&#8239;: combinez deux exercices à enchaîner pour maximiser l'efficacité (agoniste, antagoniste ou zone ciblée).
           </CardDescription>
         </CardHeader>

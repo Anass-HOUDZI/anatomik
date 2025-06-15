@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { StorageManager } from '../../utils/StorageManager';
 
@@ -132,7 +131,7 @@ const TimingCalculator: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Form */}
         <div className="space-y-6">
-          <h3 className="text-2xl font-bold mb-6">Paramètres d'entraînement</h3>
+          <h3 className="text-2xl font-bold mb-6 text-black">Paramètres d'entraînement</h3>
           
           <div className="input-group-custom">
             <label htmlFor="workoutTime">Heure d'entraînement</label>
@@ -230,7 +229,7 @@ const TimingCalculator: React.FC = () => {
 
         {/* Recommendations */}
         <div className="space-y-6">
-          <h3 className="text-2xl font-bold mb-6">Planning nutritionnel</h3>
+          <h3 className="text-2xl font-bold mb-6 text-black">Planning nutritionnel</h3>
           
           {recommendations.preWorkout.length > 0 && (
             <div className="bg-card border border-custom rounded-lg p-6">
