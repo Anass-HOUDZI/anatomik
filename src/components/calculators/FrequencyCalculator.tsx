@@ -306,12 +306,13 @@ const FrequencyCalculator = () => {
                 <div>
                   <h4 className="font-semibold mb-2">Conseils Clés</h4>
                   <ul className="text-sm space-y-1">
-                    {(results.recommendations.tips as string[]).map((tip, i) => (
-                      <li key={i} className="flex items-center space-x-2">
-                        <i className="fas fa-check text-green-500 text-xs"></i>
-                        <span>{tip}</span>
-                      </li>
-                    ))}
+                    {Array.isArray(results.recommendations.tips) &&
+                      results.recommendations.tips.map((tip: string, i: number) => (
+                        <li key={i} className="flex items-center space-x-2">
+                          <i className="fas fa-check text-green-500 text-xs"></i>
+                          <span>{tip}</span>
+                        </li>
+                      ))}
                   </ul>
                 </div>
               </div>
