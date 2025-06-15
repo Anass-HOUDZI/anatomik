@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { StorageManager } from '../../utils/StorageManager';
 
@@ -76,11 +75,13 @@ const MacroCalculator: React.FC = () => {
     const total = parseFloat(newRatios.proteinRatio) + parseFloat(newRatios.fatRatio) + parseFloat(newRatios.carbRatio);
     if (total !== 100) {
       const difference = 100 - total;
-      if (macro !== 'protein' && macro !== 'fat') {
+      if (macro === 'carbs') {
+        // If carbs changed, adjust protein and fat equally
         const adjustment = difference / 2;
         newRatios.proteinRatio = Math.max(5, parseFloat(newRatios.proteinRatio) + adjustment).toString();
         newRatios.fatRatio = Math.max(5, parseFloat(newRatios.fatRatio) + adjustment).toString();
-      } else if (macro !== 'carbs') {
+      } else {
+        // If protein or fat changed, adjust carbs
         newRatios.carbRatio = Math.max(5, parseFloat(newRatios.carbRatio) + difference).toString();
       }
     }
