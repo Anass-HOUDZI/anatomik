@@ -1,12 +1,13 @@
 
 import type { Tool } from '../../App';
 import WorkoutGenerator from '../generators/WorkoutGenerator';
+import NutritionGenerator from '../generators/NutritionGenerator';
 
 const generatorToolsConfig: Tool[] = [
   {
     id: 'workout-generator',
     name: 'Générateur de Programmes',
-    description: 'Création de programmes d\'entraînement personnalisés',
+    description: "Création de programmes d'entraînement personnalisés",
     category: 'generators',
     icon: 'fa-list-alt',
     component: WorkoutGenerator
@@ -16,7 +17,8 @@ const generatorToolsConfig: Tool[] = [
     name: 'Générateur de Menus',
     description: 'Plans nutritionnels équilibrés selon vos besoins',
     category: 'generators',
-    icon: 'fa-utensils'
+    icon: 'fa-utensils',
+    component: NutritionGenerator
   },
   {
     id: 'meal-planner',
@@ -27,7 +29,7 @@ const generatorToolsConfig: Tool[] = [
   },
   {
     id: 'exercise-generator',
-    name: 'Générateur d\'Exercices',
+    name: "Générateur d'Exercices",
     description: 'Alternatives d\'exercices par groupe musculaire',
     category: 'generators',
     icon: 'fa-random'
@@ -42,7 +44,7 @@ const generatorToolsConfig: Tool[] = [
   {
     id: 'recovery-planner',
     name: 'Planificateur de Récupération',
-    description: 'Routines d\'étirements et mobilité personnalisées',
+    description: "Routines d'étirements et mobilité personnalisées",
     category: 'generators',
     icon: 'fa-spa'
   }
