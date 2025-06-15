@@ -4,13 +4,15 @@ import type { Category, Tool } from '../App';
 import BMRCalculator from './calculators/BMRCalculator';
 import MacroCalculator from './calculators/MacroCalculator';
 import OneRMCalculator from './calculators/OneRMCalculator';
+import HydrationCalculator from './calculators/HydrationCalculator';
+import ProteinCalculator from './calculators/ProteinCalculator';
 
 interface ToolViewProps {
   category: Category;
   onToolSelect: (tool: Tool) => void;
 }
 
-// Configuration des outils par catégorie
+// Configuration des outils par catégorie avec nouveaux calculateurs
 const toolsConfig: Record<string, Tool[]> = {
   nutritional: [
     {
@@ -30,6 +32,22 @@ const toolsConfig: Record<string, Tool[]> = {
       component: MacroCalculator
     },
     {
+      id: 'hydration-calculator',
+      name: 'Calculateur d\'Hydratation',
+      description: 'Besoins en eau selon votre poids et niveau d\'activité',
+      category: 'nutritional',
+      icon: 'fa-tint',
+      component: HydrationCalculator
+    },
+    {
+      id: 'protein-calculator',
+      name: 'Calculateur de Protéines',
+      description: 'Besoins protéiques selon vos objectifs et poids corporel',
+      category: 'nutritional',
+      icon: 'fa-drumstick-bite',
+      component: ProteinCalculator
+    },
+    {
       id: 'bulk-calculator',
       name: 'Calculateur de Prise de Masse',
       description: 'Surplus calorique optimal pour une prise de masse propre',
@@ -44,11 +62,32 @@ const toolsConfig: Record<string, Tool[]> = {
       icon: 'fa-minus-circle'
     },
     {
-      id: 'hydration-calculator',
-      name: 'Calculateur d\'Hydratation',
-      description: 'Besoins en eau selon votre poids et niveau d\'activité',
+      id: 'gi-calculator',
+      name: 'Calculateur d\'Index Glycémique',
+      description: 'Impact des glucides sur votre glycémie et énergie',
       category: 'nutritional',
-      icon: 'fa-tint'
+      icon: 'fa-chart-line'
+    },
+    {
+      id: 'timing-calculator',
+      name: 'Calculateur de Timing Nutritionnel',
+      description: 'Optimisez le timing de vos nutriments pré/post entraînement',
+      category: 'nutritional',
+      icon: 'fa-clock'
+    },
+    {
+      id: 'supplements-calculator',
+      name: 'Calculateur de Suppléments',
+      description: 'Dosages recommandés selon vos besoins et objectifs',
+      category: 'nutritional',
+      icon: 'fa-pills'
+    },
+    {
+      id: 'omega-calculator',
+      name: 'Calculateur Oméga 3/6',
+      description: 'Équilibre optimal des acides gras essentiels',
+      category: 'nutritional',
+      icon: 'fa-fish'
     }
   ],
   training: [
@@ -87,6 +126,27 @@ const toolsConfig: Record<string, Tool[]> = {
       description: 'Temps de récupération optimal selon l\'intensité',
       category: 'training',
       icon: 'fa-clock'
+    },
+    {
+      id: 'frequency-calculator',
+      name: 'Calculateur de Fréquence',
+      description: 'Nombre optimal de séances par groupe musculaire',
+      category: 'training',
+      icon: 'fa-calendar-week'
+    },
+    {
+      id: 'periodization-calculator',
+      name: 'Calculateur de Périodisation',
+      description: 'Planification des cycles d\'entraînement',
+      category: 'training',
+      icon: 'fa-sync-alt'
+    },
+    {
+      id: 'rm-zone-calculator',
+      name: 'Calculateur RM par Zone',
+      description: 'Calculs 3RM, 5RM, 10RM selon vos objectifs',
+      category: 'training',
+      icon: 'fa-layer-group'
     }
   ],
   tracking: [
@@ -124,6 +184,20 @@ const toolsConfig: Record<string, Tool[]> = {
       description: 'Suivi quotidien de votre consommation d\'eau',
       category: 'tracking',
       icon: 'fa-glass-water'
+    },
+    {
+      id: 'sleep-tracker',
+      name: 'Tracker de Sommeil',
+      description: 'Impact du sommeil sur votre récupération',
+      category: 'tracking',
+      icon: 'fa-bed'
+    },
+    {
+      id: 'fatigue-tracker',
+      name: 'Tracker de Fatigue',
+      description: 'Échelle de perception de l\'effort et fatigue',
+      category: 'tracking',
+      icon: 'fa-battery-quarter'
     }
   ],
   generators: [
@@ -161,6 +235,13 @@ const toolsConfig: Record<string, Tool[]> = {
       description: 'Cycles de masse, sèche et maintien',
       category: 'generators',
       icon: 'fa-calendar-alt'
+    },
+    {
+      id: 'recovery-planner',
+      name: 'Planificateur de Récupération',
+      description: 'Routines d\'étirements et mobilité personnalisées',
+      category: 'generators',
+      icon: 'fa-spa'
     }
   ]
 };
@@ -187,7 +268,7 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
         {tools.map((tool, index) => (
           <div
             key={tool.id}
-            className="tool-card slide-up"
+            className="tool-card slide-up cursor-pointer"
             style={{ animationDelay: `${index * 0.1}s` }}
             onClick={() => onToolSelect(tool)}
           >
@@ -199,9 +280,15 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold mb-1">{tool.name}</h3>
                   {tool.component && (
-                    <span className="inline-flex items-center text-xs bg-success text-white px-2 py-1 rounded-full">
+                    <span className="inline-flex items-center text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
                       <i className="fas fa-check-circle mr-1"></i>
                       Disponible
+                    </span>
+                  )}
+                  {!tool.component && (
+                    <span className="inline-flex items-center text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
+                      <i className="fas fa-clock mr-1"></i>
+                      Bientôt
                     </span>
                   )}
                 </div>
@@ -211,9 +298,9 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
               </p>
             </div>
             
-            <div className="flex items-center justify-between pt-4 border-t border-custom">
+            <div className="flex items-center justify-between pt-4 border-t border-border">
               <span className="text-sm text-muted-foreground">
-                {tool.component ? 'Cliquez pour utiliser' : 'Bientôt disponible'}
+                {tool.component ? 'Cliquez pour utiliser' : 'En développement'}
               </span>
               <i className="fas fa-arrow-right text-primary"></i>
             </div>
@@ -221,12 +308,29 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
         ))}
       </div>
 
+      {/* API Integration Notice */}
+      <div className="text-center mt-12 p-6 bg-gradient-to-r from-blue-50 to-green-50 rounded-xl border border-blue-200">
+        <i className="fas fa-cloud text-3xl text-blue-500 mb-4"></i>
+        <h3 className="text-xl font-bold text-blue-900 mb-2">Intégration APIs Nutritionnelles</h3>
+        <p className="text-blue-800 mb-4">
+          Les calculateurs nutritionnels utilisent les APIs USDA, Open Food Facts et Nutritionix 
+          pour des données alimentaires précises et à jour.
+        </p>
+        <div className="flex justify-center space-x-6 text-sm text-blue-700">
+          <span>🥗 2000+ aliments</span>
+          <span>📊 Données nutritionnelles complètes</span>
+          <span>🔄 Cache intelligent</span>
+          <span>📱 Fonctionnement offline</span>
+        </div>
+      </div>
+
       {/* Coming Soon Notice */}
-      <div className="text-center mt-12 p-8 bg-gradient-primary text-white rounded-xl">
+      <div className="text-center mt-8 p-8 bg-gradient-primary text-white rounded-xl">
         <i className="fas fa-rocket text-4xl mb-4"></i>
-        <h3 className="text-2xl font-bold mb-2">Plus d'outils en cours de développement</h3>
+        <h3 className="text-2xl font-bold mb-2">Développement continu</h3>
         <p className="text-lg opacity-90">
-          Tous les 60 outils seront progressivement ajoutés. Revenez bientôt pour découvrir les nouveautés !
+          Les 60 outils sont en cours d'implémentation progressive. 
+          Chaque outil intègre les dernières recherches scientifiques en nutrition et entraînement.
         </p>
       </div>
     </div>
