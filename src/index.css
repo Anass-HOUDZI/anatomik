@@ -511,6 +511,19 @@
   box-shadow: 0 4px 16px 0 rgba(67,134,249,0.13);
 }
 
+.category-card-modern .icon-gradient-circle {
+  /* Overwrite to ensure icons do not float/animate and remain centered with enough top margin */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-left: auto;
+  margin-right: auto;
+  /* See inline style for size/margin, nothing to float */
+  animation: none !important;
+  box-shadow: 0 6px 20px 0 rgba(67,134,249,0.08);
+  position: static;
+}
+
 .category-card-modern .gradient-text {
   background: linear-gradient(90deg, #4386f9 30%, #13ff99 80%);
   -webkit-background-clip: text;
