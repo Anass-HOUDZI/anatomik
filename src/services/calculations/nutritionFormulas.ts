@@ -1,4 +1,3 @@
-
 import { Demographics, BMRResult, NutritionTargets } from '../../types';
 
 // Formules scientifiques pour calculs nutritionnels
@@ -61,6 +60,7 @@ export class NutritionCalculations {
       unit: 'kcal/day',
       confidence,
       formula: method,
+      method, // Add the missing method property
       tdee: Math.round(tdee),
       calorieAdjustment: {
         maintenance: Math.round(tdee),

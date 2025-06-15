@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card } from '../ui/card';
 import { Button } from '../ui/button';
@@ -147,21 +146,21 @@ const ProteinCalculator: React.FC = () => {
   const saveResult = () => {
     if (result) {
       // Sauvegarder dans le profil nutritionnel
-      const profile = StorageManager.getUserProfile() || {
-        id: 'user_1',
-        demographics: { age, weight, gender: 'M', height: 175, activityLevel },
-        goals: { primary: goal as any, timeline: 12, specificGoals: [] },
-        preferences: { units: 'metric', language: 'fr', theme: 'light', notifications: true },
-        settings: { autoSave: true, dataRetention: 365, exportFormat: 'pdf', privacyMode: false },
-        createdAt: new Date(),
-        updatedAt: new Date()
-      };
-
-      profile.demographics.weight = weight;
-      profile.demographics.age = age;
-      profile.demographics.activityLevel = activityLevel;
+      const profile = StorageManager.getUserProfile();
       
-      StorageManager.saveUserProfile(profile);
+      if (profile) {
+        // Update existing profile
+        const updatedProfile = {
+          ...profile,
+          demographics: {
+            ...profile.demographics,
+            weight: weight,
+            age: age,
+            activityLevel: activityLevel as any
+          }
+        };
+        StorageManager.saveUserProfile(updatedProfile);
+      }
       
       toast({
         title: "Données sauvegardées",

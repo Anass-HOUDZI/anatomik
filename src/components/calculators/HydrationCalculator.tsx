@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card } from '../ui/card';
 import { Button } from '../ui/button';
@@ -188,6 +187,7 @@ const HydrationCalculator: React.FC = () => {
               </div>
             </div>
 
+            
             <div className="space-y-4">
               <div className="bg-gradient-to-r from-blue-50 to-cyan-50 p-4 rounded-lg">
                 <h4 className="font-semibold text-blue-900 mb-2">
@@ -234,6 +234,7 @@ const HydrationCalculator: React.FC = () => {
         </div>
       </Card>
 
+      
       {result && (
         <Card className="p-6">
           <div className="space-y-6">

@@ -1,27 +1,12 @@
 
-export interface UserProfile {
-  age?: number;
-  gender?: 'M' | 'F';
-  weight?: number;
-  height?: number;
-  activityLevel?: string;
-  goals?: string[];
-  experience?: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { UserProfile, Demographics, FitnessGoals, UserPreferences, AppSettings } from '../types';
 
 export interface TrackingData {
   weight: Array<{ date: string; value: number }>;
   measurements: Record<string, Array<{ date: string; value: number }>>;
   workouts: Array<{ date: string; exercises: any[] }>;
   nutrition: Array<{ date: string; calories: number; macros: any }>;
-}
-
-export interface AppSettings {
-  theme: 'light' | 'dark';
-  language: 'fr' | 'en';
-  units: 'metric' | 'imperial';
+  hydration?: Array<{ date: string; target: number; weight: number; activityLevel: string; climate: string }>;
 }
 
 export class StorageManager {
@@ -48,6 +33,32 @@ export class StorageManager {
   static saveUserProfile(profile: Partial<UserProfile>) {
     try {
       const existing = this.getUserProfile() || { 
+        id: 'user_1',
+        demographics: {
+          age: 30,
+          gender: 'M' as const,
+          weight: 70,
+          height: 175,
+          activityLevel: 'moderate' as const
+        },
+        goals: {
+          primary: 'maintenance' as const,
+          timeline: 12,
+          targetWeight: 70,
+          specificGoals: []
+        },
+        preferences: {
+          units: 'metric' as const,
+          language: 'fr' as const,
+          theme: 'light' as const,
+          notifications: true
+        },
+        settings: {
+          autoSave: true,
+          dataRetention: 365,
+          exportFormat: 'pdf' as const,
+          privacyMode: false
+        },
         createdAt: new Date(), 
         updatedAt: new Date() 
       };
@@ -73,7 +84,8 @@ export class StorageManager {
         weight: [],
         measurements: {},
         workouts: [],
-        nutrition: []
+        nutrition: [],
+        hydration: []
       };
     } catch (error) {
       console.error('Error loading tracking data:', error);
@@ -81,7 +93,8 @@ export class StorageManager {
         weight: [],
         measurements: {},
         workouts: [],
-        nutrition: []
+        nutrition: [],
+        hydration: []
       };
     }
   }
@@ -115,25 +128,27 @@ export class StorageManager {
   }
 
   // Settings Management
-  static getSettings(): AppSettings {
+  static getSettings(): UserPreferences {
     try {
       const data = localStorage.getItem(this.SETTINGS_KEY);
       return data ? JSON.parse(data) : {
-        theme: 'light',
+        units: 'metric',
         language: 'fr',
-        units: 'metric'
+        theme: 'light',
+        notifications: true
       };
     } catch (error) {
       console.error('Error loading settings:', error);
       return {
-        theme: 'light',
+        units: 'metric',
         language: 'fr',
-        units: 'metric'
+        theme: 'light',
+        notifications: true
       };
     }
   }
 
-  static saveSettings(settings: Partial<AppSettings>) {
+  static saveSettings(settings: Partial<UserPreferences>) {
     try {
       const existing = this.getSettings();
       const updated = { ...existing, ...settings };
