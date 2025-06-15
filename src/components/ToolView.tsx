@@ -93,6 +93,41 @@ const toolsConfig: Record<string, Tool[]> = {
       description: 'Équilibre optimal des acides gras essentiels',
       category: 'nutritional',
       icon: 'fa-fish'
+    },
+    {
+      id: 'fiber-calculator',
+      name: 'Calculateur de Fibres',
+      description: 'Besoins en fibres pour santé digestive et satiété optimales',
+      category: 'nutritional',
+      icon: 'fa-seedling'
+    },
+    {
+      id: 'sodium-calculator',
+      name: 'Calculateur de Sodium',
+      description: 'Gestion du sodium pour pression artérielle et définition musculaire',
+      category: 'nutritional',
+      icon: 'fa-balance-scale'
+    },
+    {
+      id: 'vitamins-calculator',
+      name: 'Calculateur de Vitamines',
+      description: 'Apports journaliers recommandés selon votre profil',
+      category: 'nutritional',
+      icon: 'fa-prescription-bottle'
+    },
+    {
+      id: 'minerals-calculator',
+      name: 'Calculateur de Minéraux',
+      description: 'Fer, calcium, magnésium optimisés pour sportifs',
+      category: 'nutritional',
+      icon: 'fa-gem'
+    },
+    {
+      id: 'nutrient-density-calculator',
+      name: 'Calculateur de Densité Nutritionnelle',
+      description: 'Score qualité nutritionnelle des aliments par calorie',
+      category: 'nutritional',
+      icon: 'fa-star'
     }
   ],
   training: [
@@ -329,12 +364,19 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
         </div>
       </div>
 
-      {/* Coming Soon Notice */}
+      {/* Progress Notice */}
       <div className="text-center mt-8 p-8 bg-gradient-primary text-white rounded-xl">
-        <i className="fas fa-rocket text-4xl mb-4"></i>
-        <h3 className="text-2xl font-bold mb-2">Développement continu</h3>
-        <p className="text-lg opacity-90">
-          Les 60 outils sont en cours d'implémentation progressive. 
+        <i className="fas fa-chart-bar text-4xl mb-4"></i>
+        <h3 className="text-2xl font-bold mb-2">Phase 1 : Calculateurs Nutritionnels</h3>
+        <div className="text-lg opacity-90 mb-4">
+          {category.id === 'nutritional' && 
+            `Progression : 12/15 outils implémentés (80% complété)`
+          }
+          {category.id !== 'nutritional' && 
+            `Les 60 outils sont en cours d'implémentation progressive.`
+          }
+        </div>
+        <p className="opacity-75">
           Chaque outil intègre les dernières recherches scientifiques en nutrition et entraînement.
         </p>
       </div>
