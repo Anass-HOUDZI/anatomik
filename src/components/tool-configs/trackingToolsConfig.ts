@@ -4,6 +4,7 @@ import WeightTracker from '../trackers/WeightTracker';
 import MeasurementsTracker from '../trackers/MeasurementsTracker';
 import PerformanceTracker from '../trackers/PerformanceTracker';
 import BodyCompositionTracker from '../trackers/BodyCompositionTracker';
+import HydrationTracker from '../trackers/HydrationTracker';
 
 const trackingToolsConfig: Tool[] = [
   {
@@ -43,7 +44,8 @@ const trackingToolsConfig: Tool[] = [
     name: 'Tracker d\'Hydratation',
     description: 'Suivi quotidien de votre consommation d\'eau',
     category: 'tracking',
-    icon: 'fa-glass-water'
+    icon: 'fa-glass-water',
+    component: HydrationTracker
   },
   {
     id: 'sleep-tracker',
