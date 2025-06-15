@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -68,7 +67,7 @@ const App = () => {
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <div className="min-h-screen bg-background transition-colors duration-300">
+          <div className="min-h-screen bg-background transition-colors duration-300 flex flex-col">
             <Header 
               currentView={currentView}
               selectedCategory={selectedCategory}
@@ -77,7 +76,7 @@ const App = () => {
               onBackToCategory={handleBackToCategory}
             />
             
-            <main className="container mx-auto px-4 py-8">
+            <main className="container mx-auto px-4 py-8 flex-1 w-full">
               {currentView === 'home' && (
                 <div className="fade-in">
                   <div className="text-center mb-12">
@@ -123,21 +122,18 @@ const App = () => {
               )}
             </main>
             
-            <footer className="bg-gradient-dark text-white py-8 mt-16">
-              <div className="container mx-auto px-4 text-center">
-                <h3 className="text-2xl font-bold mb-4">FitMASTER PRO</h3>
-                <p className="text-lg mb-4">
-                  60 outils gratuits • 100% offline • 0% collecte de données
-                </p>
-                <div className="flex justify-center space-x-6 text-sm opacity-75">
-                  <span>Calculateurs nutritionnels (15)</span>
-                  <span>•</span>
-                  <span>Calculateurs d'entraînement (15)</span>
-                  <span>•</span>
-                  <span>Outils de suivi (15)</span>
-                  <span>•</span>
-                  <span>Planificateurs (15)</span>
-                </div>
+            <footer className="bg-transparent text-center py-6 shadow-none select-none">
+              <div className="text-xs md:text-sm text-muted-foreground">
+                Copyright © 2025{" "}
+                <a
+                  href="https://www.linkedin.com/in/anasshoudzi/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline font-semibold text-blue-700 hover:text-blue-900 transition-colors"
+                >
+                  Anass Houdzi
+                </a>
+                {" "}– Tous droits réservés.
               </div>
             </footer>
           </div>
