@@ -1,3 +1,4 @@
+
 import React from 'react';
 import type { Category, Tool } from '../App';
 import BMRCalculator from './calculators/BMRCalculator';
@@ -8,13 +9,21 @@ import ProteinCalculator from './calculators/ProteinCalculator';
 import BulkCalculator from './calculators/BulkCalculator';
 import CutCalculator from './calculators/CutCalculator';
 import GICalculator from './calculators/GICalculator';
+import TimingCalculator from './calculators/TimingCalculator';
+import SupplementsCalculator from './calculators/SupplementsCalculator';
+import FiberCalculator from './calculators/FiberCalculator';
+import SodiumCalculator from './calculators/SodiumCalculator';
+import OmegaCalculator from './calculators/OmegaCalculator';
+import VitaminsCalculator from './calculators/VitaminsCalculator';
+import MineralsCalculator from './calculators/MineralsCalculator';
+import NutrientDensityCalculator from './calculators/NutrientDensityCalculator';
 
 interface ToolViewProps {
   category: Category;
   onToolSelect: (tool: Tool) => void;
 }
 
-// Configuration des outils par catégorie avec nouveaux calculateurs
+// Configuration des outils par catégorie avec tous les calculateurs nutritionnels
 const toolsConfig: Record<string, Tool[]> = {
   nutritional: [
     {
@@ -78,56 +87,64 @@ const toolsConfig: Record<string, Tool[]> = {
       name: 'Calculateur de Timing Nutritionnel',
       description: 'Optimisez le timing de vos nutriments pré/post entraînement',
       category: 'nutritional',
-      icon: 'fa-clock'
+      icon: 'fa-clock',
+      component: TimingCalculator
     },
     {
       id: 'supplements-calculator',
       name: 'Calculateur de Suppléments',
       description: 'Dosages recommandés selon vos besoins et objectifs',
       category: 'nutritional',
-      icon: 'fa-pills'
+      icon: 'fa-pills',
+      component: SupplementsCalculator
     },
     {
       id: 'omega-calculator',
       name: 'Calculateur Oméga 3/6',
       description: 'Équilibre optimal des acides gras essentiels',
       category: 'nutritional',
-      icon: 'fa-fish'
+      icon: 'fa-fish',
+      component: OmegaCalculator
     },
     {
       id: 'fiber-calculator',
       name: 'Calculateur de Fibres',
       description: 'Besoins en fibres pour santé digestive et satiété optimales',
       category: 'nutritional',
-      icon: 'fa-seedling'
+      icon: 'fa-seedling',
+      component: FiberCalculator
     },
     {
       id: 'sodium-calculator',
       name: 'Calculateur de Sodium',
       description: 'Gestion du sodium pour pression artérielle et définition musculaire',
       category: 'nutritional',
-      icon: 'fa-balance-scale'
+      icon: 'fa-balance-scale',
+      component: SodiumCalculator
     },
     {
       id: 'vitamins-calculator',
       name: 'Calculateur de Vitamines',
       description: 'Apports journaliers recommandés selon votre profil',
       category: 'nutritional',
-      icon: 'fa-prescription-bottle'
+      icon: 'fa-prescription-bottle',
+      component: VitaminsCalculator
     },
     {
       id: 'minerals-calculator',
       name: 'Calculateur de Minéraux',
       description: 'Fer, calcium, magnésium optimisés pour sportifs',
       category: 'nutritional',
-      icon: 'fa-gem'
+      icon: 'fa-gem',
+      component: MineralsCalculator
     },
     {
       id: 'nutrient-density-calculator',
       name: 'Calculateur de Densité Nutritionnelle',
       description: 'Score qualité nutritionnelle des aliments par calorie',
       category: 'nutritional',
-      icon: 'fa-star'
+      icon: 'fa-star',
+      component: NutrientDensityCalculator
     }
   ],
   training: [
@@ -348,32 +365,16 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
         ))}
       </div>
 
-      {/* API Integration Notice */}
-      <div className="text-center mt-12 p-6 bg-gradient-to-r from-blue-50 to-green-50 rounded-xl border border-blue-200">
-        <i className="fas fa-cloud text-3xl text-blue-500 mb-4"></i>
-        <h3 className="text-xl font-bold text-blue-900 mb-2">Intégration APIs Nutritionnelles</h3>
-        <p className="text-blue-800 mb-4">
-          Les calculateurs nutritionnels utilisent les APIs USDA, Open Food Facts et Nutritionix 
-          pour des données alimentaires précises et à jour.
-        </p>
-        <div className="flex justify-center space-x-6 text-sm text-blue-700">
-          <span>🥗 2000+ aliments</span>
-          <span>📊 Données nutritionnelles complètes</span>
-          <span>🔄 Cache intelligent</span>
-          <span>📱 Fonctionnement offline</span>
-        </div>
-      </div>
-
-      {/* Progress Notice */}
-      <div className="text-center mt-8 p-8 bg-gradient-primary text-white rounded-xl">
-        <i className="fas fa-chart-bar text-4xl mb-4"></i>
-        <h3 className="text-2xl font-bold mb-2">Phase 1 : Calculateurs Nutritionnels</h3>
+      {/* Completion Status */}
+      <div className="text-center mt-12 p-8 bg-gradient-primary text-white rounded-xl">
+        <i className="fas fa-check-circle text-4xl mb-4"></i>
+        <h3 className="text-2xl font-bold mb-2">Phase 1 Complétée !</h3>
         <div className="text-lg opacity-90 mb-4">
           {category.id === 'nutritional' && 
-            `Progression : 12/15 outils implémentés (80% complété)`
+            `Les 15 calculateurs nutritionnels sont maintenant disponibles (100% complété)`
           }
           {category.id !== 'nutritional' && 
-            `Les 60 outils sont en cours d'implémentation progressive.`
+            `Phase en cours d'implémentation.`
           }
         </div>
         <p className="opacity-75">
