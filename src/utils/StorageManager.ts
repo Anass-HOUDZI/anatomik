@@ -5,9 +5,9 @@ export interface TrackingData {
   measurements: Record<string, Array<{ date: string; value: number }>>;
   workouts: Array<{ date: string; exercises: any[] }>;
   nutrition: Array<{ date: string; calories: number; macros: any }>;
-  hydration?: Array<{ date: string; target: number; weight: number; activityLevel: string; climate: string }>;
+  hydration?: Array<{ date: string; value: number; unit: string }>;
   performance?: Record<string, Array<{ date: string; value: number; notes?: string }>>;
-  bodyFat?: Array<{ date: string; value: number }>; // Ajout pour composition corporelle
+  bodyFat?: Array<{ date: string; value: number }>;
 }
 
 export class StorageManager {
