@@ -1,4 +1,3 @@
-
 import { UserProfile, Demographics, FitnessGoals, UserPreferences, AppSettings } from '../types';
 
 export interface TrackingData {
@@ -7,6 +6,7 @@ export interface TrackingData {
   workouts: Array<{ date: string; exercises: any[] }>;
   nutrition: Array<{ date: string; calories: number; macros: any }>;
   hydration?: Array<{ date: string; target: number; weight: number; activityLevel: string; climate: string }>;
+  performance?: Record<string, Array<{ date: string; value: number; notes?: string }>>; // Ajout pour tracker de perf
 }
 
 export class StorageManager {
@@ -85,7 +85,8 @@ export class StorageManager {
         measurements: {},
         workouts: [],
         nutrition: [],
-        hydration: []
+        hydration: [],
+        performance: {}
       };
     } catch (error) {
       console.error('Error loading tracking data:', error);
@@ -94,7 +95,8 @@ export class StorageManager {
         measurements: {},
         workouts: [],
         nutrition: [],
-        hydration: []
+        hydration: [],
+        performance: {}
       };
     }
   }

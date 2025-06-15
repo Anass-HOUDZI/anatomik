@@ -57,13 +57,15 @@ export default function PerformanceTracker() {
       value: weight,
       notes: reps.toString(),
     };
-    if (!performance[exercise]) performance[exercise] = [];
-    performance[exercise].push(entry);
-    // Tri + persist
-    performance[exercise].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    // On clone l'objet pour éviter de muter directement storage
+    const updatedPerf = { ...performance };
+    if (!updatedPerf[exercise]) updatedPerf[exercise] = [];
+    updatedPerf[exercise] = [...updatedPerf[exercise], entry].sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
     StorageManager.saveTrackingData({
       ...trackingData,
-      performance,
+      performance: updatedPerf,
     });
     setWeight(0);
     setReps(0);
@@ -131,13 +133,10 @@ export default function PerformanceTracker() {
           ]))}
           className="bg-muted p-2 mb-4"
         >
-          {({ width, height }) => (
-            <svg width={width} height={height}>
-              {/* ... Placeholder/replace with recharts for real implémentation */}
-              {/* Ici on peut intégrer recharts.LineChart, mais kept simple */}
-              Désolé, l'affichage graphique avancé sera ajouté bientôt&nbsp;!
-            </svg>
-          )}
+          {/* Remplacer la fonction enfant par du JSX */}
+          <div className="w-full h-32 flex items-center justify-center text-sm text-muted-foreground">
+            Désolé, l'affichage graphique avancé sera ajouté bientôt&nbsp;!
+          </div>
         </ChartContainer>
       )}
 
