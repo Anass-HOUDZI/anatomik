@@ -17,13 +17,17 @@ import OmegaCalculator from './calculators/OmegaCalculator';
 import VitaminsCalculator from './calculators/VitaminsCalculator';
 import MineralsCalculator from './calculators/MineralsCalculator';
 import NutrientDensityCalculator from './calculators/NutrientDensityCalculator';
+import LoadCalculator from './calculators/LoadCalculator';
+import VolumeCalculator from './calculators/VolumeCalculator';
+import ProgressionCalculator from './calculators/ProgressionCalculator';
+import RestCalculator from './calculators/RestCalculator';
 
 interface ToolViewProps {
   category: Category;
   onToolSelect: (tool: Tool) => void;
 }
 
-// Configuration des outils par catégorie avec tous les calculateurs nutritionnels
+// Configuration des outils par catégorie avec tous les calculateurs
 const toolsConfig: Record<string, Tool[]> = {
   nutritional: [
     {
@@ -161,28 +165,32 @@ const toolsConfig: Record<string, Tool[]> = {
       name: 'Calculateur de Charges',
       description: 'Pourcentages d\'entraînement basés sur votre 1RM',
       category: 'training',
-      icon: 'fa-percent'
+      icon: 'fa-percent',
+      component: LoadCalculator
     },
     {
       id: 'volume-calculator',
       name: 'Calculateur de Volume',
       description: 'Volume total d\'entraînement (Sets × Reps × Poids)',
       category: 'training',
-      icon: 'fa-calculator'
+      icon: 'fa-calculator',
+      component: VolumeCalculator
     },
     {
       id: 'progression-calculator',
       name: 'Calculateur de Progression',
       description: 'Planification de la surcharge progressive',
       category: 'training',
-      icon: 'fa-arrow-up'
+      icon: 'fa-arrow-up',
+      component: ProgressionCalculator
     },
     {
       id: 'rest-calculator',
       name: 'Calculateur de Repos',
       description: 'Temps de récupération optimal selon l\'intensité',
       category: 'training',
-      icon: 'fa-clock'
+      icon: 'fa-clock',
+      component: RestCalculator
     },
     {
       id: 'frequency-calculator',
@@ -306,6 +314,11 @@ const toolsConfig: Record<string, Tool[]> = {
 const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
   const tools = toolsConfig[category.id] || [];
 
+  // Count implemented tools
+  const implementedCount = tools.filter(tool => tool.component).length;
+  const totalCount = tools.length;
+  const completionPercentage = Math.round((implementedCount / totalCount) * 100);
+
   return (
     <div className="max-w-6xl mx-auto">
       {/* Category Header */}
@@ -316,7 +329,7 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
         <h2 className="text-4xl font-bold mb-4">{category.name}</h2>
         <p className="text-xl text-muted-foreground mb-6">{category.description}</p>
         <div className="inline-flex items-center space-x-2 bg-gradient-primary text-white px-6 py-3 rounded-full">
-          <span className="font-semibold">{tools.length} outils disponibles</span>
+          <span className="font-semibold">{implementedCount}/{totalCount} outils disponibles ({completionPercentage}%)</span>
         </div>
       </div>
 
@@ -368,12 +381,15 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
       {/* Completion Status */}
       <div className="text-center mt-12 p-8 bg-gradient-primary text-white rounded-xl">
         <i className="fas fa-check-circle text-4xl mb-4"></i>
-        <h3 className="text-2xl font-bold mb-2">Phase 1 Complétée !</h3>
+        <h3 className="text-2xl font-bold mb-2">Progression du Développement</h3>
         <div className="text-lg opacity-90 mb-4">
           {category.id === 'nutritional' && 
-            `Les 15 calculateurs nutritionnels sont maintenant disponibles (100% complété)`
+            `Phase 1 - Calculateurs Nutritionnels: 15/15 outils (100% complété)`
           }
-          {category.id !== 'nutritional' && 
+          {category.id === 'training' && 
+            `Phase 2 - Calculateurs d'Entraînement: ${implementedCount}/15 outils (${completionPercentage}% complété)`
+          }
+          {category.id !== 'nutritional' && category.id !== 'training' && 
             `Phase en cours d'implémentation.`
           }
         </div>
