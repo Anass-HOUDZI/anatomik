@@ -6,7 +6,8 @@ export interface TrackingData {
   workouts: Array<{ date: string; exercises: any[] }>;
   nutrition: Array<{ date: string; calories: number; macros: any }>;
   hydration?: Array<{ date: string; target: number; weight: number; activityLevel: string; climate: string }>;
-  performance?: Record<string, Array<{ date: string; value: number; notes?: string }>>; // Ajout pour tracker de perf
+  performance?: Record<string, Array<{ date: string; value: number; notes?: string }>>;
+  bodyFat?: Array<{ date: string; value: number }>; // Ajout pour composition corporelle
 }
 
 export class StorageManager {
@@ -86,7 +87,8 @@ export class StorageManager {
         workouts: [],
         nutrition: [],
         hydration: [],
-        performance: {}
+        performance: {},
+        bodyFat: []
       };
     } catch (error) {
       console.error('Error loading tracking data:', error);
@@ -96,7 +98,8 @@ export class StorageManager {
         workouts: [],
         nutrition: [],
         hydration: [],
-        performance: {}
+        performance: {},
+        bodyFat: []
       };
     }
   }

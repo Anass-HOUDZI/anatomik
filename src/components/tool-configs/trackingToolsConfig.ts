@@ -3,6 +3,7 @@ import type { Tool } from '../../App';
 import WeightTracker from '../trackers/WeightTracker';
 import MeasurementsTracker from '../trackers/MeasurementsTracker';
 import PerformanceTracker from '../trackers/PerformanceTracker';
+import BodyCompositionTracker from '../trackers/BodyCompositionTracker';
 
 const trackingToolsConfig: Tool[] = [
   {
@@ -34,7 +35,8 @@ const trackingToolsConfig: Tool[] = [
     name: 'Tracker de Composition',
     description: 'Évolution de votre masse grasse et masse maigre',
     category: 'tracking',
-    icon: 'fa-user'
+    icon: 'fa-user',
+    component: BodyCompositionTracker
   },
   {
     id: 'hydration-tracker',
