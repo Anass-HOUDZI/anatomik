@@ -31,6 +31,7 @@ import HIITCalculator from './calculators/HIITCalculator';
 import RecoveryCalculator from './calculators/RecoveryCalculator';
 import DeloadCalculator from './calculators/DeloadCalculator';
 import WeightTracker from './trackers/WeightTracker';
+import MeasurementsTracker from './trackers/MeasurementsTracker';
 
 interface ToolViewProps {
   category: Category;
@@ -297,7 +298,8 @@ const toolsConfig: Record<string, Tool[]> = {
       name: 'Tracker de Mensurations',
       description: 'Évolution de vos mensurations corporelles',
       category: 'tracking',
-      icon: 'fa-ruler'
+      icon: 'fa-ruler',
+      component: require('./trackers/MeasurementsTracker').default
     },
     {
       id: 'performance-tracker',
