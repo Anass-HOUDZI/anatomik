@@ -6,6 +6,7 @@ import { useMobileOptimization } from '@/hooks/useMobileOptimization';
 interface MobileCardProps {
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   clickable?: boolean;
   onTap?: () => void;
   enableHaptic?: boolean;
@@ -14,6 +15,7 @@ interface MobileCardProps {
 export const MobileCard: React.FC<MobileCardProps> = ({
   children,
   className,
+  style,
   clickable = false,
   onTap,
   enableHaptic = true
@@ -38,6 +40,7 @@ export const MobileCard: React.FC<MobileCardProps> = ({
         clickable && deviceInfo.isTouchDevice && 'touch-feedback active:scale-98',
         className
       )}
+      style={style}
       onClick={clickable ? handleTap : undefined}
     >
       {children}
