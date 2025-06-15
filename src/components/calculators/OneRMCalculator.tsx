@@ -98,16 +98,16 @@ const OneRMCalculator: React.FC = () => {
           <h3 className="text-2xl font-bold mb-6 text-black">Informations de performance</h3>
           
           <div className="input-group-custom">
-            <label htmlFor="exercise">Exercice</label>
+            <label htmlFor="exercise" className="text-black">Exercice</label>
             <select
               id="exercise"
               name="exercise"
               value={formData.exercise}
               onChange={handleInputChange}
-              className="form-control-custom"
+              className="form-control-custom text-black"
             >
               {exercises.map(exercise => (
-                <option key={exercise.value} value={exercise.value}>
+                <option key={exercise.value} value={exercise.value} className="text-black">
                   {exercise.label}
                 </option>
               ))}
@@ -115,14 +115,14 @@ const OneRMCalculator: React.FC = () => {
           </div>
 
           <div className="input-group-custom">
-            <label htmlFor="weight">Poids soulevé (kg)</label>
+            <label htmlFor="weight" className="text-black">Poids soulevé (kg)</label>
             <input
               type="number"
               id="weight"
               name="weight"
               value={formData.weight}
               onChange={handleInputChange}
-              className="form-control-custom"
+              className="form-control-custom text-black"
               placeholder="Ex: 100"
               min="5"
               max="500"
@@ -131,14 +131,14 @@ const OneRMCalculator: React.FC = () => {
           </div>
 
           <div className="input-group-custom">
-            <label htmlFor="reps">Nombre de répétitions</label>
+            <label htmlFor="reps" className="text-black">Nombre de répétitions</label>
             <input
               type="number"
               id="reps"
               name="reps"
               value={formData.reps}
               onChange={handleInputChange}
-              className="form-control-custom"
+              className="form-control-custom text-black"
               placeholder="Ex: 5"
               min="1"
               max="20"
@@ -155,7 +155,7 @@ const OneRMCalculator: React.FC = () => {
                   <i className={`fas ${selectedExercise.icon}`}></i>
                 </div>
                 <div>
-                  <h4 className="font-semibold">{selectedExercise.label}</h4>
+                  <h4 className="font-semibold text-black">{selectedExercise.label}</h4>
                   <p className="text-sm text-muted-foreground">Exercice sélectionné</p>
                 </div>
               </div>
@@ -184,16 +184,16 @@ const OneRMCalculator: React.FC = () => {
             <div className="space-y-6">
               {/* 1RM Result */}
               <div className="result-card bg-gradient-primary">
-                <div className="result-value text-5xl">{results.oneRM}kg</div>
-                <div className="result-label text-xl">1RM Estimé</div>
-                <small className="text-sm opacity-75 mt-2 block">
+                <div className="result-value text-5xl text-black">{results.oneRM}kg</div>
+                <div className="result-label text-xl text-black">1RM Estimé</div>
+                <small className="text-sm opacity-75 mt-2 block text-black">
                   Basé sur {formData.weight}kg × {formData.reps} répétitions
                 </small>
               </div>
 
               {/* Training Percentages */}
               <div className="bg-card border border-custom rounded-lg p-6">
-                <h4 className="text-xl font-semibold mb-6">Charges d'entraînement recommandées</h4>
+                <h4 className="text-xl font-semibold mb-6 text-black">Charges d'entraînement recommandées</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {percentageRanges.map((range, index) => (
                     <div
@@ -205,7 +205,7 @@ const OneRMCalculator: React.FC = () => {
                       }`}
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <span className="font-bold text-lg">
+                        <span className="font-bold text-lg text-black">
                           {results.percentages[range.label]}kg
                         </span>
                         <span className={`text-sm px-2 py-1 rounded-full ${
@@ -230,55 +230,55 @@ const OneRMCalculator: React.FC = () => {
               {/* Training Programs */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="bg-card border border-custom rounded-lg p-4">
-                  <h5 className="font-semibold text-primary mb-3">Force (1-5 reps)</h5>
+                  <h5 className="font-semibold text-primary mb-3 text-black">Force (1-5 reps)</h5>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span>95%</span>
-                      <strong>{results.percentages['95%']}kg</strong>
+                      <span className="text-black">95%</span>
+                      <strong className="text-black">{results.percentages['95%']}kg</strong>
                     </div>
                     <div className="flex justify-between">
-                      <span>90%</span>
-                      <strong>{results.percentages['90%']}kg</strong>
+                      <span className="text-black">90%</span>
+                      <strong className="text-black">{results.percentages['90%']}kg</strong>
                     </div>
                     <div className="flex justify-between">
-                      <span>85%</span>
-                      <strong>{results.percentages['85%']}kg</strong>
+                      <span className="text-black">85%</span>
+                      <strong className="text-black">{results.percentages['85%']}kg</strong>
                     </div>
                   </div>
                 </div>
 
                 <div className="bg-card border border-custom rounded-lg p-4">
-                  <h5 className="font-semibold text-secondary mb-3">Hypertrophie (6-12 reps)</h5>
+                  <h5 className="font-semibold text-secondary mb-3 text-black">Hypertrophie (6-12 reps)</h5>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span>80%</span>
-                      <strong>{results.percentages['80%']}kg</strong>
+                      <span className="text-black">80%</span>
+                      <strong className="text-black">{results.percentages['80%']}kg</strong>
                     </div>
                     <div className="flex justify-between">
-                      <span>75%</span>
-                      <strong>{results.percentages['75%']}kg</strong>
+                      <span className="text-black">75%</span>
+                      <strong className="text-black">{results.percentages['75%']}kg</strong>
                     </div>
                     <div className="flex justify-between">
-                      <span>70%</span>
-                      <strong>{results.percentages['70%']}kg</strong>
+                      <span className="text-black">70%</span>
+                      <strong className="text-black">{results.percentages['70%']}kg</strong>
                     </div>
                   </div>
                 </div>
 
                 <div className="bg-card border border-custom rounded-lg p-4">
-                  <h5 className="font-semibold text-success mb-3">Endurance (12+ reps)</h5>
+                  <h5 className="font-semibold text-success mb-3 text-black">Endurance (12+ reps)</h5>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span>65%</span>
-                      <strong>{results.percentages['65%']}kg</strong>
+                      <span className="text-black">65%</span>
+                      <strong className="text-black">{results.percentages['65%']}kg</strong>
                     </div>
                     <div className="flex justify-between">
-                      <span>60%</span>
-                      <strong>{results.percentages['60%']}kg</strong>
+                      <span className="text-black">60%</span>
+                      <strong className="text-black">{results.percentages['60%']}kg</strong>
                     </div>
                     <div className="flex justify-between text-muted-foreground">
-                      <span>Échauffement</span>
-                      <span>40-50%</span>
+                      <span className="text-black">Échauffement</span>
+                      <span className="text-black">40-50%</span>
                     </div>
                   </div>
                 </div>
@@ -286,11 +286,11 @@ const OneRMCalculator: React.FC = () => {
 
               {/* Safety Warning */}
               <div className="bg-warning bg-opacity-10 border border-warning rounded-lg p-4">
-                <h4 className="font-semibold text-warning mb-2 flex items-center">
+                <h4 className="font-semibold text-warning mb-2 flex items-center text-black">
                   <i className="fas fa-exclamation-triangle mr-2"></i>
                   Sécurité et Précautions
                 </h4>
-                <ul className="text-sm space-y-1">
+                <ul className="text-sm space-y-1 text-black">
                   <li>• Ne tentez jamais un 1RM sans échauffement complet</li>
                   <li>• Utilisez toujours un spotteur pour les exercices dangereux</li>
                   <li>• Ces valeurs sont des estimations, progressez graduellement</li>
@@ -301,7 +301,7 @@ const OneRMCalculator: React.FC = () => {
           ) : (
             <div className="text-center py-12 text-muted-foreground">
               <i className="fas fa-weight-hanging text-4xl mb-4"></i>
-              <p className="text-lg">Entrez votre performance pour calculer votre 1RM</p>
+              <p className="text-lg text-black">Entrez votre performance pour calculer votre 1RM</p>
             </div>
           )}
         </div>
