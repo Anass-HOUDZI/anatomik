@@ -3,6 +3,9 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
+import { ResponsiveContainer } from "@/components/ui/responsive-container";
+import { MobileCard } from "@/components/ui/mobile-card";
+import { MobileButton } from "@/components/ui/mobile-button";
 
 // Fonction de scoring Deload
 function getDeloadRecommendation({
@@ -75,106 +78,133 @@ const DeloadCalculator = () => {
   }
 
   return (
-    <div className="max-w-2xl mx-auto pt-6">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-black">Calculateur de Deload</CardTitle>
-          <CardDescription className="text-black">
+    <ResponsiveContainer 
+      className="max-w-2xl mx-auto pt-4 md:pt-6"
+      mobileClassName="px-4"
+      tabletClassName="px-6"
+      desktopClassName="px-8"
+    >
+      <MobileCard className="w-full">
+        <CardHeader className="pb-4 md:pb-6">
+          <CardTitle className="text-xl md:text-2xl text-black">Calculateur de Deload</CardTitle>
+          <CardDescription className="text-sm md:text-base text-black leading-relaxed">
             Déterminez si une semaine de décharge est recommandée pour optimiser récupération et progression, et obtenez vos consignes personnalisées.
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-4 md:px-6">
           {!showResult ? (
-            <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-              <div>
-                <Label>Niveau de fatigue général (subjectif)</Label>
+            <form className="flex flex-col gap-5 md:gap-6" onSubmit={handleSubmit}>
+              <div className="space-y-3">
+                <Label className="text-sm md:text-base">Niveau de fatigue général (subjectif)</Label>
                 <Slider
                   min={0}
                   max={10}
                   step={1}
                   value={[fatigue]}
                   onValueChange={([v]) => setFatigue(v)}
-                  className="mt-1"
+                  className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground">{fatigue}/10</div>
+                <div className="text-sm text-muted-foreground font-medium">{fatigue}/10</div>
               </div>
-              <div>
-                <Label>Semaines écoulées depuis le dernier deload</Label>
+              
+              <div className="space-y-3">
+                <Label className="text-sm md:text-base">Semaines écoulées depuis le dernier deload</Label>
                 <Slider
                   min={1}
                   max={12}
                   step={1}
                   value={[weeksSinceLastDeload]}
                   onValueChange={([v]) => setWeeksSinceLastDeload(v)}
-                  className="mt-1"
+                  className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground">{weeksSinceLastDeload} semaine{weeksSinceLastDeload > 1 ? "s" : ""}</div>
+                <div className="text-sm text-muted-foreground font-medium">
+                  {weeksSinceLastDeload} semaine{weeksSinceLastDeload > 1 ? "s" : ""}
+                </div>
               </div>
-              <div>
-                <Label>Intensité moyenne des séances (charge relative)</Label>
+              
+              <div className="space-y-3">
+                <Label className="text-sm md:text-base">Intensité moyenne des séances (charge relative)</Label>
                 <Slider
                   min={5}
                   max={10}
                   step={1}
                   value={[intensity]}
                   onValueChange={([v]) => setIntensity(v)}
-                  className="mt-1"
+                  className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground">{intensity}/10</div>
+                <div className="text-sm text-muted-foreground font-medium">{intensity}/10</div>
               </div>
-              <div>
-                <Label>Volume d'entraînement élevé sur les 3 dernières semaines ?</Label>
-                <div className="flex items-center gap-4 mt-2">
-                  <button
+              
+              <div className="space-y-3">
+                <Label className="text-sm md:text-base">Volume d'entraînement élevé sur les 3 dernières semaines ?</Label>
+                <div className="flex items-center gap-3 mt-2">
+                  <MobileButton
                     type="button"
-                    className={`px-3 py-2 rounded border ${highVolume ? "bg-primary text-white border-primary" : "bg-background border-muted text-foreground"} focus:outline-none`}
+                    variant={highVolume ? "primary" : "outline"}
+                    size="md"
                     onClick={() => setHighVolume(true)}
+                    className="flex-1"
                   >
                     Oui
-                  </button>
-                  <button
+                  </MobileButton>
+                  <MobileButton
                     type="button"
-                    className={`px-3 py-2 rounded border ${!highVolume ? "bg-primary text-white border-primary" : "bg-background border-muted text-foreground"} focus:outline-none`}
+                    variant={!highVolume ? "primary" : "outline"}
+                    size="md"
                     onClick={() => setHighVolume(false)}
+                    className="flex-1"
                   >
                     Non
-                  </button>
+                  </MobileButton>
                 </div>
               </div>
-              <Button type="submit" className="w-full mt-2">
+              
+              <MobileButton type="submit" className="w-full mt-4" size="lg">
                 Calculer ma recommandation de deload
-              </Button>
+              </MobileButton>
             </form>
           ) : (
-            <div className="animate-fade-in">
-              <div className={`text-2xl font-semibold mb-2 ${result.need ? "text-yellow-700" : "text-green-700"}`}>
+            <div className="animate-fade-in space-y-4">
+              <div className={`text-xl md:text-2xl font-semibold ${result.need ? "text-yellow-700" : "text-green-700"}`}>
                 {result.need ? "Deload Recommandé" : "Pas de deload nécessaire"}
               </div>
-              <div className="text-lg mb-3">
+              
+              <div className="text-base md:text-lg leading-relaxed">
                 {result.message}
               </div>
+              
               {result.need && (
                 <>
-                  <div className="mb-2 p-3 bg-muted rounded text-sm text-muted-foreground">
-                    <div><b>Réduction recommandée :</b> {result.reduction}</div>
-                    <div><b>Durée idéale :</b> {result.duration}</div>
-                    <div><b>Activités suggérées :</b> {result.activities}</div>
+                  <div className="p-4 bg-muted rounded-lg space-y-2">
+                    <div className="text-sm md:text-base">
+                      <b>Réduction recommandée :</b> {result.reduction}
+                    </div>
+                    <div className="text-sm md:text-base">
+                      <b>Durée idéale :</b> {result.duration}
+                    </div>
+                    <div className="text-sm md:text-base">
+                      <b>Activités suggérées :</b> {result.activities}
+                    </div>
                   </div>
-                  <ul className="list-disc ml-6 text-xs text-muted-foreground mb-4">
-                    <li>Le deload facilite la surcompensation - profitez-en pour affiner la technique et écouter vos sensations.</li>
-                    <li>N'ayez pas peur de "lever le pied" quelques jours, les progrès s'accélèrent après un bon deload !</li>
-                    <li>Si la fatigue persiste après le deload, pensez à réévaluer volume et intensité dans votre prochain cycle.</li>
-                  </ul>
+                  
+                  <div className="p-4 bg-blue-50 rounded-lg">
+                    <ul className="space-y-2 text-xs md:text-sm text-blue-800">
+                      <li>• Le deload facilite la surcompensation - profitez-en pour affiner la technique et écouter vos sensations.</li>
+                      <li>• N'ayez pas peur de "lever le pied" quelques jours, les progrès s'accélèrent après un bon deload !</li>
+                      <li>• Si la fatigue persiste après le deload, pensez à réévaluer volume et intensité dans votre prochain cycle.</li>
+                    </ul>
+                  </div>
                 </>
               )}
-              <Button variant="secondary" onClick={handleReset}>
+              
+              <MobileButton variant="secondary" onClick={handleReset} size="lg" className="w-full">
                 Nouveau calcul
-              </Button>
+              </MobileButton>
             </div>
           )}
         </CardContent>
-      </Card>
-    </div>
+      </MobileCard>
+    </ResponsiveContainer>
   );
 };
 
