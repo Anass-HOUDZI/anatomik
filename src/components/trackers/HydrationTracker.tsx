@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from "react";
 import { Table, TableHeader, TableBody, TableRow, TableCell, TableHead } from "../ui/table";
 import { Input } from "../ui/input";
@@ -32,7 +31,7 @@ export default function HydrationTracker() {
     if (trackingData.hydration && Array.isArray(trackingData.hydration)) {
       return trackingData.hydration.map(e => ({
         date: e.date?.slice(0,10) || "",
-        value: Number(e.value ?? (e.ml ?? 0)),
+        value: Number(e.value ?? 0),
         unit: e.unit ?? "ml"
       }));
     }

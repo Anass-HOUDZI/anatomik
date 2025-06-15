@@ -96,21 +96,19 @@ const HydrationCalculator: React.FC = () => {
       const trackingData = StorageManager.getTrackingData();
       // Sauvegarder les besoins en hydratation
       const hydrationEntry = {
-        date: new Date().toISOString(),
-        target: result.totalNeeds,
-        weight,
-        activityLevel,
-        climate
+        date: new Date().toISOString().slice(0, 10),
+        value: result.totalNeeds,
+        unit: 'ml'
       };
-      
-      // Ajouter à l'historique hydratation
+
+      // Ajouter à l'historique hydratation sous le bon format
       if (!trackingData.hydration) {
         trackingData.hydration = [];
       }
       trackingData.hydration.push(hydrationEntry);
-      
+
       StorageManager.saveTrackingData(trackingData);
-      
+
       toast({
         title: "Données sauvegardées",
         description: "Vos besoins en hydratation ont été enregistrés",
