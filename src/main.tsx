@@ -85,7 +85,8 @@ const initializePWA = async () => {
   console.log('✨ PWA FitMASTER PRO initialisée avec succès!');
 };
 
-// Démarrage application
-initializePWA().then(() => {
-  createRoot(document.getElementById("root")!).render(<App />);
-});
+// Démarrage application React
+createRoot(document.getElementById("root")!).render(<App />);
+
+// Lancement de l'initialisation PWA en arrière-plan
+initializePWA();
