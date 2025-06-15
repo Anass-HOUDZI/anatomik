@@ -79,18 +79,18 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({ onCategorySelect }) => {
             style={{ animationDelay: `${idx * 0.09}s` }}
             onClick={() => onCategorySelect(category)}
           >
-            {/* Icône rond moderne */}
+            {/* Icône rond moderne - fixe, plus d'effet flottant */}
             <div className="w-20 h-20 mt-7 rounded-full bg-white flex items-center justify-center shadow-lg z-10
                 border-4 border-white/40 group-hover:border-blue-200 transition-all duration-200
-                absolute -top-10 left-1/2 -translate-x-1/2 animate-float">
+                absolute -top-10 left-1/2 -translate-x-1/2">
               <i className={`fas ${category.icon} text-4xl text-gradient`} />
             </div>
             {/* Corps carte */}
             <div className="flex-1 flex flex-col justify-end w-full px-4 pt-16 pb-7 items-center text-center">
-              <h3 className="font-display text-2xl md:text-3xl font-bold gradient-text mb-2">
+              <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-2">
                 {category.name}
               </h3>
-              <p className="text-base sm:text-lg text-gray-100 text-opacity-90 font-medium mb-4">
+              <p className="text-base sm:text-lg text-white/90 font-medium mb-4">
                 {category.description}
               </p>
               {/* Badge outils */}
