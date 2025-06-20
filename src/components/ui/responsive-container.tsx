@@ -11,6 +11,7 @@ interface ResponsiveContainerProps {
   desktopClassName?: string;
   enableSafeAreas?: boolean;
   enableTouchOptimization?: boolean;
+  fullWidth?: boolean;
 }
 
 export const ResponsiveContainer: React.FC<ResponsiveContainerProps> = ({
@@ -19,13 +20,18 @@ export const ResponsiveContainer: React.FC<ResponsiveContainerProps> = ({
   mobileClassName,
   tabletClassName,
   desktopClassName,
-  enableSafeAreas = true,
-  enableTouchOptimization = true
+  enableSafeAreas = false,
+  enableTouchOptimization = true,
+  fullWidth = true
 }) => {
   const { deviceInfo } = useMobileOptimization();
 
   const getResponsiveClassName = () => {
     let baseClassName = className || '';
+    
+    if (fullWidth) {
+      baseClassName += ' w-full';
+    }
     
     if (deviceInfo.isMobile && mobileClassName) {
       baseClassName += ` ${mobileClassName}`;

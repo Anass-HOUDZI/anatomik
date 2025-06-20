@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -80,17 +81,17 @@ const App = () => {
                 onBackToCategory={handleBackToCategory}
               />
               
-              <main className="container mx-auto px-4 py-8 flex-1 w-full mobile-scroll">
+              <main className="flex-1 w-full mobile-scroll">
                 {currentView === 'home' && (
-                  <div className="fade-in mobile-fade-scale">
-                    <div className="text-center mb-12">
+                  <div className="fade-in mobile-fade-scale w-full">
+                    <div className="text-center mb-8 px-4">
                       <h1 className="text-4xl md:text-6xl font-bold text-gradient mb-4 heading-mobile-responsive">
                         FitMASTER PRO
                       </h1>
-                      <p className="text-xl md:text-2xl text-muted-foreground mb-6 text-mobile-responsive">
+                      <p className="text-xl md:text-2xl text-muted-foreground mb-4 text-mobile-responsive">
                         60 outils gratuits de musculation et nutrition
                       </p>
-                      <p className="text-lg text-muted-foreground max-w-3xl mx-auto text-mobile-responsive">
+                      <p className="text-lg text-muted-foreground max-w-3xl mx-auto text-mobile-responsive px-4">
                         Suite complète d'outils professionnels fonctionnant 100% côté client. 
                         Calculateurs, trackers, planificateurs - tout accessible offline !
                       </p>
@@ -101,7 +102,7 @@ const App = () => {
                 )}
                 
                 {currentView === 'category' && selectedCategory && (
-                  <div className="fade-in mobile-slide-up">
+                  <div className="fade-in mobile-slide-up w-full">
                     <ToolView 
                       category={selectedCategory}
                       onToolSelect={handleToolSelect}
@@ -110,8 +111,8 @@ const App = () => {
                 )}
                 
                 {currentView === 'tool' && selectedTool && (
-                  <div className="fade-in mobile-fade-scale">
-                    <div className="calculator-container mobile-container">
+                  <div className="fade-in mobile-fade-scale w-full">
+                    <div className="w-full px-4 py-6">
                       <div className="text-center mb-6">
                         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-primary text-white text-2xl mb-4 mobile-optimized">
                           <i className={`fas ${selectedTool.icon}`}></i>
@@ -126,8 +127,8 @@ const App = () => {
                 )}
               </main>
               
-              <footer className="bg-transparent text-center py-6 shadow-none select-none safe-area-horizontal">
-                <div className="text-xs md:text-sm text-muted-foreground text-mobile-responsive">
+              <footer className="bg-transparent text-center py-4 shadow-none select-none safe-area-horizontal">
+                <div className="text-xs md:text-sm text-muted-foreground text-mobile-responsive px-4">
                   Copyright © 2025{" "}
                   <a
                     href="https://www.linkedin.com/in/anasshoudzi/"
