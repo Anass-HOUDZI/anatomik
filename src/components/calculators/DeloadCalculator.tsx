@@ -140,7 +140,7 @@ const DeloadCalculator = () => {
                 <div className="flex gap-3 mt-2">
                   <MobileButton
                     type="button"
-                    variant={highVolume ? "default" : "outline"}
+                    variant={highVolume ? "primary" : "outline"}
                     size="md"
                     onClick={() => setHighVolume(true)}
                     className="flex-1"
@@ -149,7 +149,7 @@ const DeloadCalculator = () => {
                   </MobileButton>
                   <MobileButton
                     type="button"
-                    variant={!highVolume ? "default" : "outline"}
+                    variant={!highVolume ? "primary" : "outline"}
                     size="md"
                     onClick={() => setHighVolume(false)}
                     className="flex-1"
