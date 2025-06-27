@@ -1,8 +1,7 @@
+
 import React, { useState } from "react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { ResponsiveContainer } from "@/components/ui/responsive-container";
 import { MobileCard } from "@/components/ui/mobile-card";
@@ -22,10 +21,8 @@ const DropSetsCalculator: React.FC = () => {
   const [dropPercent, setDropPercent] = useState<number>(defaultDropPercent);
   const [repsFirstSet, setRepsFirstSet] = useState<number>(10);
   const [showResults, setShowResults] = useState(false);
-
   const [results, setResults] = useState<DropSetResult[]>([]);
 
-  // Calculer les charges des drops
   const calculateDropSets = () => {
     const output: DropSetResult[] = [];
     let currentWeight = initialWeight;
@@ -37,9 +34,7 @@ const DropSetsCalculator: React.FC = () => {
         weight: Math.round(currentWeight * 100) / 100,
         estimatedReps: i === 0 ? currentReps : currentReps > 2 ? Math.max(Math.floor(currentReps * 0.6), 1) : null,
       });
-      // Pour les drops suivants, réduction du poids
       currentWeight = currentWeight * (1 - dropPercent / 100);
-      // Optionnel: estimer que les reps chutent à ~60% de la série précédente
       currentReps = currentReps > 2 ? Math.max(Math.floor(currentReps * 0.6), 1) : 1;
     }
     setResults(output);
@@ -52,30 +47,30 @@ const DropSetsCalculator: React.FC = () => {
   };
 
   return (
-    <ResponsiveContainer 
-      className="max-w-2xl mx-auto pt-4 md:pt-6"
-      mobileClassName="px-4"
-      tabletClassName="px-6"
-      desktopClassName="px-8"
-    >
+    <ResponsiveContainer className="w-full">
       <MobileCard className="w-full">
-        <CardHeader className="pb-4 md:pb-6">
-          <CardTitle className="text-xl md:text-2xl text-black">Calculateur de Drop Sets</CardTitle>
-          <CardDescription className="text-sm md:text-base text-black leading-relaxed">
-            Programme automatiquement votre série dégressive : poids, nombre de drops et estimation des répétitions.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="px-4 md:px-6">
-          {!showResults && (
+        <div className="p-4 md:p-6">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">
+              Calculateur de Drop Sets
+            </h2>
+            <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+              Programme automatiquement votre série dégressive : poids, nombre de drops et estimation des répétitions.
+            </p>
+          </div>
+
+          {!showResults ? (
             <form
-              className="flex flex-col gap-4 md:gap-5"
+              className="space-y-6"
               onSubmit={e => {
                 e.preventDefault();
                 calculateDropSets();
               }}
             >
               <div className="space-y-2">
-                <Label htmlFor="initialWeight" className="text-sm md:text-base">Poids de départ (kg)</Label>
+                <Label htmlFor="initialWeight" className="text-sm md:text-base font-medium">
+                  Poids de départ (kg)
+                </Label>
                 <Input
                   id="initialWeight"
                   type="number"
@@ -84,13 +79,15 @@ const DropSetsCalculator: React.FC = () => {
                   value={initialWeight}
                   onChange={e => setInitialWeight(Number(e.target.value))}
                   step={0.5}
-                  className="mobile-input text-base"
+                  className="mobile-input"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="repsFirstSet" className="text-sm md:text-base">Nombre de répétitions sur la première série</Label>
+                <Label htmlFor="repsFirstSet" className="text-sm md:text-base font-medium">
+                  Nombre de répétitions sur la première série
+                </Label>
                 <Input
                   id="repsFirstSet"
                   type="number"
@@ -99,13 +96,15 @@ const DropSetsCalculator: React.FC = () => {
                   value={repsFirstSet}
                   onChange={e => setRepsFirstSet(Number(e.target.value))}
                   step={1}
-                  className="mobile-input text-base"
+                  className="mobile-input"
                   required
                 />
               </div>
 
               <div className="space-y-3">
-                <Label htmlFor="nbDrops" className="text-sm md:text-base">Nombre de drops (réductions successives)</Label>
+                <Label className="text-sm md:text-base font-medium">
+                  Nombre de drops (réductions successives)
+                </Label>
                 <Slider
                   min={1}
                   max={5}
@@ -114,11 +113,15 @@ const DropSetsCalculator: React.FC = () => {
                   onValueChange={([v]) => setNbDrops(Number(v))}
                   className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground">{nbDrops === 1 ? "1 drop" : `${nbDrops} drops`}</div>
+                <div className="text-sm text-gray-500 font-medium">
+                  {nbDrops === 1 ? "1 drop" : `${nbDrops} drops`}
+                </div>
               </div>
 
               <div className="space-y-3">
-                <Label htmlFor="dropPercent" className="text-sm md:text-base">Pourcentage de réduction par drop (%)</Label>
+                <Label className="text-sm md:text-base font-medium">
+                  Pourcentage de réduction par drop (%)
+                </Label>
                 <Slider
                   min={10}
                   max={40}
@@ -127,35 +130,34 @@ const DropSetsCalculator: React.FC = () => {
                   onValueChange={([v]) => setDropPercent(Number(v))}
                   className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground">{`-${dropPercent}% à chaque drop`}</div>
+                <div className="text-sm text-gray-500 font-medium">{`-${dropPercent}% à chaque drop`}</div>
               </div>
 
-              <MobileButton className="mt-4 md:mt-6 w-full" type="submit" size="lg">
+              <MobileButton className="w-full mt-6" type="submit" size="lg">
                 Calculer ma Drop Set
               </MobileButton>
             </form>
-          )}
-
-          {showResults && (
-            <div className="pt-2">
-              <h3 className="font-semibold mb-3 text-lg md:text-xl">Plan Drop Set généré</h3>
+          ) : (
+            <div className="space-y-6">
+              <h3 className="text-xl font-bold text-center text-black">Plan Drop Set généré</h3>
+              
               <div className="overflow-x-auto">
                 <table className="w-full text-sm border rounded-lg">
                   <thead>
-                    <tr className="bg-muted">
-                      <th className="py-3 px-2 md:px-4 text-xs md:text-sm">Série</th>
-                      <th className="py-3 px-2 md:px-4 text-xs md:text-sm">Poids (kg)</th>
-                      <th className="py-3 px-2 md:px-4 text-xs md:text-sm">Rép. (estimées)</th>
-                      <th className="py-3 px-2 md:px-4 text-xs md:text-sm">Repos</th>
+                    <tr className="bg-gray-50">
+                      <th className="py-3 px-2 text-center font-semibold">Série</th>
+                      <th className="py-3 px-2 text-center font-semibold">Poids (kg)</th>
+                      <th className="py-3 px-2 text-center font-semibold">Rép. (estimées)</th>
+                      <th className="py-3 px-2 text-center font-semibold">Repos</th>
                     </tr>
                   </thead>
                   <tbody>
                     {results.map((step, idx) => (
-                      <tr key={step.step} className={idx % 2 === 0 ? "bg-background" : "bg-muted"}>
-                        <td className="py-2 md:py-3 px-2 md:px-4 text-center text-sm">{step.step}</td>
-                        <td className="py-2 md:py-3 px-2 md:px-4 text-center text-sm font-medium">{step.weight}</td>
-                        <td className="py-2 md:py-3 px-2 md:px-4 text-center text-sm">{step.estimatedReps ?? "-"}</td>
-                        <td className="py-2 md:py-3 px-2 md:px-4 text-center text-sm">
+                      <tr key={step.step} className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                        <td className="py-2 px-2 text-center font-medium">{step.step}</td>
+                        <td className="py-2 px-2 text-center font-bold text-blue-600">{step.weight}</td>
+                        <td className="py-2 px-2 text-center">{step.estimatedReps ?? "-"}</td>
+                        <td className="py-2 px-2 text-center text-sm">
                           {idx === 0 ? "-" : "10-20 s"}
                         </td>
                       </tr>
@@ -163,17 +165,19 @@ const DropSetsCalculator: React.FC = () => {
                   </tbody>
                 </table>
               </div>
-              <div className="my-4 p-3 bg-blue-50 rounded-lg">
-                <p className="text-xs md:text-sm text-blue-800 leading-relaxed">
-                  <b>Astuce :</b> Pour une efficacité optimale, réduisez le poids sans repos (ou ≤ 20s), jusqu'à l'échec technique.
+
+              <div className="p-4 bg-blue-50 rounded-lg">
+                <p className="text-blue-800 font-medium">
+                  <strong>💡 Astuce :</strong> Pour une efficacité optimale, réduisez le poids sans repos (ou ≤ 20s), jusqu'à l'échec technique.
                 </p>
               </div>
+
               <MobileButton variant="secondary" onClick={handleReset} size="lg" className="w-full">
                 Nouvelle simulation
               </MobileButton>
             </div>
           )}
-        </CardContent>
+        </div>
       </MobileCard>
     </ResponsiveContainer>
   );

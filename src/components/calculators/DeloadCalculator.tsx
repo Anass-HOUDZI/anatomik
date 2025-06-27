@@ -1,13 +1,11 @@
+
 import React, { useState } from "react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { ResponsiveContainer } from "@/components/ui/responsive-container";
 import { MobileCard } from "@/components/ui/mobile-card";
 import { MobileButton } from "@/components/ui/mobile-button";
 
-// Fonction de scoring Deload
 function getDeloadRecommendation({
   fatigue,
   weeksSinceLastDeload,
@@ -19,21 +17,21 @@ function getDeloadRecommendation({
   intensity: number;
   highVolume: boolean;
 }) {
-  // Points attribués selon les réponses
   let score = 0;
-  score += fatigue * 2.5; // fatigue a un poids important
+  score += fatigue * 2.5;
   score += intensity * 1.6;
   score += highVolume ? 5 : 0;
-  score += Math.max(0, (weeksSinceLastDeload - 3) * 2); // si >3 semaines, points bonus
+  score += Math.max(0, (weeksSinceLastDeload - 3) * 2);
 
-  // Conseil et ajustements recommandés
   if (score < 18) {
     return {
       need: false,
       message: "Votre niveau de fatigue et de surcharge progressive reste modéré. Un deload n'est probablement pas nécessaire, mais un monitoring rapproché est conseillé.",
       reduction: "",
       activities: "Continuez votre routine habituelle, privilégiez la qualité technique et le ressenti.",
-      duration: "—"
+      duration: "—",
+      bgColor: "bg-green-50",
+      textColor: "text-green-700"
     };
   } else if (score < 30) {
     return {
@@ -41,23 +39,27 @@ function getDeloadRecommendation({
       message: "Votre charge accumulée suggère qu'un deload léger serait bénéfique pour relancer la progression.",
       reduction: "Réduction volume -40% OU intensité -20%",
       activities: "Séances plus courtes, travail technique, mobilité, cardio léger.",
-      duration: "4 à 5 jours"
+      duration: "4 à 5 jours",
+      bgColor: "bg-yellow-50",
+      textColor: "text-yellow-700"
     };
   } else {
     return {
       need: true,
       message: "Votre score indique une accumulation importante de fatigue. Un deload complet est fortement recommandé pour prévenir la stagnation ou le surmenage.",
-      reduction: "Réduction combinée : volume -50% ET intensité -30%",
+      reduction: "Réduction combinée : volume -50% ET intensité -30%",
       activities: "Technique, mobilité, sports doux (marche, yoga), récupération active.",
-      duration: "5 à 7 jours"
+      duration: "5 à 7 jours",
+      bgColor: "bg-red-50",
+      textColor: "text-red-700"
     };
   }
 }
 
 const DeloadCalculator = () => {
-  const [fatigue, setFatigue] = useState(6); // fatigue générale 0-10
-  const [weeksSinceLastDeload, setWeeksSinceLastDeload] = useState(4); // 1-12+
-  const [intensity, setIntensity] = useState(8); // charge/intensité moyenne
+  const [fatigue, setFatigue] = useState(6);
+  const [weeksSinceLastDeload, setWeeksSinceLastDeload] = useState(4);
+  const [intensity, setIntensity] = useState(8);
   const [highVolume, setHighVolume] = useState(false);
   const [showResult, setShowResult] = useState(false);
 
@@ -78,24 +80,22 @@ const DeloadCalculator = () => {
   }
 
   return (
-    <ResponsiveContainer 
-      className="max-w-2xl mx-auto pt-4 md:pt-6"
-      mobileClassName="px-4"
-      tabletClassName="px-6"
-      desktopClassName="px-8"
-    >
+    <ResponsiveContainer className="w-full">
       <MobileCard className="w-full">
-        <CardHeader className="pb-4 md:pb-6">
-          <CardTitle className="text-xl md:text-2xl text-black">Calculateur de Deload</CardTitle>
-          <CardDescription className="text-sm md:text-base text-black leading-relaxed">
-            Déterminez si une semaine de décharge est recommandée pour optimiser récupération et progression, et obtenez vos consignes personnalisées.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="px-4 md:px-6">
+        <div className="p-4 md:p-6">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">
+              Calculateur de Deload
+            </h2>
+            <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+              Déterminez si une semaine de décharge est recommandée pour optimiser récupération et progression, et obtenez vos consignes personnalisées.
+            </p>
+          </div>
+
           {!showResult ? (
-            <form className="flex flex-col gap-5 md:gap-6" onSubmit={handleSubmit}>
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="space-y-3">
-                <Label className="text-sm md:text-base">Niveau de fatigue général (subjectif)</Label>
+                <Label className="text-sm md:text-base font-medium">Niveau de fatigue général (subjectif)</Label>
                 <Slider
                   min={0}
                   max={10}
@@ -104,11 +104,11 @@ const DeloadCalculator = () => {
                   onValueChange={([v]) => setFatigue(v)}
                   className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground font-medium">{fatigue}/10</div>
+                <div className="text-sm text-gray-500 font-medium">{fatigue}/10</div>
               </div>
               
               <div className="space-y-3">
-                <Label className="text-sm md:text-base">Semaines écoulées depuis le dernier deload</Label>
+                <Label className="text-sm md:text-base font-medium">Semaines écoulées depuis le dernier deload</Label>
                 <Slider
                   min={1}
                   max={12}
@@ -117,13 +117,13 @@ const DeloadCalculator = () => {
                   onValueChange={([v]) => setWeeksSinceLastDeload(v)}
                   className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground font-medium">
+                <div className="text-sm text-gray-500 font-medium">
                   {weeksSinceLastDeload} semaine{weeksSinceLastDeload > 1 ? "s" : ""}
                 </div>
               </div>
               
               <div className="space-y-3">
-                <Label className="text-sm md:text-base">Intensité moyenne des séances (charge relative)</Label>
+                <Label className="text-sm md:text-base font-medium">Intensité moyenne des séances (charge relative)</Label>
                 <Slider
                   min={5}
                   max={10}
@@ -132,15 +132,15 @@ const DeloadCalculator = () => {
                   onValueChange={([v]) => setIntensity(v)}
                   className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground font-medium">{intensity}/10</div>
+                <div className="text-sm text-gray-500 font-medium">{intensity}/10</div>
               </div>
               
               <div className="space-y-3">
-                <Label className="text-sm md:text-base">Volume d'entraînement élevé sur les 3 dernières semaines ?</Label>
-                <div className="flex items-center gap-3 mt-2">
+                <Label className="text-sm md:text-base font-medium">Volume d'entraînement élevé sur les 3 dernières semaines ?</Label>
+                <div className="flex gap-3 mt-2">
                   <MobileButton
                     type="button"
-                    variant={highVolume ? "primary" : "outline"}
+                    variant={highVolume ? "default" : "outline"}
                     size="md"
                     onClick={() => setHighVolume(true)}
                     className="flex-1"
@@ -149,7 +149,7 @@ const DeloadCalculator = () => {
                   </MobileButton>
                   <MobileButton
                     type="button"
-                    variant={!highVolume ? "primary" : "outline"}
+                    variant={!highVolume ? "default" : "outline"}
                     size="md"
                     onClick={() => setHighVolume(false)}
                     className="flex-1"
@@ -159,42 +159,43 @@ const DeloadCalculator = () => {
                 </div>
               </div>
               
-              <MobileButton type="submit" className="w-full mt-4" size="lg">
+              <MobileButton type="submit" className="w-full mt-6" size="lg">
                 Calculer ma recommandation de deload
               </MobileButton>
             </form>
           ) : (
-            <div className="animate-fade-in space-y-4">
-              <div className={`text-xl md:text-2xl font-semibold ${result.need ? "text-yellow-700" : "text-green-700"}`}>
-                {result.need ? "Deload Recommandé" : "Pas de deload nécessaire"}
-              </div>
-              
-              <div className="text-base md:text-lg leading-relaxed">
-                {result.message}
+            <div className="space-y-6">
+              <div className={`p-6 rounded-lg ${result.bgColor}`}>
+                <div className={`text-2xl font-bold text-center mb-3 ${result.textColor}`}>
+                  {result.need ? "Deload Recommandé" : "Pas de deload nécessaire"}
+                </div>
+                <p className={`text-center ${result.textColor}`}>
+                  {result.message}
+                </p>
               </div>
               
               {result.need && (
-                <>
-                  <div className="p-4 bg-muted rounded-lg space-y-2">
-                    <div className="text-sm md:text-base">
-                      <b>Réduction recommandée :</b> {result.reduction}
+                <div className="space-y-4">
+                  <div className="p-4 bg-gray-50 rounded-lg space-y-3">
+                    <div className="text-sm">
+                      <strong>Réduction recommandée :</strong> {result.reduction}
                     </div>
-                    <div className="text-sm md:text-base">
-                      <b>Durée idéale :</b> {result.duration}
+                    <div className="text-sm">
+                      <strong>Durée idéale :</strong> {result.duration}
                     </div>
-                    <div className="text-sm md:text-base">
-                      <b>Activités suggérées :</b> {result.activities}
+                    <div className="text-sm">
+                      <strong>Activités suggérées :</strong> {result.activities}
                     </div>
                   </div>
                   
                   <div className="p-4 bg-blue-50 rounded-lg">
-                    <ul className="space-y-2 text-xs md:text-sm text-blue-800">
+                    <ul className="space-y-2 text-sm text-blue-800">
                       <li>• Le deload facilite la surcompensation - profitez-en pour affiner la technique et écouter vos sensations.</li>
                       <li>• N'ayez pas peur de "lever le pied" quelques jours, les progrès s'accélèrent après un bon deload !</li>
                       <li>• Si la fatigue persiste après le deload, pensez à réévaluer volume et intensité dans votre prochain cycle.</li>
                     </ul>
                   </div>
-                </>
+                </div>
               )}
               
               <MobileButton variant="secondary" onClick={handleReset} size="lg" className="w-full">
@@ -202,7 +203,7 @@ const DeloadCalculator = () => {
               </MobileButton>
             </div>
           )}
-        </CardContent>
+        </div>
       </MobileCard>
     </ResponsiveContainer>
   );

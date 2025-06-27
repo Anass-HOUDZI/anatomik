@@ -1,5 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
 import { StorageManager } from '../../utils/StorageManager';
+import { ResponsiveContainer } from "@/components/ui/responsive-container";
+import { MobileCard } from "@/components/ui/mobile-card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const TimingCalculator: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -127,196 +132,199 @@ const TimingCalculator: React.FC = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <ResponsiveContainer className="w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Input Form */}
-        <div className="space-y-6">
-          <h3 className="text-2xl font-bold mb-6 text-black">Paramètres d'entraînement</h3>
-          
-          <div className="input-group-custom">
-            <label htmlFor="workoutTime">Heure d'entraînement</label>
-            <input
-              type="time"
-              id="workoutTime"
-              name="workoutTime"
-              value={formData.workoutTime}
-              onChange={handleInputChange}
-              className="form-control-custom"
-            />
-          </div>
+        <MobileCard className="w-full">
+          <div className="p-4 md:p-6">
+            <h3 className="text-xl md:text-2xl font-bold mb-6 text-black">Paramètres d'entraînement</h3>
+            
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="workoutTime" className="text-sm md:text-base font-medium">Heure d'entraînement</Label>
+                <Input
+                  type="time"
+                  id="workoutTime"
+                  name="workoutTime"
+                  value={formData.workoutTime}
+                  onChange={handleInputChange}
+                  className="mobile-input"
+                />
+              </div>
 
-          <div className="input-group-custom">
-            <label htmlFor="workoutDuration">Durée (minutes)</label>
-            <input
-              type="number"
-              id="workoutDuration"
-              name="workoutDuration"
-              value={formData.workoutDuration}
-              onChange={handleInputChange}
-              className="form-control-custom"
-              min="30"
-              max="180"
-              step="15"
-            />
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="workoutDuration" className="text-sm md:text-base font-medium">Durée (minutes)</Label>
+                <Input
+                  type="number"
+                  id="workoutDuration"
+                  name="workoutDuration"
+                  value={formData.workoutDuration}
+                  onChange={handleInputChange}
+                  className="mobile-input"
+                  min="30"
+                  max="180"
+                  step="15"
+                />
+              </div>
 
-          <div className="input-group-custom">
-            <label htmlFor="workoutType">Type d'entraînement</label>
-            <select
-              id="workoutType"
-              name="workoutType"
-              value={formData.workoutType}
-              onChange={handleInputChange}
-              className="form-control-custom"
-            >
-              {workoutTypes.map(type => (
-                <option key={type.value} value={type.value}>
-                  {type.label}
-                </option>
-              ))}
-            </select>
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="workoutType" className="text-sm md:text-base font-medium">Type d'entraînement</Label>
+                <select
+                  id="workoutType"
+                  name="workoutType"
+                  value={formData.workoutType}
+                  onChange={handleInputChange}
+                  className="w-full p-3 border rounded-lg mobile-input"
+                >
+                  {workoutTypes.map(type => (
+                    <option key={type.value} value={type.value}>
+                      {type.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-          <div className="input-group-custom">
-            <label htmlFor="goal">Objectif principal</label>
-            <select
-              id="goal"
-              name="goal"
-              value={formData.goal}
-              onChange={handleInputChange}
-              className="form-control-custom"
-            >
-              {goals.map(goal => (
-                <option key={goal.value} value={goal.value}>
-                  {goal.label}
-                </option>
-              ))}
-            </select>
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="goal" className="text-sm md:text-base font-medium">Objectif principal</Label>
+                <select
+                  id="goal"
+                  name="goal"
+                  value={formData.goal}
+                  onChange={handleInputChange}
+                  className="w-full p-3 border rounded-lg mobile-input"
+                >
+                  {goals.map(goal => (
+                    <option key={goal.value} value={goal.value}>
+                      {goal.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-          <div className="input-group-custom">
-            <label htmlFor="weight">Poids corporel (kg)</label>
-            <input
-              type="number"
-              id="weight"
-              name="weight"
-              value={formData.weight}
-              onChange={handleInputChange}
-              className="form-control-custom"
-              placeholder="Ex: 70"
-              min="40"
-              max="200"
-              step="0.1"
-            />
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="weight" className="text-sm md:text-base font-medium">Poids corporel (kg)</Label>
+                <Input
+                  type="number"
+                  id="weight"
+                  name="weight"
+                  value={formData.weight}
+                  onChange={handleInputChange}
+                  className="mobile-input"
+                  placeholder="Ex: 70"
+                  min="40"
+                  max="200"
+                  step="0.1"
+                />
+              </div>
 
-          <div className="input-group-custom">
-            <label htmlFor="preworkoutMeal">Dernier repas avant (heures)</label>
-            <select
-              id="preworkoutMeal"
-              name="preworkoutMeal"
-              value={formData.preworkoutMeal}
-              onChange={handleInputChange}
-              className="form-control-custom"
-            >
-              <option value="1">1 heure</option>
-              <option value="2">2 heures</option>
-              <option value="3">3 heures</option>
-              <option value="4">4+ heures</option>
-            </select>
+              <div className="space-y-2">
+                <Label htmlFor="preworkoutMeal" className="text-sm md:text-base font-medium">Dernier repas avant (heures)</Label>
+                <select
+                  id="preworkoutMeal"
+                  name="preworkoutMeal"
+                  value={formData.preworkoutMeal}
+                  onChange={handleInputChange}
+                  className="w-full p-3 border rounded-lg mobile-input"
+                >
+                  <option value="1">1 heure</option>
+                  <option value="2">2 heures</option>
+                  <option value="3">3 heures</option>
+                  <option value="4">4+ heures</option>
+                </select>
+              </div>
+            </div>
           </div>
-        </div>
+        </MobileCard>
 
         {/* Recommendations */}
-        <div className="space-y-6">
-          <h3 className="text-2xl font-bold mb-6 text-black">Planning nutritionnel</h3>
-          
-          {recommendations.preWorkout.length > 0 && (
-            <div className="bg-card border border-custom rounded-lg p-6">
-              <h4 className="font-semibold mb-4 flex items-center text-blue-600">
-                <i className="fas fa-clock mr-2"></i>
-                Pré-entraînement
-              </h4>
-              <div className="space-y-3">
-                {recommendations.preWorkout.map((rec, index) => (
-                  <div key={index} className="border-l-4 border-blue-500 pl-4">
-                    <div className="font-medium text-blue-900">{rec.time}</div>
-                    <div className="text-sm font-medium">{rec.food}</div>
-                    <div className="text-xs text-muted-foreground">{rec.reason}</div>
+        <MobileCard className="w-full">
+          <div className="p-4 md:p-6">
+            <h3 className="text-xl md:text-2xl font-bold mb-6 text-black">Planning nutritionnel</h3>
+            
+            <div className="space-y-6">
+              {recommendations.preWorkout.length > 0 && (
+                <div className="p-4 bg-blue-50 rounded-lg">
+                  <h4 className="font-semibold mb-3 flex items-center text-blue-600">
+                    🕐 Pré-entraînement
+                  </h4>
+                  <div className="space-y-3">
+                    {recommendations.preWorkout.map((rec, index) => (
+                      <div key={index} className="border-l-4 border-blue-500 pl-4">
+                        <div className="font-medium text-blue-900">{rec.time}</div>
+                        <div className="text-sm font-medium">{rec.food}</div>
+                        <div className="text-xs text-blue-700">{rec.reason}</div>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
+              )}
+
+              {recommendations.duringWorkout.length > 0 && (
+                <div className="p-4 bg-green-50 rounded-lg">
+                  <h4 className="font-semibold mb-3 flex items-center text-green-600">
+                    🏋️ Pendant l'entraînement
+                  </h4>
+                  <div className="space-y-3">
+                    {recommendations.duringWorkout.map((rec, index) => (
+                      <div key={index} className="border-l-4 border-green-500 pl-4">
+                        <div className="font-medium text-green-900">{rec.timing}</div>
+                        <div className="text-sm font-medium">{rec.supplement} - {rec.amount}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {recommendations.postWorkout.length > 0 && (
+                <div className="p-4 bg-orange-50 rounded-lg">
+                  <h4 className="font-semibold mb-3 flex items-center text-orange-600">
+                    ⚡ Post-entraînement
+                  </h4>
+                  <div className="space-y-3">
+                    {recommendations.postWorkout.map((rec, index) => (
+                      <div key={index} className="border-l-4 border-orange-500 pl-4">
+                        <div className="font-medium text-orange-900">{rec.time}</div>
+                        <div className="text-sm font-medium">{rec.food}</div>
+                        <div className="text-xs text-orange-700">{rec.reason}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {recommendations.evening.length > 0 && (
+                <div className="p-4 bg-purple-50 rounded-lg">
+                  <h4 className="font-semibold mb-3 flex items-center text-purple-600">
+                    🌙 Soirée
+                  </h4>
+                  <div className="space-y-3">
+                    {recommendations.evening.map((rec, index) => (
+                      <div key={index} className="border-l-4 border-purple-500 pl-4">
+                        <div className="font-medium text-purple-900">{rec.time}</div>
+                        <div className="text-sm font-medium">{rec.food}</div>
+                        <div className="text-xs text-purple-700">{rec.reason}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="p-4 bg-gradient-to-r from-blue-50 to-green-50 border border-blue-200 rounded-lg">
+                <h4 className="font-semibold mb-2 text-blue-900 flex items-center">
+                  💡 Principes clés
+                </h4>
+                <ul className="text-sm text-blue-800 space-y-1">
+                  <li>• <strong>Fenêtre anabolique :</strong> 30min-2h post-entraînement</li>
+                  <li>• <strong>Hydratation :</strong> Avant, pendant et après l'effort</li>
+                  <li>• <strong>Timing :</strong> Adaptation selon objectifs et contraintes</li>
+                  <li>• <strong>Consistance :</strong> Régularité plus importante que perfection</li>
+                </ul>
               </div>
             </div>
-          )}
-
-          {recommendations.duringWorkout.length > 0 && (
-            <div className="bg-card border border-custom rounded-lg p-6">
-              <h4 className="font-semibold mb-4 flex items-center text-green-600">
-                <i className="fas fa-dumbbell mr-2"></i>
-                Pendant l'entraînement
-              </h4>
-              <div className="space-y-3">
-                {recommendations.duringWorkout.map((rec, index) => (
-                  <div key={index} className="border-l-4 border-green-500 pl-4">
-                    <div className="font-medium text-green-900">{rec.timing}</div>
-                    <div className="text-sm font-medium">{rec.supplement} - {rec.amount}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {recommendations.postWorkout.length > 0 && (
-            <div className="bg-card border border-custom rounded-lg p-6">
-              <h4 className="font-semibold mb-4 flex items-center text-orange-600">
-                <i className="fas fa-bolt mr-2"></i>
-                Post-entraînement
-              </h4>
-              <div className="space-y-3">
-                {recommendations.postWorkout.map((rec, index) => (
-                  <div key={index} className="border-l-4 border-orange-500 pl-4">
-                    <div className="font-medium text-orange-900">{rec.time}</div>
-                    <div className="text-sm font-medium">{rec.food}</div>
-                    <div className="text-xs text-muted-foreground">{rec.reason}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {recommendations.evening.length > 0 && (
-            <div className="bg-card border border-custom rounded-lg p-6">
-              <h4 className="font-semibold mb-4 flex items-center text-purple-600">
-                <i className="fas fa-moon mr-2"></i>
-                Soirée
-              </h4>
-              <div className="space-y-3">
-                {recommendations.evening.map((rec, index) => (
-                  <div key={index} className="border-l-4 border-purple-500 pl-4">
-                    <div className="font-medium text-purple-900">{rec.time}</div>
-                    <div className="text-sm font-medium">{rec.food}</div>
-                    <div className="text-xs text-muted-foreground">{rec.reason}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <div className="bg-gradient-to-r from-blue-50 to-green-50 border border-blue-200 rounded-lg p-4">
-            <h4 className="font-semibold mb-2 text-blue-900 flex items-center">
-              <i className="fas fa-lightbulb mr-2"></i>
-              Principes clés
-            </h4>
-            <ul className="text-sm text-blue-800 space-y-1">
-              <li>• <strong>Fenêtre anabolique :</strong> 30min-2h post-workout</li>
-              <li>• <strong>Hydratation :</strong> Commencer 2h avant l'entraînement</li>
-              <li>• <strong>Digestion :</strong> Éviter repas copieux 2h avant</li>
-              <li>• <strong>Récupération :</strong> Protéines + glucides dans l'heure</li>
-            </ul>
           </div>
-        </div>
+        </MobileCard>
       </div>
-    </div>
+    </ResponsiveContainer>
   );
 };
 

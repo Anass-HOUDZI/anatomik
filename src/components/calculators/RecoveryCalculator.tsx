@@ -1,16 +1,12 @@
+
 import React, { useState } from "react";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
+import { ResponsiveContainer } from "@/components/ui/responsive-container";
+import { MobileCard } from "@/components/ui/mobile-card";
+import { MobileButton } from "@/components/ui/mobile-button";
 
-// Helper pour calcul score
 function getRecoveryEstimate(data: {
   intensity: number;
   sleep: number;
@@ -18,7 +14,6 @@ function getRecoveryEstimate(data: {
   age: number;
   fatigue: number;
 }) {
-  // Barème pondéré : plus le score total est élevé, plus la récup est lente
   let score =
     data.intensity * 2 +
     (10 - data.sleep) * 1.7 +
@@ -30,35 +25,35 @@ function getRecoveryEstimate(data: {
     return {
       level: "Rapide",
       time: "8-20h",
-      advice:
-        "Votre récupération est optimale ! Une séance peut être programmée dans la journée ou le lendemain.",
-      color: "text-green-600",
+      advice: "Votre récupération est optimale ! Une séance peut être programmée dans la journée ou le lendemain.",
+      color: "text-green-600", 
+      bgColor: "bg-green-50"
     };
   } else if (score < 28) {
     return {
       level: "Modérée",
       time: "20-36h",
-      advice:
-        "Pensez à surveiller votre récupération. Un délai d'au moins 1 journée entre les séances est conseillé.",
+      advice: "Pensez à surveiller votre récupération. Un délai d'au moins 1 journée entre les séances est conseillé.",
       color: "text-yellow-600",
+      bgColor: "bg-yellow-50"
     };
   } else {
     return {
       level: "Longue",
       time: "36-72h",
-      advice:
-        "Votre corps montre des signes de récupération lente. Accordez-vous au minimum 36h avant la prochaine séance ciblant le même groupe musculaire.",
+      advice: "Votre corps montre des signes de récupération lente. Accordez-vous au minimum 36h avant la prochaine séance ciblant le même groupe musculaire.",
       color: "text-red-600",
+      bgColor: "bg-red-50"
     };
   }
 }
 
 const RecoveryCalculator = () => {
-  const [intensity, setIntensity] = useState(7); // effort séance précédente
-  const [sleep, setSleep] = useState(7); // heures de sommeil (0-10)
-  const [soreness, setSoreness] = useState(4); // courbatures (0-10)
+  const [intensity, setIntensity] = useState(7);
+  const [sleep, setSleep] = useState(7);
+  const [soreness, setSoreness] = useState(4);
   const [age, setAge] = useState(30);
-  const [fatigue, setFatigue] = useState(4); // 0-10
+  const [fatigue, setFatigue] = useState(4);
   const [showResult, setShowResult] = useState(false);
 
   const result = getRecoveryEstimate({
@@ -79,107 +74,122 @@ const RecoveryCalculator = () => {
   }
 
   return (
-    <div className="max-w-2xl mx-auto pt-6">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-black">Calculateur de Récupération</CardTitle>
-          <CardDescription className="text-black">
-            Estimez le temps optimal à respecter entre deux séances pour maximiser vos progrès et éviter le surmenage.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+    <ResponsiveContainer className="w-full">
+      <MobileCard className="w-full">
+        <div className="p-4 md:p-6">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">
+              Calculateur de Récupération
+            </h2>
+            <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+              Estimez le temps optimal à respecter entre deux séances pour maximiser vos progrès et éviter le surmenage.
+            </p>
+          </div>
+
           {!showResult ? (
-            <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-              <div>
-                <Label>Intensité de la dernière séance</Label>
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              <div className="space-y-3">
+                <Label className="text-sm md:text-base font-medium">Intensité de la dernière séance</Label>
                 <Slider
                   min={4}
                   max={10}
                   step={1}
                   value={[intensity]}
                   onValueChange={([v]) => setIntensity(v)}
-                  className="mt-1"
+                  className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground">{intensity}/10</div>
+                <div className="text-sm text-gray-500 font-medium">{intensity}/10</div>
               </div>
-              <div>
-                <Label>Sommeil cette nuit (0 = très mauvais, 10 = excellent)</Label>
+
+              <div className="space-y-3">
+                <Label className="text-sm md:text-base font-medium">Qualité du sommeil (0 = très mauvais, 10 = excellent)</Label>
                 <Slider
                   min={0}
                   max={10}
                   step={1}
                   value={[sleep]}
                   onValueChange={([v]) => setSleep(v)}
-                  className="mt-1"
+                  className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground">{sleep}/10</div>
+                <div className="text-sm text-gray-500 font-medium">{sleep}/10</div>
               </div>
-              <div>
-                <Label>Courbatures actuelles</Label>
+
+              <div className="space-y-3">
+                <Label className="text-sm md:text-base font-medium">Courbatures actuelles</Label>
                 <Slider
                   min={0}
                   max={10}
                   step={1}
                   value={[soreness]}
                   onValueChange={([v]) => setSoreness(v)}
-                  className="mt-1"
+                  className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground">{soreness}/10</div>
+                <div className="text-sm text-gray-500 font-medium">{soreness}/10</div>
               </div>
-              <div>
-                <Label>Âge (plus de 40 ans ? La récupération peut être plus lente)</Label>
+
+              <div className="space-y-3">
+                <Label className="text-sm md:text-base font-medium">Âge</Label>
                 <Slider
                   min={16}
                   max={80}
                   step={1}
                   value={[age]}
                   onValueChange={([v]) => setAge(v)}
-                  className="mt-1"
+                  className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground">{age} ans</div>
+                <div className="text-sm text-gray-500 font-medium">{age} ans</div>
               </div>
-              <div>
-                <Label>Fatigue générale ressentie</Label>
+
+              <div className="space-y-3">
+                <Label className="text-sm md:text-base font-medium">Fatigue générale ressentie</Label>
                 <Slider
                   min={0}
                   max={10}
                   step={1}
                   value={[fatigue]}
                   onValueChange={([v]) => setFatigue(v)}
-                  className="mt-1"
+                  className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground">{fatigue}/10</div>
+                <div className="text-sm text-gray-500 font-medium">{fatigue}/10</div>
               </div>
-              <Button type="submit" className="w-full mt-2">
+
+              <MobileButton type="submit" className="w-full mt-6" size="lg">
                 Calculer mon temps de récupération
-              </Button>
+              </MobileButton>
             </form>
           ) : (
-            <div className="animate-fade-in">
-              <div className={`text-2xl font-semibold mb-2 ${result.color}`}>
-                Récupération : {result.level}
+            <div className="space-y-6">
+              <div className={`text-center p-6 rounded-lg ${result.bgColor}`}>
+                <div className={`text-3xl font-bold mb-2 ${result.color}`}>
+                  Récupération : {result.level}
+                </div>
+                <div className="text-xl font-semibold mb-4">
+                  Temps conseillé : <span className="font-bold">{result.time}</span>
+                </div>
               </div>
-              <div className="text-lg mb-4">
-                Temps conseillé entre 2 séances :{" "}
-                <span className="font-bold">{result.time}</span>
+
+              <div className="p-4 bg-blue-50 rounded-lg">
+                <p className="text-blue-800 font-medium mb-2">{result.advice}</p>
               </div>
-              <div className="mb-2 p-3 bg-muted rounded text-sm text-muted-foreground">
-                {result.advice}
+
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-800">💡 Conseils pour optimiser votre récupération :</h4>
+                <ul className="space-y-2 text-sm text-gray-600">
+                  <li>• Variez les groupes musculaires si récupération non optimale</li>
+                  <li>• L'hydratation et la nutrition accélèrent la récupération</li>
+                  <li>• Le sommeil reste le facteur n°1 pour récupérer vite</li>
+                  <li>• Surveillez le retour à une sensation de fraîcheur</li>
+                </ul>
               </div>
-              <ul className="list-disc ml-6 text-xs text-muted-foreground mb-4">
-                <li>Pensez à varier les groupes musculaires si récupération non optimale.</li>
-                <li>L’hydratation et la nutrition accélèrent la récupération.</li>
-                <li>Le sommeil reste le facteur n°1 pour récupérer vite.</li>
-                <li>Surveillez le retour à une sensation de fraîcheur avant de (re)solliciter un groupe musculaire.</li>
-              </ul>
-              <Button variant="secondary" onClick={handleReset}>
+
+              <MobileButton variant="secondary" onClick={handleReset} className="w-full" size="lg">
                 Nouveau calcul
-              </Button>
+              </MobileButton>
             </div>
           )}
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </MobileCard>
+    </ResponsiveContainer>
   );
 };
 

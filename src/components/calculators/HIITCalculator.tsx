@@ -1,16 +1,11 @@
 
-import React, { useState } from "react";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
+import { ResponsiveContainer } from "@/components/ui/responsive-container";
+import { MobileCard } from "@/components/ui/mobile-card";
+import { MobileButton } from "@/components/ui/mobile-button";
 
 const HIIT_PROTOCOLS = [
   {
@@ -56,8 +51,7 @@ const HIITCalculator = () => {
   const [intensity, setIntensity] = useState(8);
   const [showPlan, setShowPlan] = useState(false);
 
-  // Mettre à jour sliders si preset changé sauf en personnalisé
-  React.useEffect(() => {
+  useEffect(() => {
     if (protocol.name !== "Personnalisé") {
       setWork(protocol.work);
       setRest(protocol.rest);
@@ -79,7 +73,6 @@ const HIITCalculator = () => {
     setShowPlan(false);
   }
 
-  // Génère la table des intervalles
   const intervals = Array.from({ length: cycles }, (_, i) => ({
     index: i + 1,
     work: work,
@@ -87,21 +80,24 @@ const HIITCalculator = () => {
   }));
 
   return (
-    <div className="max-w-2xl mx-auto pt-6">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-black">Calculateur HIIT</CardTitle>
-          <CardDescription className="text-black">
-            Définissez votre protocole d'intervalles haute intensité et obtenez le planning précis avec conseils pros !
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+    <ResponsiveContainer className="w-full">
+      <MobileCard className="w-full">
+        <div className="p-4 md:p-6">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">
+              Calculateur HIIT
+            </h2>
+            <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+              Définissez votre protocole d'intervalles haute intensité et obtenez le planning précis avec conseils pros !
+            </p>
+          </div>
+
           {!showPlan ? (
-            <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-              <div>
-                <Label>Protocole HIIT</Label>
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              <div className="space-y-2">
+                <Label className="text-sm md:text-base font-medium">Protocole HIIT</Label>
                 <select
-                  className="w-full mt-2 border rounded px-2 py-1"
+                  className="w-full p-3 border rounded-lg mobile-input"
                   value={selectedIdx}
                   onChange={e => setSelectedIdx(Number(e.target.value))}
                 >
@@ -111,107 +107,135 @@ const HIITCalculator = () => {
                     </option>
                   ))}
                 </select>
-                <div className="text-xs text-muted-foreground mt-1">{protocol.desc}</div>
+                <div className="text-xs text-gray-500 mt-1">{protocol.desc}</div>
               </div>
-              <div>
-                <Label>Temps d'effort <span className="text-xs text-muted-foreground">/ intervalle</span></Label>
+
+              <div className="space-y-3">
+                <Label className="text-sm md:text-base font-medium">
+                  Temps d'effort <span className="text-xs text-gray-500">/ intervalle</span>
+                </Label>
                 <Slider
                   min={10}
                   max={120}
                   step={5}
                   value={[work]}
                   onValueChange={([v]) => setWork(Number(v))}
-                  className="mt-1"
+                  className="mt-2"
                   disabled={protocol.name !== "Personnalisé"}
                 />
-                <div className="text-sm text-muted-foreground">{work} secondes</div>
+                <div className="text-sm text-gray-500 font-medium">{work} secondes</div>
               </div>
-              <div>
-                <Label>Temps de repos <span className="text-xs text-muted-foreground">/ intervalle</span></Label>
+
+              <div className="space-y-3">
+                <Label className="text-sm md:text-base font-medium">
+                  Temps de repos <span className="text-xs text-gray-500">/ intervalle</span>
+                </Label>
                 <Slider
                   min={5}
                   max={180}
                   step={5}
                   value={[rest]}
                   onValueChange={([v]) => setRest(Number(v))}
-                  className="mt-1"
+                  className="mt-2"
                   disabled={protocol.name !== "Personnalisé"}
                 />
-                <div className="text-sm text-muted-foreground">{rest} secondes</div>
+                <div className="text-sm text-gray-500 font-medium">{rest} secondes</div>
               </div>
-              <div>
-                <Label>Nombre d'intervalles</Label>
+
+              <div className="space-y-3">
+                <Label className="text-sm md:text-base font-medium">Nombre d'intervalles</Label>
                 <Slider
                   min={3}
                   max={20}
                   step={1}
                   value={[cycles]}
                   onValueChange={([v]) => setCycles(Number(v))}
-                  className="mt-1"
+                  className="mt-2"
                   disabled={protocol.name !== "Personnalisé"}
                 />
-                <div className="text-sm text-muted-foreground">{cycles} cycles</div>
+                <div className="text-sm text-gray-500 font-medium">{cycles} cycles</div>
               </div>
-              <div>
-                <Label>Intensité perçue</Label>
+
+              <div className="space-y-3">
+                <Label className="text-sm md:text-base font-medium">Intensité perçue</Label>
                 <Slider
                   min={5}
                   max={10}
                   step={1}
                   value={[intensity]}
                   onValueChange={([v]) => setIntensity(Number(v))}
-                  className="mt-1"
+                  className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground">{intensity}/10 (5 = modéré, 10 = max)</div>
+                <div className="text-sm text-gray-500 font-medium">{intensity}/10 (5 = modéré, 10 = max)</div>
               </div>
-              <div>
-                <Label>Durée totale estimée</Label>
-                <div className="font-semibold mt-1">{totalTime} sec ({totalMinutes} min)</div>
-              </div>
-              <Button type="submit" className="w-full mt-3">Générer mon HIIT</Button>
-            </form>
-          ) : (
-            <div>
-              <h3 className="font-semibold text-lg mb-3">Protocole HIIT Généré</h3>
-              <table className="w-full text-xs border mb-2">
-                <thead>
-                  <tr className="bg-muted">
-                    <th className="py-2 px-2 text-center">Cycle</th>
-                    <th className="py-2 px-2 text-center">Effort (sec)</th>
-                    <th className="py-2 px-2 text-center">Repos (sec)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {intervals.map(iv => (
-                    <tr className={iv.index % 2 === 0 ? "bg-background" : "bg-muted"} key={iv.index}>
-                      <td className="py-1 px-2 text-center">{iv.index}</td>
-                      <td className="py-1 px-2 text-center font-semibold text-primary">{iv.work}</td>
-                      <td className="py-1 px-2 text-center">{iv.rest > 0 ? iv.rest : '-'}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <div className="my-3 text-xs bg-muted px-3 py-2 rounded">
-                <b>Conseils HIIT :</b>
-                <ul className="list-disc ml-4 mt-1">
-                  <li>Échauffez-vous 5-10 min avant de commencer.</li>
-                  <li>Adaptez l’intensité selon votre niveau, ciblez {intensity}/10 sur l’échelle d’effort perçu.</li>
-                  <li>HIIT se suffit à 2-3 séances/semaine pour des progrès significatifs.</li>
-                  <li>Respectez une technique irréprochable même sur la fin.</li>
-                  <li>Hydratez-vous bien et récupérez activement après l’effort.</li>
-                </ul>
-                <div className="mt-2">
-                  <b>Durée totale :</b> <span className="font-semibold">{totalTime} sec ({totalMinutes} min)</span>
-                  <br />
-                  <b>Profil :</b> {protocol.name} - Intensité cible : {intensity}/10
+
+              <div className="p-4 bg-blue-50 rounded-lg">
+                <Label className="font-semibold text-blue-800">Durée totale estimée</Label>
+                <div className="text-xl font-bold text-blue-600 mt-1">
+                  {totalTime} sec ({totalMinutes} min)
                 </div>
               </div>
-              <Button onClick={handleReset} variant="secondary">Nouveau protocole</Button>
+
+              <MobileButton type="submit" className="w-full mt-6" size="lg">
+                Générer mon HIIT
+              </MobileButton>
+            </form>
+          ) : (
+            <div className="space-y-6">
+              <h3 className="text-xl font-bold text-center text-black">Protocole HIIT Généré</h3>
+              
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm border rounded-lg">
+                  <thead>
+                    <tr className="bg-gray-50">
+                      <th className="py-3 px-2 text-center font-semibold">Cycle</th>
+                      <th className="py-3 px-2 text-center font-semibold">Effort (sec)</th>
+                      <th className="py-3 px-2 text-center font-semibold">Repos (sec)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {intervals.map(iv => (
+                      <tr className={iv.index % 2 === 0 ? "bg-white" : "bg-gray-50"} key={iv.index}>
+                        <td className="py-2 px-2 text-center font-medium">{iv.index}</td>
+                        <td className="py-2 px-2 text-center font-bold text-red-600">{iv.work}</td>
+                        <td className="py-2 px-2 text-center text-blue-600">{iv.rest > 0 ? iv.rest : '-'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="space-y-4">
+                <div className="p-4 bg-green-50 rounded-lg">
+                  <div className="font-semibold text-green-800 mb-2">🏃‍♂️ Conseils HIIT :</div>
+                  <ul className="space-y-1 text-sm text-green-700">
+                    <li>• Échauffez-vous 5-10 min avant de commencer</li>
+                    <li>• Adaptez l'intensité selon votre niveau, ciblez {intensity}/10</li>
+                    <li>• HIIT se suffit à 2-3 séances/semaine pour des progrès significatifs</li>
+                    <li>• Respectez une technique irréprochable même sur la fin</li>
+                    <li>• Hydratez-vous bien et récupérez activement après l'effort</li>
+                  </ul>
+                </div>
+
+                <div className="p-4 bg-blue-50 rounded-lg text-center">
+                  <div className="font-semibold text-blue-800">📊 Profil :</div>
+                  <div className="text-blue-700">
+                    {protocol.name} - Intensité cible : {intensity}/10
+                  </div>
+                  <div className="text-xl font-bold text-blue-600 mt-2">
+                    Durée totale : {totalTime} sec ({totalMinutes} min)
+                  </div>
+                </div>
+              </div>
+
+              <MobileButton onClick={handleReset} variant="secondary" className="w-full" size="lg">
+                Nouveau protocole
+              </MobileButton>
             </div>
           )}
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </MobileCard>
+    </ResponsiveContainer>
   );
 };
 

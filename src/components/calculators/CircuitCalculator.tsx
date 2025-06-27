@@ -1,15 +1,11 @@
+
 import React, { useState } from "react";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
+import { ResponsiveContainer } from "@/components/ui/responsive-container";
+import { MobileCard } from "@/components/ui/mobile-card";
+import { MobileButton } from "@/components/ui/mobile-button";
 
 const defaultExos = [
   "Pompes",
@@ -30,9 +26,7 @@ const CircuitCalculator: React.FC = () => {
   const [workTime, setWorkTime] = useState(40);
   const [restTime, setRestTime] = useState(20);
   const [betweenRoundRest, setBetweenRoundRest] = useState(60);
-  const [stationNames, setStationNames] = useState<string[]>(
-    Array(6).fill("")
-  );
+  const [stationNames, setStationNames] = useState<string[]>(Array(6).fill(""));
   const [showPlan, setShowPlan] = useState(false);
 
   const handleStationNameChange = (i: number, val: string) => {
@@ -56,19 +50,20 @@ const CircuitCalculator: React.FC = () => {
     setStationNames(Array(6).fill(""));
   };
 
-  // Afficher que tous les noms d'exercices sont remplis
   const stationFields = [];
   for (let i = 0; i < nbStations; i++) {
     stationFields.push(
-      <div key={i} className="mb-2">
-        <Label htmlFor={`station${i}`}>Station {i + 1}</Label>
+      <div key={i} className="space-y-2">
+        <Label htmlFor={`station${i}`} className="text-sm md:text-base font-medium">
+          Station {i + 1}
+        </Label>
         <Input
           id={`station${i}`}
           list="exoSuggestions"
           placeholder={defaultExos[i]}
           value={stationNames[i] || ""}
           onChange={(e) => handleStationNameChange(i, e.target.value)}
-          className="mt-1"
+          className="mobile-input"
           required
         />
         <datalist id="exoSuggestions">
@@ -81,19 +76,22 @@ const CircuitCalculator: React.FC = () => {
   }
 
   return (
-    <div className="max-w-2xl mx-auto pt-6">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-black">Calculateur de Circuit Training</CardTitle>
-          <CardDescription className="text-black">
-            Générez facilement votre circuit&nbsp;: sélectionnez les stations/exercices, le temps d'effort/repos et obtenez le planning détaillé.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+    <ResponsiveContainer className="w-full">
+      <MobileCard className="w-full">
+        <div className="p-4 md:p-6">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">
+              Calculateur de Circuit Training
+            </h2>
+            <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+              Générez facilement votre circuit : sélectionnez les stations/exercices, le temps d'effort/repos et obtenez le planning détaillé.
+            </p>
+          </div>
+
           {!showPlan ? (
-            <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-              <div>
-                <Label>Nombre de stations (exercices enchaînés)</Label>
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              <div className="space-y-3">
+                <Label className="text-sm md:text-base font-medium">Nombre de stations (exercices enchaînés)</Label>
                 <Slider
                   min={2}
                   max={6}
@@ -102,14 +100,15 @@ const CircuitCalculator: React.FC = () => {
                   onValueChange={([v]) => setNbStations(Number(v))}
                   className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground">
-                  {nbStations} stations
-                </div>
+                <div className="text-sm text-gray-500 font-medium">{nbStations} stations</div>
               </div>
-              {/* Stations/exos */}
-              {stationFields}
-              <div>
-                <Label>Nombre de tours (rounds complets)</Label>
+
+              <div className="space-y-4">
+                {stationFields}
+              </div>
+
+              <div className="space-y-3">
+                <Label className="text-sm md:text-base font-medium">Nombre de tours (rounds complets)</Label>
                 <Slider
                   min={1}
                   max={6}
@@ -118,12 +117,11 @@ const CircuitCalculator: React.FC = () => {
                   onValueChange={([v]) => setNbTours(Number(v))}
                   className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground">
-                  {nbTours} tours
-                </div>
+                <div className="text-sm text-gray-500 font-medium">{nbTours} tours</div>
               </div>
-              <div>
-                <Label>Temps d'effort par station (secondes)</Label>
+
+              <div className="space-y-3">
+                <Label className="text-sm md:text-base font-medium">Temps d'effort par station (secondes)</Label>
                 <Slider
                   min={10}
                   max={90}
@@ -132,12 +130,11 @@ const CircuitCalculator: React.FC = () => {
                   onValueChange={([v]) => setWorkTime(Number(v))}
                   className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground">
-                  {workTime} secondes
-                </div>
+                <div className="text-sm text-gray-500 font-medium">{workTime} secondes</div>
               </div>
-              <div>
-                <Label>Repos entre stations (secondes)</Label>
+
+              <div className="space-y-3">
+                <Label className="text-sm md:text-base font-medium">Repos entre stations (secondes)</Label>
                 <Slider
                   min={5}
                   max={60}
@@ -146,12 +143,11 @@ const CircuitCalculator: React.FC = () => {
                   onValueChange={([v]) => setRestTime(Number(v))}
                   className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground">
-                  {restTime} sec
-                </div>
+                <div className="text-sm text-gray-500 font-medium">{restTime} sec</div>
               </div>
-              <div>
-                <Label>Repos entre chaque tour (secondes)</Label>
+
+              <div className="space-y-3">
+                <Label className="text-sm md:text-base font-medium">Repos entre chaque tour (secondes)</Label>
                 <Slider
                   min={30}
                   max={180}
@@ -160,86 +156,73 @@ const CircuitCalculator: React.FC = () => {
                   onValueChange={([v]) => setBetweenRoundRest(Number(v))}
                   className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground">
-                  {betweenRoundRest} sec par pause longue
-                </div>
+                <div className="text-sm text-gray-500 font-medium">{betweenRoundRest} sec par pause longue</div>
               </div>
-              <Button type="submit" className="w-full mt-2">
+
+              <MobileButton type="submit" className="w-full mt-6" size="lg">
                 Générer mon Circuit
-              </Button>
+              </MobileButton>
             </form>
           ) : (
-            <div>
-              <h3 className="font-semibold text-lg mb-3">Circuit Training généré</h3>
-              <table className="w-full text-xs border mb-2">
-                <thead>
-                  <tr className="bg-muted">
-                    <th className="py-2 px-2 text-center">Round</th>
-                    {stationNames.slice(0, nbStations).map((name, idx) => (
-                      <th
-                        key={idx}
-                        className="py-2 px-2 text-center min-w-[90px]"
-                      >
-                        {name || `Station ${idx + 1}`}
-                      </th>
-                    ))}
-                    <th className="py-2 px-2 text-center">
-                      Repos fin de tour
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Array.from({ length: nbTours }, (_, roundIdx) => (
-                    <tr className={roundIdx % 2 === 0 ? "bg-background" : "bg-muted"} key={roundIdx}>
-                      <td className="py-1 px-2 text-center">
-                        {roundIdx + 1}
-                      </td>
-                      {stationNames.slice(0, nbStations).map((_, i) => (
-                        <td className="py-1 px-2 text-center" key={i}>
-                          {workTime}s effort<br />
-                          {i < nbStations - 1 ? (
-                            <span className="text-muted-foreground">
-                              {restTime}s repos
-                            </span>
-                          ) : (
-                            "-"
-                          )}
-                        </td>
+            <div className="space-y-6">
+              <h3 className="text-xl font-bold text-center text-black">Circuit Training généré</h3>
+              
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm border rounded-lg">
+                  <thead>
+                    <tr className="bg-gray-50">
+                      <th className="py-3 px-2 text-center font-semibold">Round</th>
+                      {stationNames.slice(0, nbStations).map((name, idx) => (
+                        <th key={idx} className="py-3 px-2 text-center font-semibold min-w-[90px]">
+                          {name || `Station ${idx + 1}`}
+                        </th>
                       ))}
-                      <td className="py-1 px-2 text-center">
-                        {roundIdx === nbTours - 1 ? "-" : `${betweenRoundRest}s`}
-                      </td>
+                      <th className="py-3 px-2 text-center font-semibold">Repos fin de tour</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-              <div className="my-3 text-xs bg-muted px-3 py-2 rounded">
-                <div>
-                  <b>Conseils Circuit Training :</b>
-                  <ul className="list-disc ml-4 mt-1">
-                    <li>
-                      Alternez les groupes musculaires pour limiter la fatigue locale.
-                    </li>
-                    <li>
-                      Privilégiez des mouvements fonctionnels pour maximiser l'effet cardio et global.
-                    </li>
-                    <li>
-                      Hydratez-vous bien entre les rounds, et adaptez le temps d'effort selon votre niveau.
-                    </li>
-                  </ul>
-                  <div className="mt-1">
-                    <b>Structure :</b> Enchaînez chaque station <b>{workTime}s</b>, reposez-vous <b>{restTime}s</b> entre chaque, et <b>{betweenRoundRest}s</b> entre les rounds.
-                  </div>
+                  </thead>
+                  <tbody>
+                    {Array.from({ length: nbTours }, (_, roundIdx) => (
+                      <tr className={roundIdx % 2 === 0 ? "bg-white" : "bg-gray-50"} key={roundIdx}>
+                        <td className="py-2 px-2 text-center font-medium">{roundIdx + 1}</td>
+                        {stationNames.slice(0, nbStations).map((_, i) => (
+                          <td className="py-2 px-2 text-center" key={i}>
+                            <div className="font-bold text-red-600">{workTime}s effort</div>
+                            {i < nbStations - 1 ? (
+                              <div className="text-blue-600 text-xs">{restTime}s repos</div>
+                            ) : (
+                              <div className="text-xs">-</div>
+                            )}
+                          </td>
+                        ))}
+                        <td className="py-2 px-2 text-center">
+                          {roundIdx === nbTours - 1 ? "-" : `${betweenRoundRest}s`}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="p-4 bg-green-50 rounded-lg">
+                <div className="font-semibold text-green-800 mb-2">🏃‍♂️ Conseils Circuit Training :</div>
+                <ul className="space-y-1 text-sm text-green-700">
+                  <li>• Alternez les groupes musculaires pour limiter la fatigue locale</li>
+                  <li>• Privilégiez des mouvements fonctionnels pour maximiser l'effet cardio et global</li>
+                  <li>• Hydratez-vous bien entre les rounds, et adaptez le temps d'effort selon votre niveau</li>
+                </ul>
+                <div className="mt-3 p-3 bg-white rounded">
+                  <strong>Structure :</strong> Enchaînez chaque station <strong>{workTime}s</strong>, reposez-vous <strong>{restTime}s</strong> entre chaque, et <strong>{betweenRoundRest}s</strong> entre les rounds.
                 </div>
               </div>
-              <Button variant="secondary" onClick={handleReset}>
+
+              <MobileButton variant="secondary" onClick={handleReset} className="w-full" size="lg">
                 Nouveau circuit
-              </Button>
+              </MobileButton>
             </div>
           )}
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </MobileCard>
+    </ResponsiveContainer>
   );
 };
 

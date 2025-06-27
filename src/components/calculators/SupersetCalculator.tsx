@@ -1,10 +1,12 @@
 
 import React, { useState } from "react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
+import { ResponsiveContainer } from "@/components/ui/responsive-container";
+import { MobileCard } from "@/components/ui/mobile-card";
+import { MobileButton } from "@/components/ui/mobile-button";
 
 const exerciseSuggestions = [
   "Développé couché (pectoraux)",
@@ -54,7 +56,6 @@ const SupersetCalculator: React.FC = () => {
     setRestCycle(90);
   };
 
-  // Conseils dynamiques
   let conseil = "";
   if (exA && exB) {
     if (isMuscleChainMatch(exA, exB)) {
@@ -67,19 +68,22 @@ const SupersetCalculator: React.FC = () => {
   }
 
   return (
-    <div className="max-w-2xl mx-auto pt-6">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-black">Calculateur de Superset</CardTitle>
-          <CardDescription className="text-black">
-            Créez une superset intelligente&#8239;: combinez deux exercices à enchaîner pour maximiser l'efficacité (agoniste, antagoniste ou zone ciblée).
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+    <ResponsiveContainer className="w-full">
+      <MobileCard className="w-full">
+        <div className="p-4 md:p-6">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">
+              Calculateur de Superset
+            </h2>
+            <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+              Créez une superset intelligente : combinez deux exercices à enchaîner pour maximiser l'efficacité.
+            </p>
+          </div>
+
           {!showPlan ? (
-            <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-              <div>
-                <Label htmlFor="exA">Exercice 1</Label>
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              <div className="space-y-2">
+                <Label htmlFor="exA" className="text-sm md:text-base font-medium">Exercice 1</Label>
                 <Input
                   id="exA"
                   list="exSuggestions"
@@ -87,11 +91,12 @@ const SupersetCalculator: React.FC = () => {
                   value={exA}
                   onChange={e => setExA(e.target.value)}
                   required
-                  className="mt-1"
+                  className="mobile-input"
                 />
               </div>
-              <div>
-                <Label htmlFor="exB">Exercice 2</Label>
+
+              <div className="space-y-2">
+                <Label htmlFor="exB" className="text-sm md:text-base font-medium">Exercice 2</Label>
                 <Input
                   id="exB"
                   list="exSuggestions"
@@ -99,19 +104,23 @@ const SupersetCalculator: React.FC = () => {
                   value={exB}
                   onChange={e => setExB(e.target.value)}
                   required
-                  className="mt-1"
+                  className="mobile-input"
                 />
-                {/* Suggestions DataList */}
                 <datalist id="exSuggestions">
                   {exerciseSuggestions.map(ex => (
                     <option value={ex} key={ex} />
                   ))}
                 </datalist>
               </div>
-              {conseil && <div className="text-xs bg-muted px-3 py-2 rounded mb-2">{conseil}</div>}
 
-              <div>
-                <Label>Nombre de cycles (tours)</Label>
+              {conseil && (
+                <div className="p-3 bg-blue-50 rounded-lg">
+                  <p className="text-sm text-blue-800 font-medium">{conseil}</p>
+                </div>
+              )}
+
+              <div className="space-y-3">
+                <Label className="text-sm md:text-base font-medium">Nombre de cycles (tours)</Label>
                 <Slider
                   min={1}
                   max={6}
@@ -120,10 +129,11 @@ const SupersetCalculator: React.FC = () => {
                   onValueChange={([v]) => setCycles(Number(v))}
                   className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground">{cycles} tours</div>
+                <div className="text-sm text-gray-500 font-medium">{cycles} tours</div>
               </div>
-              <div>
-                <Label>Repos entre exercices (secondes)</Label>
+
+              <div className="space-y-3">
+                <Label className="text-sm md:text-base font-medium">Repos entre exercices (secondes)</Label>
                 <Slider
                   min={0}
                   max={60}
@@ -132,12 +142,13 @@ const SupersetCalculator: React.FC = () => {
                   onValueChange={([v]) => setRestBetween(Number(v))}
                   className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground">
+                <div className="text-sm text-gray-500 font-medium">
                   {restBetween === 0 ? "Aucun repos (enchaînement optimal)" : `${restBetween} sec`}
                 </div>
               </div>
-              <div>
-                <Label>Repos entre cycles (secondes)</Label>
+
+              <div className="space-y-3">
+                <Label className="text-sm md:text-base font-medium">Repos entre cycles (secondes)</Label>
                 <Slider
                   min={30}
                   max={180}
@@ -146,51 +157,61 @@ const SupersetCalculator: React.FC = () => {
                   onValueChange={([v]) => setRestCycle(Number(v))}
                   className="mt-2"
                 />
-                <div className="text-sm text-muted-foreground">{restCycle} sec entre chaque tour</div>
+                <div className="text-sm text-gray-500 font-medium">{restCycle} sec entre chaque tour</div>
               </div>
-              <Button type="submit" className="w-full mt-2">Générer le Superset</Button>
+
+              <MobileButton type="submit" className="w-full mt-6" size="lg">
+                Générer le Superset
+              </MobileButton>
             </form>
           ) : (
-            <div>
-              <h3 className="font-semibold text-lg mb-3">Plan Superset généré</h3>
-              <table className="w-full text-sm border mb-2">
-                <thead>
-                  <tr className="bg-muted">
-                    <th className="py-2 px-2 text-center">Cycle</th>
-                    <th className="py-2 px-2 text-center">Exercice #1</th>
-                    <th className="py-2 px-2 text-center">Exo #2</th>
-                    <th className="py-2 px-2 text-center">Repos après ce tour</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Array.from({ length: cycles }, (_, idx) => (
-                    <tr key={idx} className={idx % 2 === 0 ? "bg-background" : "bg-muted"}>
-                      <td className="py-1 text-center">{idx + 1}</td>
-                      <td className="py-1 text-center">{exA}</td>
-                      <td className="py-1 text-center">{exB}</td>
-                      <td className="py-1 text-center">
-                        {idx === cycles - 1 ? "-" : `${restCycle} s`}
-                      </td>
+            <div className="space-y-6">
+              <h3 className="text-xl font-bold text-center text-black">Plan Superset généré</h3>
+              
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm border rounded-lg">
+                  <thead>
+                    <tr className="bg-gray-50">
+                      <th className="py-3 px-2 text-center font-semibold">Cycle</th>
+                      <th className="py-3 px-2 text-center font-semibold">Exercice #1</th>
+                      <th className="py-3 px-2 text-center font-semibold">Exo #2</th>
+                      <th className="py-3 px-2 text-center font-semibold">Repos après ce tour</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-              <div className="my-3 text-xs bg-muted px-3 py-2 rounded">
-                <div>
-                  <b>Rappel d'exécution :</b> Enchaînez <b>{exA}</b> puis <b>{exB}</b> sans (ou avec {restBetween} s) de repos.<br />
-                  Reposez-vous <b>{restCycle} secondes</b> entre chaque tour. <br />
-                  Idéal pour : gain de temps, métabolisme augmenté, effet pump majoré.
-                </div>
-                {conseil && <div className="mt-2">{conseil}</div>}
+                  </thead>
+                  <tbody>
+                    {Array.from({ length: cycles }, (_, idx) => (
+                      <tr key={idx} className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                        <td className="py-2 px-2 text-center font-medium">{idx + 1}</td>
+                        <td className="py-2 px-2 text-center">{exA}</td>
+                        <td className="py-2 px-2 text-center">{exB}</td>
+                        <td className="py-2 px-2 text-center">
+                          {idx === cycles - 1 ? "-" : `${restCycle} s`}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-              <Button variant="secondary" onClick={handleReset}>
+
+              <div className="p-4 bg-green-50 rounded-lg">
+                <div className="font-semibold text-green-800 mb-2">
+                  🏃‍♂️ Rappel d'exécution :
+                </div>
+                <p className="text-sm text-green-700">
+                  Enchaînez <strong>{exA}</strong> puis <strong>{exB}</strong> avec {restBetween}s de repos.
+                  Reposez-vous <strong>{restCycle} secondes</strong> entre chaque tour.
+                </p>
+                {conseil && <p className="text-sm text-green-700 mt-2">{conseil}</p>}
+              </div>
+
+              <MobileButton variant="secondary" onClick={handleReset} className="w-full" size="lg">
                 Nouvelle superset
-              </Button>
+              </MobileButton>
             </div>
           )}
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </MobileCard>
+    </ResponsiveContainer>
   );
 };
 

@@ -1,5 +1,11 @@
+
 import React, { useState, useEffect } from 'react';
 import { StorageManager } from '../../utils/StorageManager';
+import { ResponsiveContainer } from "@/components/ui/responsive-container";
+import { MobileCard } from "@/components/ui/mobile-card";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const BulkCalculator: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -27,9 +33,9 @@ const BulkCalculator: React.FC = () => {
   ];
 
   const metabolismTypes = [
-    { value: 'slow', label: 'Lent (prend facilement du poids)', multiplier: 0.8 },
+    { value: 'slow', label: 'Lent (prend facilement)', multiplier: 0.8 },
     { value: 'normal', label: 'Normal', multiplier: 1.0 },
-    { value: 'fast', label: 'Rapide (difficile de prendre du poids)', multiplier: 1.3 }
+    { value: 'fast', label: 'Rapide (difficile)', multiplier: 1.3 }
   ];
 
   useEffect(() => {
@@ -62,26 +68,21 @@ const BulkCalculator: React.FC = () => {
     const totalGain = goalWeightNum - currentWeightNum;
     const weeklyGain = totalGain / timelineNum;
     
-    // Taux de gain recommandé selon expérience
     const expLevel = experienceLevels.find(e => e.value === experience);
     const maxWeeklyGain = expLevel?.gainRate || 0.25;
     
-    // Ajustement métabolisme
     const metabType = metabolismTypes.find(m => m.value === metabolism);
     const metabMultiplier = metabType?.multiplier || 1.0;
     
-    // Calcul surplus calorique (1kg = ~7700 kcal, ratio muscle/graisse selon expérience)
     const muscleRatio = experience === 'beginner' ? 0.7 : experience === 'intermediate' ? 0.6 : 0.5;
     const fatRatio = 1 - muscleRatio;
     
     const estimatedGainMuscle = totalGain * muscleRatio;
     const estimatedGainFat = totalGain * fatRatio;
     
-    // Surplus quotidien (ajusté métabolisme)
     const dailySurplus = Math.round((weeklyGain * 7700 / 7) * metabMultiplier);
     const totalSurplus = dailySurplus * (timelineNum * 7);
 
-    // Warnings
     const warnings: string[] = [];
     if (weeklyGain > maxWeeklyGain * 1.5) {
       warnings.push('Gain trop rapide - risque d\'accumulation de graisse excessive');
@@ -112,177 +113,175 @@ const BulkCalculator: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <ResponsiveContainer className="w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Input Form */}
-        <div className="space-y-6">
-          <h3 className="text-2xl font-bold mb-6 text-black">Paramètres de prise de masse</h3>
-          
-          <div className="input-group-custom">
-            <label htmlFor="currentWeight">Poids actuel (kg)</label>
-            <input
-              type="number"
-              id="currentWeight"
-              name="currentWeight"
-              value={formData.currentWeight}
-              onChange={handleInputChange}
-              className="form-control-custom"
-              placeholder="Ex: 70"
-              min="40"
-              max="200"
-              step="0.1"
-            />
-          </div>
+        <MobileCard className="w-full">
+          <div className="p-4 md:p-6">
+            <h3 className="text-xl md:text-2xl font-bold mb-6 text-black">Paramètres de prise de masse</h3>
+            
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="currentWeight" className="text-sm md:text-base font-medium">Poids actuel (kg)</Label>
+                <Input
+                  type="number"
+                  id="currentWeight"
+                  name="currentWeight"
+                  value={formData.currentWeight}
+                  onChange={handleInputChange}
+                  className="mobile-input"
+                  placeholder="Ex: 70"
+                  min="40"
+                  max="200"
+                  step="0.1"
+                />
+              </div>
 
-          <div className="input-group-custom">
-            <label htmlFor="goalWeight">Poids objectif (kg)</label>
-            <input
-              type="number"
-              id="goalWeight"
-              name="goalWeight"
-              value={formData.goalWeight}
-              onChange={handleInputChange}
-              className="form-control-custom"
-              placeholder="Ex: 75"
-              min="40"
-              max="200"
-              step="0.1"
-            />
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="goalWeight" className="text-sm md:text-base font-medium">Poids objectif (kg)</Label>
+                <Input
+                  type="number"
+                  id="goalWeight"
+                  name="goalWeight"
+                  value={formData.goalWeight}
+                  onChange={handleInputChange}
+                  className="mobile-input"
+                  placeholder="Ex: 75"
+                  min="40"
+                  max="200"
+                  step="0.1"
+                />
+              </div>
 
-          <div className="input-group-custom">
-            <label htmlFor="timeline">Durée (semaines)</label>
-            <input
-              type="number"
-              id="timeline"
-              name="timeline"
-              value={formData.timeline}
-              onChange={handleInputChange}
-              className="form-control-custom"
-              placeholder="Ex: 12"
-              min="4"
-              max="52"
-            />
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="timeline" className="text-sm md:text-base font-medium">Durée (semaines)</Label>
+                <Input
+                  type="number"
+                  id="timeline"
+                  name="timeline"
+                  value={formData.timeline}
+                  onChange={handleInputChange}
+                  className="mobile-input"
+                  placeholder="Ex: 12"
+                  min="4"
+                  max="52"
+                />
+              </div>
 
-          <div className="input-group-custom">
-            <label htmlFor="experience">Niveau d'expérience</label>
-            <select
-              id="experience"
-              name="experience"
-              value={formData.experience}
-              onChange={handleInputChange}
-              className="form-control-custom"
-            >
-              {experienceLevels.map(level => (
-                <option key={level.value} value={level.value}>
-                  {level.label}
-                </option>
-              ))}
-            </select>
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="experience" className="text-sm md:text-base font-medium">Niveau d'expérience</Label>
+                <select
+                  id="experience"
+                  name="experience"
+                  value={formData.experience}
+                  onChange={handleInputChange}
+                  className="w-full p-3 border rounded-lg mobile-input"
+                >
+                  {experienceLevels.map(level => (
+                    <option key={level.value} value={level.value}>
+                      {level.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-          <div className="input-group-custom">
-            <label htmlFor="metabolism">Type de métabolisme</label>
-            <select
-              id="metabolism"
-              name="metabolism"
-              value={formData.metabolism}
-              onChange={handleInputChange}
-              className="form-control-custom"
-            >
-              {metabolismTypes.map(type => (
-                <option key={type.value} value={type.value}>
-                  {type.label}
-                </option>
-              ))}
-            </select>
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="metabolism" className="text-sm md:text-base font-medium">Type de métabolisme</Label>
+                <select
+                  id="metabolism"
+                  name="metabolism"
+                  value={formData.metabolism}
+                  onChange={handleInputChange}
+                  className="w-full p-3 border rounded-lg mobile-input"
+                >
+                  {metabolismTypes.map(type => (
+                    <option key={type.value} value={type.value}>
+                      {type.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-          <div className="input-group-custom">
-            <label htmlFor="bodyFat">% de graisse corporelle (optionnel)</label>
-            <input
-              type="number"
-              id="bodyFat"
-              name="bodyFat"
-              value={formData.bodyFat}
-              onChange={handleInputChange}
-              className="form-control-custom"
-              placeholder="Ex: 15"
-              min="5"
-              max="35"
-              step="0.1"
-            />
+              <div className="space-y-2">
+                <Label htmlFor="bodyFat" className="text-sm md:text-base font-medium">% de graisse corporelle (optionnel)</Label>
+                <Input
+                  type="number"
+                  id="bodyFat"
+                  name="bodyFat"
+                  value={formData.bodyFat}
+                  onChange={handleInputChange}
+                  className="mobile-input"
+                  placeholder="Ex: 15"
+                  min="5"
+                  max="35"
+                  step="0.1"
+                />
+              </div>
+            </div>
           </div>
-        </div>
+        </MobileCard>
 
         {/* Results */}
-        <div className="space-y-6">
-          <h3 className="text-2xl font-bold mb-6 text-black">Plan de prise de masse</h3>
-          
-          {results.weeklyGain > 0 ? (
-            <div className="space-y-4">
-              <div className="result-card bg-gradient-success">
-                <div className="result-value">{results.weeklyGain} kg</div>
-                <div className="result-label">Gain hebdomadaire cible</div>
-              </div>
-
-              <div className="result-card">
-                <div className="result-value">+{results.dailySurplus}</div>
-                <div className="result-label">Surplus calorique quotidien</div>
-                <small className="text-sm opacity-75 mt-2 block">
-                  Au-dessus de votre maintenance
-                </small>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="result-card bg-gradient-secondary">
-                  <div className="result-value text-2xl">{results.estimatedGainMuscle} kg</div>
-                  <div className="result-label text-base">Muscle estimé</div>
+        <MobileCard className="w-full">
+          <div className="p-4 md:p-6">
+            <h3 className="text-xl md:text-2xl font-bold mb-6 text-black">Plan de prise de masse</h3>
+            
+            {results.weeklyGain > 0 ? (
+              <div className="space-y-6">
+                <div className="text-center p-6 bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg">
+                  <div className="text-3xl font-bold text-green-600">{results.weeklyGain} kg</div>
+                  <div className="text-green-800 font-medium">Gain hebdomadaire cible</div>
                 </div>
 
-                <div className="result-card bg-gradient-warning">
-                  <div className="result-value text-2xl">{results.estimatedGainFat} kg</div>
-                  <div className="result-label text-base">Graisse estimée</div>
+                <div className="text-center p-4 bg-blue-50 rounded-lg">
+                  <div className="text-2xl font-bold text-blue-600">+{results.dailySurplus}</div>
+                  <div className="text-blue-800 font-medium">Surplus calorique quotidien</div>
+                  <small className="text-blue-600 text-sm">Au-dessus de votre maintenance</small>
                 </div>
-              </div>
 
-              {results.warnings.length > 0 && (
-                <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
-                  <h4 className="font-semibold mb-2 text-orange-800 flex items-center">
-                    <i className="fas fa-exclamation-triangle mr-2"></i>
-                    Avertissements
-                  </h4>
-                  <ul className="text-sm text-orange-700 space-y-1">
-                    {results.warnings.map((warning, index) => (
-                      <li key={index}>• {warning}</li>
-                    ))}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="text-center p-4 bg-purple-50 rounded-lg">
+                    <div className="text-xl font-bold text-purple-600">{results.estimatedGainMuscle} kg</div>
+                    <div className="text-purple-800 font-medium text-sm">Muscle estimé</div>
+                  </div>
+
+                  <div className="text-center p-4 bg-orange-50 rounded-lg">
+                    <div className="text-xl font-bold text-orange-600">{results.estimatedGainFat} kg</div>
+                    <div className="text-orange-800 font-medium text-sm">Graisse estimée</div>
+                  </div>
+                </div>
+
+                {results.warnings.length > 0 && (
+                  <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <h4 className="font-semibold mb-2 text-red-800">⚠️ Avertissements</h4>
+                    <ul className="text-sm text-red-700 space-y-1">
+                      {results.warnings.map((warning, index) => (
+                        <li key={index}>• {warning}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <h4 className="font-semibold mb-3 text-gray-800">💡 Conseils pour réussir</h4>
+                  <ul className="text-sm text-gray-600 space-y-2">
+                    <li>• <strong>Pesée :</strong> Chaque matin à jeun, même conditions</li>
+                    <li>• <strong>Ajustements :</strong> Réviser le surplus toutes les 2 semaines</li>
+                    <li>• <strong>Entraînement :</strong> Progresser en charge régulièrement</li>
+                    <li>• <strong>Protéines :</strong> 2-2.5g/kg pour optimiser les gains</li>
                   </ul>
                 </div>
-              )}
-
-              <div className="bg-card border border-custom rounded-lg p-4">
-                <h4 className="font-semibold mb-3 flex items-center">
-                  <i className="fas fa-lightbulb text-warning mr-2"></i>
-                  Conseils pour réussir
-                </h4>
-                <ul className="text-sm text-muted-foreground space-y-2">
-                  <li>• <strong>Pesée :</strong> Chaque matin à jeun, même conditions</li>
-                  <li>• <strong>Ajustements :</strong> Réviser le surplus toutes les 2 semaines</li>
-                  <li>• <strong>Entraînement :</strong> Progresser en charge régulièrement</li>
-                  <li>• <strong>Protéines :</strong> 2-2.5g/kg pour optimiser les gains</li>
-                </ul>
               </div>
-            </div>
-          ) : (
-            <div className="text-center py-12 text-muted-foreground">
-              <i className="fas fa-chart-line text-4xl mb-4"></i>
-              <p className="text-lg">Remplissez vos objectifs pour voir le plan</p>
-            </div>
-          )}
-        </div>
+            ) : (
+              <div className="text-center py-12 text-gray-500">
+                <div className="text-4xl mb-4">📈</div>
+                <p className="text-lg">Remplissez vos objectifs pour voir le plan</p>
+              </div>
+            )}
+          </div>
+        </MobileCard>
       </div>
-    </div>
+    </ResponsiveContainer>
   );
 };
 
