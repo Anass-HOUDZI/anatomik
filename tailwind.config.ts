@@ -74,27 +74,6 @@ export default {
 				'touch-target': '44px',
 			},
 			colors: {
-				gray: {
-					100: "#f8f9fa",
-					200: "#f1f3f6",
-					300: "#e4e7ec",
-					500: "#636b7c",
-					700: "#282b35",
-					900: "#171924"
-				},
-				blue: {
-					50: "#eaf2fb",
-					100: "#c7dcfa",
-					400: "#4386f9",
-					600: "#2563eb",
-					700: "#264ea4",
-					900: "#1d315b"
-				},
-				accent: "#afecfe",
-				shimmer: "#fff6e5",
-				success: "#31cf6e",
-				warning: "#ffe569",
-				error: "#fd4d4d",
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
@@ -127,16 +106,6 @@ export default {
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
-				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
 				}
 			},
 			borderRadius: {
