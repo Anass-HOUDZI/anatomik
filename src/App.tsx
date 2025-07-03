@@ -39,7 +39,6 @@ const App = () => {
   const [selectedTool, setSelectedTool] = useState<Tool | null>(null);
 
   useEffect(() => {
-    // Initialize storage and load user preferences
     StorageManager.init();
     console.log('FitMASTER PRO - Application initialized');
   }, []);
@@ -70,9 +69,7 @@ const App = () => {
       <ThemeProvider>
         <GestureProvider>
           <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <div className="min-h-screen bg-background transition-colors duration-300 flex flex-col mobile-optimized">
+            <div className="min-h-screen bg-background text-foreground">
               <Header 
                 currentView={currentView}
                 selectedCategory={selectedCategory}
@@ -81,17 +78,17 @@ const App = () => {
                 onBackToCategory={handleBackToCategory}
               />
               
-              <main className="flex-1 w-full mobile-scroll">
+              <main className="container mx-auto px-4 py-8">
                 {currentView === 'home' && (
-                  <div className="fade-in mobile-fade-scale w-full">
-                    <div className="text-center mb-8 px-4">
-                      <h1 className="text-4xl md:text-6xl font-bold text-gradient mb-4 heading-mobile-responsive">
+                  <div className="space-y-8">
+                    <div className="text-center space-y-4">
+                      <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                         FitMASTER PRO
                       </h1>
-                      <p className="text-xl md:text-2xl text-muted-foreground mb-4 text-mobile-responsive">
+                      <p className="text-xl md:text-2xl text-muted-foreground">
                         60 outils gratuits de musculation et nutrition
                       </p>
-                      <p className="text-lg text-muted-foreground max-w-3xl mx-auto text-mobile-responsive px-4">
+                      <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
                         Suite complète d'outils professionnels fonctionnant 100% côté client. 
                         Calculateurs, trackers, planificateurs - tout accessible offline !
                       </p>
@@ -102,49 +99,49 @@ const App = () => {
                 )}
                 
                 {currentView === 'category' && selectedCategory && (
-                  <div className="fade-in mobile-slide-up w-full">
-                    <ToolView 
-                      category={selectedCategory}
-                      onToolSelect={handleToolSelect}
-                    />
-                  </div>
+                  <ToolView 
+                    category={selectedCategory}
+                    onToolSelect={handleToolSelect}
+                  />
                 )}
                 
                 {currentView === 'tool' && selectedTool && (
-                  <div className="fade-in mobile-fade-scale w-full">
-                    <div className="w-full px-4 py-6">
-                      <div className="text-center mb-6">
-                        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-primary text-white text-2xl mb-4 mobile-optimized">
-                          <i className={`fas ${selectedTool.icon}`}></i>
-                        </div>
-                        <h2 className="text-3xl font-bold mb-2 heading-mobile-responsive">{selectedTool.name}</h2>
-                        <p className="text-lg text-muted-foreground text-mobile-responsive">{selectedTool.description}</p>
+                  <div className="space-y-6">
+                    <div className="text-center space-y-4">
+                      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white text-2xl">
+                        <i className={`fas ${selectedTool.icon}`}></i>
                       </div>
-                      
-                      {selectedTool.component && <selectedTool.component />}
+                      <h2 className="text-3xl font-bold">{selectedTool.name}</h2>
+                      <p className="text-lg text-muted-foreground">{selectedTool.description}</p>
                     </div>
+                    
+                    {selectedTool.component && <selectedTool.component />}
                   </div>
                 )}
               </main>
               
-              <footer className="bg-transparent text-center py-4 shadow-none select-none safe-area-horizontal">
-                <div className="text-xs md:text-sm text-muted-foreground text-mobile-responsive px-4">
-                  Copyright © 2025{" "}
-                  <a
-                    href="https://www.linkedin.com/in/anasshoudzi/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline font-semibold text-blue-700 hover:text-blue-900 transition-colors touch-target"
-                  >
-                    Anass Houdzi
-                  </a>
-                  {" "}– Tous droits réservés.
+              <footer className="bg-muted/50 text-center py-6 mt-12">
+                <div className="container mx-auto px-4">
+                  <p className="text-sm text-muted-foreground">
+                    Copyright © 2025{" "}
+                    <a
+                      href="https://www.linkedin.com/in/anasshoudzi/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold text-blue-600 hover:text-blue-800 transition-colors"
+                    >
+                      Anass Houdzi
+                    </a>
+                    {" "}– Tous droits réservés.
+                  </p>
                 </div>
               </footer>
               
-              {/* Indicateur PWA */}
               <PWAIndicator />
             </div>
+            
+            <Toaster />
+            <Sonner />
           </TooltipProvider>
         </GestureProvider>
       </ThemeProvider>
