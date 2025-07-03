@@ -1,5 +1,6 @@
 import React from 'react';
 import { Clock, Zap, CheckCircle2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import type { Category, Tool } from '../App';
 import { EnhancedCard } from './ui/enhanced-card';
 import { ProgressIndicator } from './ui/progress-indicator';

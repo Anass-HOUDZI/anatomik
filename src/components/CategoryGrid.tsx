@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { Search, Calculator, Dumbbell, TrendingUp, Calendar } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import type { Category } from '../App';
 import { EnhancedCard } from './ui/enhanced-card';
 import { IconButton } from './ui/icon-button';

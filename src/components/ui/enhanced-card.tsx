@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 interface EnhancedCardProps {
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   variant?: 'default' | 'gradient' | 'glass' | 'hover-lift';
   gradientType?: 'green' | 'blue' | 'orange' | 'purple';
   clickable?: boolean;
@@ -17,6 +18,7 @@ interface EnhancedCardProps {
 export const EnhancedCard: React.FC<EnhancedCardProps> = ({
   children,
   className,
+  style,
   variant = 'default',
   gradientType = 'blue',
   clickable = false,
@@ -40,7 +42,7 @@ export const EnhancedCard: React.FC<EnhancedCardProps> = ({
 
   if (loading) {
     return (
-      <div className={cn('loading-shimmer rounded-xl h-48', className)}>
+      <div className={cn('loading-shimmer rounded-xl h-48', className)} style={style}>
         <div className="p-6 space-y-4">
           <div className="h-4 bg-white/20 rounded w-3/4"></div>
           <div className="h-3 bg-white/20 rounded w-1/2"></div>
@@ -58,6 +60,7 @@ export const EnhancedCard: React.FC<EnhancedCardProps> = ({
         clickable && 'interactive-element cursor-pointer focus-ring',
         className
       )}
+      style={style}
       onClick={clickable ? onClick : undefined}
       role={clickable ? 'button' : undefined}
       tabIndex={clickable ? 0 : undefined}
