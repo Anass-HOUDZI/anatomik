@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ArrowLeft, Home, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
@@ -40,6 +39,7 @@ const Header: React.FC<HeaderProps> = ({
     if (selectedTool) {
       items.push({
         label: selectedTool.name,
+        onClick: () => {}, // Empty function for current tool
         current: true
       });
     }
