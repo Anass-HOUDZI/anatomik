@@ -70,19 +70,23 @@ const App = () => {
             onBackToCategory={handleBackToCategory}
           />
           
-          <main className="container mx-auto px-4 py-8">
+          <main className="container mx-auto mobile-padding py-8">
             {currentView === 'home' && (
-              <div className="space-y-8">
-                <div className="text-center space-y-4">
-                  <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <div className="space-y-12">
+                {/* Hero Section */}
+                <div className="text-center space-y-6 animate-fade-in-up">
+                  <h1 className="heading-primary">
                     FitMASTER PRO
                   </h1>
-                  <p className="text-xl text-muted-foreground">
-                    60 outils gratuits de musculation et nutrition
-                  </p>
-                  <p className="text-muted-foreground max-w-3xl mx-auto">
-                    Suite complète d'outils professionnels fonctionnant 100% côté client.
-                  </p>
+                  <div className="space-y-4">
+                    <p className="text-xl md:text-2xl text-muted-foreground font-medium">
+                      60 outils gratuits de musculation et nutrition
+                    </p>
+                    <p className="text-body max-w-3xl mx-auto text-lg">
+                      Suite complète d'outils professionnels fonctionnant 100% côté client.
+                      Calculateurs, trackers, planificateurs - tout ce dont vous avez besoin pour optimiser vos performances.
+                    </p>
+                  </div>
                 </div>
                 
                 <CategoryGrid onCategorySelect={handleCategorySelect} />
@@ -97,21 +101,30 @@ const App = () => {
             )}
             
             {currentView === 'tool' && selectedTool && (
-              <div className="space-y-6">
-                <div className="text-center space-y-4">
-                  <h2 className="text-3xl font-bold">{selectedTool.name}</h2>
-                  <p className="text-muted-foreground">{selectedTool.description}</p>
+              <div className="space-y-8">
+                <div className="text-center space-y-4 animate-fade-in-up">
+                  <h2 className="heading-secondary">{selectedTool.name}</h2>
+                  <p className="text-body text-lg max-w-3xl mx-auto">{selectedTool.description}</p>
                 </div>
                 
-                {selectedTool.component && <selectedTool.component />}
+                {selectedTool.component && (
+                  <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+                    <selectedTool.component />
+                  </div>
+                )}
               </div>
             )}
           </main>
           
-          <footer className="bg-muted/50 text-center py-6 mt-12">
-            <p className="text-sm text-muted-foreground">
-              Copyright © 2025 Anass Houdzi – Tous droits réservés.
-            </p>
+          <footer className="bg-muted/30 text-center py-8 mt-16 border-t">
+            <div className="container mx-auto mobile-padding">
+              <p className="text-sm text-muted-foreground">
+                Copyright © 2025 Anass Houdzi – Tous droits réservés.
+              </p>
+              <p className="text-xs text-muted-foreground mt-2">
+                Application web progressive optimisée pour tous les appareils
+              </p>
+            </div>
           </footer>
         </div>
         

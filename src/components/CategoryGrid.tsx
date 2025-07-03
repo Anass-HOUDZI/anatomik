@@ -1,41 +1,51 @@
 
 import React, { useState } from 'react';
+import { Search, Calculator, Dumbbell, TrendingUp, Calendar } from 'lucide-react';
 import type { Category } from '../App';
+import { EnhancedCard } from './ui/enhanced-card';
+import { IconButton } from './ui/icon-button';
 
 const categories: Category[] = [
   {
     id: 'nutritional',
     name: 'Calculateurs Nutritionnels',
     description: '15 outils pour optimiser votre nutrition : BMR, macros, hydratation, timing…',
-    icon: 'fa-apple-alt',
-    color: 'from-green-500 to-emerald-400',
+    icon: 'calculator',
+    color: 'green',
     toolCount: 15
   },
   {
     id: 'training',
     name: 'Calculateurs d\'Entraînement',
     description: '15 outils pour vos séances : 1RM, charges, volume, progression, récupération…',
-    icon: 'fa-dumbbell',
-    color: 'from-blue-500 to-cyan-400',
+    icon: 'dumbbell',
+    color: 'blue',
     toolCount: 15
   },
   {
     id: 'tracking',
     name: 'Suivis et Analyses',
     description: '15 trackers pour monitorer vos progrès : poids, mensurations, performance…',
-    icon: 'fa-chart-bar',
-    color: 'from-orange-500 to-yellow-400',
+    icon: 'trending-up',
+    color: 'orange',
     toolCount: 15
   },
   {
     id: 'generators',
     name: 'Planificateurs',
     description: '15 générateurs pour organiser : programmes, repas, routines, défis…',
-    icon: 'fa-calendar-alt',
-    color: 'from-purple-500 to-pink-400',
+    icon: 'calendar',
+    color: 'purple',
     toolCount: 15
   }
 ];
+
+const iconMap = {
+  calculator: Calculator,
+  dumbbell: Dumbbell,
+  'trending-up': TrendingUp,
+  calendar: Calendar
+};
 
 interface CategoryGridProps {
   onCategorySelect: (category: Category) => void;
@@ -43,6 +53,7 @@ interface CategoryGridProps {
 
 const CategoryGrid: React.FC<CategoryGridProps> = ({ onCategorySelect }) => {
   const [search, setSearch] = useState('');
+  const [searchFocused, setSearchFocused] = useState(false);
 
   const filtered = categories.filter(
     cat =>
@@ -51,72 +62,114 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({ onCategorySelect }) => {
   );
 
   return (
-    <div className="w-full max-w-6xl mx-auto space-y-8">
+    <div className="w-full max-w-7xl mx-auto space-y-12 animate-fade-in-up">
+      {/* Search Section */}
       <div className="flex justify-center">
-        <div className="w-full max-w-2xl">
-          <input
-            type="text"
-            placeholder="Rechercher un outil, calculateur ou tracker..."
-            className="w-full px-6 py-4 rounded-full bg-white shadow-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 text-lg placeholder:text-gray-400"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-          />
+        <div className="relative w-full max-w-2xl">
+          <div className={cn(
+            'relative transition-all duration-300',
+            searchFocused && 'scale-[1.02]'
+          )}>
+            <Search 
+              size={20} 
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground transition-colors duration-200" 
+            />
+            <input
+              type="text"
+              placeholder="Rechercher un outil, calculateur ou tracker..."
+              className={cn(
+                'w-full pl-12 pr-4 py-4 rounded-2xl bg-white shadow-lg border-2 transition-all duration-300',
+                'text-lg placeholder:text-muted-foreground',
+                'focus:outline-none focus:border-primary focus:shadow-xl focus:shadow-primary/10',
+                searchFocused && 'border-primary shadow-xl shadow-primary/10'
+              )}
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              onFocus={() => setSearchFocused(true)}
+              onBlur={() => setSearchFocused(false)}
+            />
+            {search && (
+              <IconButton
+                icon={<span className="text-lg">×</span>}
+                variant="ghost"
+                size="sm"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2"
+                onClick={() => setSearch('')}
+                tooltip="Effacer la recherche"
+              />
+            )}
+          </div>
         </div>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {filtered.map((category) => (
-          <div
-            key={category.id}
-            className={`
-              group relative overflow-hidden rounded-2xl shadow-xl 
-              bg-gradient-to-br ${category.color}
-              hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 cursor-pointer
-              min-h-[280px] p-8
-            `}
-            onClick={() => onCategorySelect(category)}
-          >
-            <div className="flex flex-col h-full text-white">
-              <div className="flex items-center justify-center w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm mb-6">
-                <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-                  {category.id === 'nutritional' && (
-                    <path fillRule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clipRule="evenodd" />
-                  )}
-                  {category.id === 'training' && (
-                    <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
-                  )}
-                  {category.id === 'tracking' && (
-                    <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-                  )}
-                  {category.id === 'generators' && (
-                    <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
-                  )}
-                </svg>
-              </div>
-              
-              <div className="flex-1">
-                <h3 className="text-2xl font-bold mb-4">
-                  {category.name}
-                </h3>
-                <p className="text-white/90 text-lg leading-relaxed mb-6">
-                  {category.description}
-                </p>
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm">
-                  <span className="font-semibold">{category.toolCount} outils</span>
+      {/* Categories Grid */}
+      <div className="responsive-grid">
+        {filtered.map((category, index) => {
+          const IconComponent = iconMap[category.icon as keyof typeof iconMap];
+          
+          return (
+            <EnhancedCard
+              key={category.id}
+              variant="gradient"
+              gradientType={category.color as any}
+              clickable
+              onClick={() => onCategorySelect(category)}
+              className="min-h-[320px] p-8 group animate-fade-in"
+              style={{ animationDelay: `${index * 0.1}s` }}
+              icon={<IconComponent size={40} />}
+              badge={
+                <div className="bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-semibold">
+                  {category.toolCount} outils
                 </div>
-                <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
+              }
+            >
+              <div className="flex flex-col h-full justify-between relative z-10">
+                {/* Icon Circle */}
+                <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <IconComponent size={28} className="text-white" />
+                </div>
+                
+                {/* Content */}
+                <div className="flex-1 space-y-4">
+                  <h3 className="text-2xl font-bold text-white leading-tight">
+                    {category.name}
+                  </h3>
+                  <p className="text-white/90 text-base leading-relaxed">
+                    {category.description}
+                  </p>
+                </div>
+                
+                {/* Footer */}
+                <div className="flex items-center justify-between pt-6">
+                  <div className="flex items-center gap-2 text-white/80 text-sm">
+                    <span>Découvrir les outils</span>
+                  </div>
+                  <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 group-hover:scale-110 transition-all duration-300">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        ))}
+            </EnhancedCard>
+          );
+        })}
       </div>
+
+      {/* No Results */}
+      {filtered.length === 0 && search && (
+        <div className="text-center py-12 animate-fade-in">
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
+            <Search size={24} className="text-muted-foreground" />
+          </div>
+          <h3 className="text-lg font-semibold text-foreground mb-2">
+            Aucun résultat trouvé
+          </h3>
+          <p className="text-muted-foreground">
+            Essayez avec d'autres mots-clés ou explorez nos catégories.
+          </p>
+        </div>
+      )}
     </div>
   );
 };
