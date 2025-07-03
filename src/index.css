@@ -1,3 +1,4 @@
+
 /* === GOOGLE FONTS === */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Cal+Sans:wght@400;700&display=swap');
 
@@ -6,11 +7,10 @@
 @tailwind components;
 @tailwind utilities;
 
-/* === FitMASTER PRO Design System === */
+/* === BASE STYLES === */
 @layer base {
   :root {
-    /* Base Colors (HSL format for Tailwind compatibility) */
-    --background: 219 27% 96%;
+    --background: 0 0% 100%;
     --foreground: 222 84% 5%;
     --card: 0 0% 100%;
     --card-foreground: 222 84% 5%;
@@ -24,32 +24,12 @@
     --muted-foreground: 215 16% 47%;
     --accent: 210 40% 96%;
     --accent-foreground: 222 84% 5%;
-    --destructive: 0 72% 51%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
     --border: 214 32% 91%;
     --input: 214 32% 91%;
     --ring: 221 83% 53%;
     --radius: 0.5rem;
-    
-    /* Custom gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(221, 83%, 53%) 0%, hsl(217, 91%, 60%) 100%);
-    --text-gradient: linear-gradient(135deg, hsl(221, 83%, 53%) 0%, hsl(217, 91%, 60%) 100%);
-    
-    /* Mobile & Touch optimizations */
-    --mobile-padding: 1rem;
-    --tablet-padding: 2rem;
-    --desktop-padding: 3rem;
-    --touch-target-size: 44px;
-    --safe-area-top: env(safe-area-inset-top);
-    --safe-area-bottom: env(safe-area-inset-bottom);
-    --safe-area-left: env(safe-area-inset-left);
-    --safe-area-right: env(safe-area-inset-right);
-    
-    /* Shadows */
-    --shadow-mobile-card: 0 4px 20px rgba(34, 69, 147, 0.08);
-    --shadow-touch: 0 2px 10px rgba(0, 0, 0, 0.1);
-    --shadow-touch-active: 0 1px 5px rgba(0, 0, 0, 0.15);
-    --shadow-3d: 0 8px 24px 0 rgba(10,22,50,0.10), 0 0.5px 1.5px rgba(20,25,51,0.15);
   }
 
   .dark {
@@ -75,331 +55,22 @@
   }
 
   * {
-    /* Améliorer les performances de scroll sur mobile */
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
-  }
-
-  html {
-    /* Fixer la taille de police sur mobile */
-    -webkit-text-size-adjust: 100%;
-    -moz-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-    scroll-behavior: smooth;
+    border-color: hsl(var(--border));
   }
 
   body {
-    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
-    background: hsl(var(--background));
+    background-color: hsl(var(--background));
     color: hsl(var(--foreground));
-    min-height: 100vh;
-    min-height: 100dvh; /* Support pour les nouvelles unités viewport */
-    letter-spacing: 0.01em;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    
-    /* Optimisations tactiles */
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  /* Support des zones sûres (encoches) */
-  .safe-area-container {
-    padding-top: var(--safe-area-top);
-    padding-bottom: var(--safe-area-bottom);
-    padding-left: var(--safe-area-left);
-    padding-right: var(--safe-area-right);
-  }
-
-  /* Safe areas utilities */
-  .pt-safe-top { padding-top: var(--safe-area-top); }
-  .pb-safe-bottom { padding-bottom: var(--safe-area-bottom); }
-  .pl-safe-left { padding-left: var(--safe-area-left); }
-  .pr-safe-right { padding-right: var(--safe-area-right); }
-  .safe-area-horizontal { padding-left: var(--safe-area-left); padding-right: var(--safe-area-right); }
-
-  /* Typography */
-  h1, .font-display, .title, .dashboard-title {
-    font-family: 'Cal Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-  }
-  h2, h3 {
-    font-family: 'Cal Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
-  }
-
-  /* Responsive typography */
-  @media (max-width: 480px) {
-    html { font-size: 14px; }
-  }
-  
-  @media (min-width: 481px) and (max-width: 768px) {
-    html { font-size: 15px; }
-  }
-  
-  @media (min-width: 769px) {
-    html { font-size: 16px; }
+    font-family: 'Inter', sans-serif;
   }
 }
 
 @layer components {
-  /* Mobile optimizations */
-  .mobile-optimized {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    user-select: none;
-  }
-
-  .mobile-scroll {
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-  }
-
-  .mobile-scroll-container {
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
-  }
-
-  .mobile-fade-scale {
-    animation: mobileFadeScale 0.4s ease-out;
-  }
-
-  .mobile-slide-up {
-    animation: mobileSlideUp 0.4s ease-out;
-  }
-
-  /* Touch targets */
-  .touch-target {
-    min-height: var(--touch-target-size);
-    min-width: var(--touch-target-size);
-  }
-
-  .touch-feedback {
-    transition: transform 0.1s ease;
-  }
-
-  .touch-feedback:active {
-    transform: scale(0.98);
-  }
-
-  /* Text responsive utilities */
-  .text-mobile-responsive {
-    font-size: clamp(0.875rem, 2.5vw, 1.125rem);
-    line-height: 1.5;
+  .mobile-card {
+    @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg border;
   }
   
-  .heading-mobile-responsive {
-    font-size: clamp(1.5rem, 4vw, 3rem);
-    line-height: 1.2;
-  }
-
-  /* Mobile header */
-  .mobile-header {
-    position: sticky;
-    top: 0;
-    z-index: 40;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-
-  /* Mobile input */
-  .mobile-input {
-    font-size: 16px; /* Prevents zoom on iOS */
-    border-radius: 0.75rem;
-    min-height: 48px;
-    padding: 0.75rem 1rem;
-  }
-
-  /* Animations */
-  .fade-in {
-    animation: fadeIn 0.6s ease-out;
-  }
-
-  .animate-fade-in {
-    animation: fadeIn 0.6s ease-out;
-  }
-
-  .animate-slide-up {
-    animation: slideUp 0.6s cubic-bezier(.5,1.5,.8,1) both;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes slideUp {
-    from { 
-      opacity: 0; 
-      transform: translateY(40px);
-    }
-    to { 
-      opacity: 1; 
-      transform: translateY(0); 
-    }
-  }
-
-  @keyframes mobileFadeScale {
-    from {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  @keyframes mobileSlideUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Gradient text */
-  .text-gradient {
-    background: var(--text-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-weight: 700;
-  }
-
-  /* Category cards */
-  .category-card-modern {
-    border-radius: 2rem;
-    border: 1.5px solid rgba(228, 231, 236, 0.2);
-    position: relative;
-    min-height: 300px;
-    padding-top: 3rem;
-    padding-bottom: 1.5rem;
-    overflow: visible;
-    box-shadow: 0 8px 40px 0 rgba(30,40,80,0.14), 0 3px 8px 0 rgba(10,18,65,0.09);
-    transition: transform 0.2s cubic-bezier(.21,.8,.32,1), box-shadow 0.2s, background 0.3s;
-  }
-
-  .category-card-modern.nutritional {
-    background: linear-gradient(120deg, #13ff99 0%, #289b71 60%, #7fdccc 100%);
-  }
-
-  .category-card-modern.training {
-    background: linear-gradient(120deg, #3066f6 0%, #2550b0 60%, #4386f9 100%);
-  }
-
-  .category-card-modern.tracking {
-    background: linear-gradient(120deg, #ff9800 0%, #f59e42 70%, #ffe6a9 100%);
-  }
-
-  .category-card-modern.generators {
-    background: linear-gradient(120deg, #a66ffd 0%, #7253e7 70%, #b4a1fa 100%);
-  }
-
-  .category-card-modern:hover {
-    box-shadow: 0 14px 50px 0 rgba(67,134,249,.21);
-    transform: translateY(-6px) scale(1.018) rotateX(1deg);
-  }
-
-  /* Tool cards */
-  .tool-modern-card {
-    border: none;
-    border-radius: 1.35rem !important;
-    box-shadow: 0 8px 36px 0 rgba(30,40,80,0.17), 0 2px 8px 0 rgba(20,29,67,0.10);
-    min-height: 180px;
-    transition: transform 0.17s cubic-bezier(.21,.8,.32,1), box-shadow 0.19s, background 0.26s;
-  }
-
-  .tool-modern-card:hover {
-    transform: translateY(-6px) scale(1.033) rotateX(1deg);
-    box-shadow: 0 16px 42px 0 rgba(67,134,249,.14);
-  }
-
-  /* Mobile responsive adjustments */
-  @media (max-width: 768px) {
-    .category-card-modern {
-      min-height: 200px;
-      padding-top: 2.2rem;
-      padding-bottom: 1.1rem;
-      border-radius: 1.1rem;
-    }
-    
-    .mobile-input {
-      font-size: 16px; /* Prevents zoom on iOS */
-    }
-  }
-
-  /* Optimisations pour les appareils tactiles */
-  @media (pointer: coarse) {
-    /* Cibles tactiles plus grandes */
-    button, [role="button"], a, input, select, textarea {
-      min-height: var(--touch-target-size);
-      min-width: var(--touch-target-size);
-    }
-    
-    /* Espacement amélioré pour les doigts */
-    .touch-friendly {
-      padding: 0.75rem;
-      margin: 0.25rem;
-    }
-
-    .adaptive-button:active {
-      transform: scale(0.98);
-    }
-  }
-
-  /* Active scale effect */
-  .active\:scale-98:active {
-    transform: scale(0.98);
-  }
-}
-
-@layer utilities {
-  /* Utility classes */
-  .shadow-mobile-card {
-    box-shadow: var(--shadow-mobile-card);
-  }
-
-  .shadow-touch {
-    box-shadow: var(--shadow-touch);
-  }
-
-  .shadow-touch-active {
-    box-shadow: var(--shadow-touch-active);
-  }
-
-  .shadow-3d {
-    box-shadow: var(--shadow-3d);
-  }
-}
-
-/* Support des nouvelles unités CSS */
-@supports (height: 100dvh) {
-  .full-viewport {
-    height: 100dvh;
-  }
-}
-
-@supports not (height: 100dvh) {
-  .full-viewport {
-    height: 100vh;
+  .mobile-button {
+    @apply bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium transition-colors hover:bg-primary/90;
   }
 }
