@@ -1,105 +1,122 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { CheckCircle2, Circle } from 'lucide-react';
 
 interface ProgressIndicatorProps {
   current: number;
   total: number;
-  showPercentage?: boolean;
-  showNumbers?: boolean;
+  variant?: 'line' | 'circle' | 'bar';
+  size?: 'sm' | 'md' | 'lg';
   className?: string;
-  variant?: 'line' | 'circle' | 'steps';
+  showText?: boolean;
+  color?: 'primary' | 'success' | 'warning' | 'error';
 }
 
 export const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
   current,
   total,
-  showPercentage = true,
-  showNumbers = true,
+  variant = 'line',
+  size = 'md',
   className,
-  variant = 'line'
+  showText = true,
+  color = 'primary'
 }) => {
-  const percentage = Math.round((current / total) * 100);
+  const percentage = Math.min(Math.max((current / total) * 100, 0), 100);
+  
+  const colorClasses = {
+    primary: 'bg-primary',
+    success: 'bg-green-500',
+    warning: 'bg-orange-500',
+    error: 'bg-red-500'
+  };
 
-  if (variant === 'circle') {
-    const radius = 20;
-    const circumference = 2 * Math.PI * radius;
-    const strokeDashoffset = circumference - (percentage / 100) * circumference;
+  const sizeClasses = {
+    sm: 'h-1',
+    md: 'h-2',
+    lg: 'h-3'
+  };
 
+  if (variant === 'line') {
     return (
-      <div className={cn('flex items-center gap-3', className)}>
-        <div className="relative w-12 h-12">
-          <svg className="w-12 h-12 transform -rotate-90" viewBox="0 0 44 44">
-            <circle
-              cx="22"
-              cy="22"
-              r={radius}
-              stroke="hsl(var(--muted))"
-              strokeWidth="4"
-              fill="none"
-            />
-            <circle
-              cx="22"
-              cy="22"
-              r={radius}
-              stroke="hsl(var(--primary))"
-              strokeWidth="4"
-              fill="none"
-              strokeDasharray={circumference}
-              strokeDashoffset={strokeDashoffset}
-              className="transition-all duration-300 ease-out"
-            />
-          </svg>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-xs font-semibold">{percentage}%</span>
+      <div className={cn('w-full', className)}>
+        {showText && (
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm font-medium text-foreground">
+              {current}/{total} outils
+            </span>
+            <span className="text-sm font-medium text-primary">
+              {Math.round(percentage)}%
+            </span>
           </div>
-        </div>
-        {showNumbers && (
-          <span className="text-sm text-muted-foreground">
-            {current}/{total}
-          </span>
         )}
+        <div className={cn('w-full bg-muted rounded-full overflow-hidden', sizeClasses[size])}>
+          <div 
+            className={cn('h-full transition-all duration-500 ease-out rounded-full', colorClasses[color])}
+            style={{ width: `${percentage}%` }}
+          />
+        </div>
       </div>
     );
   }
 
-  if (variant === 'steps') {
+  if (variant === 'circle') {
+    const radius = size === 'sm' ? 20 : size === 'md' ? 30 : 40;
+    const circumference = 2 * Math.PI * radius;
+    const strokeDashoffset = circumference - (percentage / 100) * circumference;
+
     return (
-      <div className={cn('flex items-center gap-2', className)}>
-        {Array.from({ length: total }, (_, index) => (
-          <div key={index} className="flex items-center">
-            {index < current ? (
-              <CheckCircle2 size={20} className="text-green-500" />
-            ) : (
-              <Circle size={20} className="text-muted-foreground" />
-            )}
-            {index < total - 1 && (
-              <div className="w-8 h-0.5 mx-2 bg-muted" />
-            )}
-          </div>
-        ))}
+      <div className={cn('relative inline-flex items-center justify-center', className)}>
+        <svg 
+          className="transform -rotate-90" 
+          width={radius * 2 + 8} 
+          height={radius * 2 + 8}
+        >
+          <circle
+            cx={radius + 4}
+            cy={radius + 4}
+            r={radius}
+            stroke="currentColor"
+            strokeWidth="2"
+            fill="transparent"
+            className="text-muted"
+          />
+          <circle
+            cx={radius + 4}
+            cy={radius + 4}
+            r={radius}
+            stroke="currentColor"
+            strokeWidth="2"
+            fill="transparent"
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+            className={cn('transition-all duration-500 ease-out', {
+              'text-primary': color === 'primary',
+              'text-green-500': color === 'success',
+              'text-orange-500': color === 'warning',
+              'text-red-500': color === 'error'
+            })}
+          />
+        </svg>
+        {showText && (
+          <span className="absolute text-xs font-medium">
+            {Math.round(percentage)}%
+          </span>
+        )}
       </div>
     );
   }
 
   return (
-    <div className={cn('space-y-2', className)}>
-      <div className="flex justify-between items-center">
-        {showNumbers && (
-          <span className="text-sm font-medium text-muted-foreground">
-            {current}/{total} outils
-          </span>
-        )}
-        {showPercentage && (
-          <span className="text-sm font-semibold text-primary">
-            {percentage}%
-          </span>
-        )}
-      </div>
-      <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
-        <div
-          className="h-full bg-gradient-to-r from-primary to-primary/80 transition-all duration-500 ease-out"
+    <div className={cn('w-full', className)}>
+      {showText && (
+        <div className="flex justify-between items-center mb-1">
+          <span className="text-sm text-muted-foreground">Progression</span>
+          <span className="text-sm font-medium">{current}/{total}</span>
+        </div>
+      )}
+      <div className="w-full bg-muted rounded-full h-2">
+        <div 
+          className={cn('h-2 rounded-full transition-all duration-500', colorClasses[color])}
           style={{ width: `${percentage}%` }}
         />
       </div>

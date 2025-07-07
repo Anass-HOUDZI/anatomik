@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { Clock, Zap, CheckCircle2 } from 'lucide-react';
+import { Clock, CheckCircle2, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Category, Tool } from '../App';
 import { EnhancedCard } from './ui/enhanced-card';
@@ -26,13 +27,6 @@ const getToolsForCategory = (categoryId: string) => {
   }
 };
 
-const categoryGradients: Record<string, string> = {
-  nutritional: 'green',
-  training: 'blue',
-  tracking: 'orange',
-  generators: 'purple',
-};
-
 interface ToolViewProps {
   category: Category;
   onToolSelect: (tool: Tool) => void;
@@ -48,10 +42,10 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
       {/* Header Section */}
       <div className="text-center space-y-6">
         <div className="space-y-4">
-          <h2 className="heading-secondary">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
             {category.name}
           </h2>
-          <p className="text-body text-xl max-w-4xl mx-auto">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto">
             {category.description}
           </p>
         </div>
@@ -63,6 +57,7 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
             total={totalCount}
             variant="line"
             className="mb-4"
+            color="primary"
           />
           <div className="flex justify-center gap-6 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
@@ -78,7 +73,7 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
       </div>
       
       {/* Tools Grid */}
-      <div className="responsive-grid">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {tools.map((tool, idx) => (
           <EnhancedCard
             key={tool.id}
@@ -86,7 +81,7 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
             clickable={!!tool.component}
             onClick={() => tool.component && onToolSelect(tool)}
             className={cn(
-              'min-h-[200px] p-6 group transition-all duration-300',
+              'min-h-[240px] p-6 group transition-all duration-300',
               !tool.component && 'opacity-75 cursor-not-allowed'
             )}
             style={{ animationDelay: `${idx * 0.05}s` }}
@@ -99,13 +94,6 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
               )}>
                 {tool.component ? 'Disponible' : 'Bientôt'}
               </div>
-            }
-            icon={
-              tool.component ? (
-                <Zap size={24} className="text-green-500" />
-              ) : (
-                <Clock size={24} className="text-orange-500" />
-              )
             }
           >
             <div className="space-y-4 h-full flex flex-col">
@@ -131,9 +119,7 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
                 </span>
                 {tool.component && (
                   <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-200">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
+                    <ArrowRight size={16} />
                   </div>
                 )}
               </div>

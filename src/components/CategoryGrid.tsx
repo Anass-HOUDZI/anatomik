@@ -79,8 +79,8 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({ onCategorySelect }) => {
               type="text"
               placeholder="Rechercher un outil, calculateur ou tracker..."
               className={cn(
-                'w-full pl-12 pr-4 py-4 rounded-2xl bg-white shadow-lg border-2 transition-all duration-300',
-                'text-lg placeholder:text-muted-foreground',
+                'w-full pl-12 pr-4 py-4 rounded-2xl bg-card shadow-lg border-2 transition-all duration-300',
+                'text-lg placeholder:text-muted-foreground text-foreground',
                 'focus:outline-none focus:border-primary focus:shadow-xl focus:shadow-primary/10',
                 searchFocused && 'border-primary shadow-xl shadow-primary/10'
               )}
@@ -104,7 +104,7 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({ onCategorySelect }) => {
       </div>
       
       {/* Categories Grid */}
-      <div className="responsive-grid">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
         {filtered.map((category, index) => {
           const IconComponent = iconMap[category.icon as keyof typeof iconMap];
           
@@ -117,9 +117,8 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({ onCategorySelect }) => {
               onClick={() => onCategorySelect(category)}
               className="min-h-[320px] p-8 group animate-fade-in"
               style={{ animationDelay: `${index * 0.1}s` }}
-              icon={<IconComponent size={40} />}
               badge={
-                <div className="bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-semibold">
+                <div className="bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-semibold text-white">
                   {category.toolCount} outils
                 </div>
               }
