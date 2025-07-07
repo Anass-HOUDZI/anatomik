@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { Search, Calculator, Dumbbell, TrendingUp, Calendar } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Category } from '../App';
-import { EnhancedCard } from './ui/enhanced-card';
-import { IconButton } from './ui/icon-button';
+import { Card, CardContent } from './ui/card';
+import { Input } from './ui/input';
+import { Button } from './ui/button';
 
 const categories: Category[] = [
   {
@@ -48,13 +49,19 @@ const iconMap = {
   calendar: Calendar
 };
 
+const colorMap = {
+  green: 'from-green-500 to-green-600',
+  blue: 'from-blue-500 to-blue-600',
+  orange: 'from-orange-500 to-orange-600',
+  purple: 'from-purple-500 to-purple-600'
+};
+
 interface CategoryGridProps {
   onCategorySelect: (category: Category) => void;
 }
 
 const CategoryGrid: React.FC<CategoryGridProps> = ({ onCategorySelect }) => {
   const [search, setSearch] = useState('');
-  const [searchFocused, setSearchFocused] = useState(false);
 
   const filtered = categories.filter(
     cat =>
@@ -63,108 +70,87 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({ onCategorySelect }) => {
   );
 
   return (
-    <div className="w-full max-w-7xl mx-auto space-y-12 animate-fade-in-up">
+    <div className="w-full max-w-7xl mx-auto space-y-8">
       {/* Search Section */}
       <div className="flex justify-center">
-        <div className="relative w-full max-w-2xl">
-          <div className={cn(
-            'relative transition-all duration-300',
-            searchFocused && 'scale-[1.02]'
-          )}>
-            <Search 
-              size={20} 
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground transition-colors duration-200" 
-            />
-            <input
-              type="text"
-              placeholder="Rechercher un outil, calculateur ou tracker..."
-              className={cn(
-                'w-full pl-12 pr-4 py-4 rounded-2xl bg-card shadow-lg border-2 transition-all duration-300',
-                'text-lg placeholder:text-muted-foreground text-foreground',
-                'focus:outline-none focus:border-primary focus:shadow-xl focus:shadow-primary/10',
-                searchFocused && 'border-primary shadow-xl shadow-primary/10'
-              )}
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              onFocus={() => setSearchFocused(true)}
-              onBlur={() => setSearchFocused(false)}
-            />
-            {search && (
-              <IconButton
-                icon={<span className="text-lg">×</span>}
-                variant="ghost"
-                size="sm"
-                className="absolute right-3 top-1/2 transform -translate-y-1/2"
-                onClick={() => setSearch('')}
-                tooltip="Effacer la recherche"
-              />
-            )}
-          </div>
+        <div className="relative w-full max-w-md">
+          <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+          <Input
+            type="text"
+            placeholder="Rechercher un outil..."
+            className="pl-10"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
+          {search && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0"
+              onClick={() => setSearch('')}
+            >
+              ×
+            </Button>
+          )}
         </div>
       </div>
       
       {/* Categories Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {filtered.map((category, index) => {
           const IconComponent = iconMap[category.icon as keyof typeof iconMap];
+          const gradientClass = colorMap[category.color as keyof typeof colorMap];
           
           return (
-            <EnhancedCard
+            <Card
               key={category.id}
-              variant="gradient"
-              gradientType={category.color as any}
-              clickable
+              className={cn(
+                "cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg",
+                "bg-gradient-to-br text-white border-0",
+                gradientClass
+              )}
               onClick={() => onCategorySelect(category)}
-              className="min-h-[320px] p-8 group animate-fade-in"
-              style={{ animationDelay: `${index * 0.1}s` }}
-              badge={
-                <div className="bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-semibold text-white">
-                  {category.toolCount} outils
-                </div>
-              }
             >
-              <div className="flex flex-col h-full justify-between relative z-10">
-                {/* Icon Circle */}
-                <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <IconComponent size={28} className="text-white" />
-                </div>
-                
-                {/* Content */}
-                <div className="flex-1 space-y-4">
-                  <h3 className="text-2xl font-bold text-white leading-tight">
-                    {category.name}
-                  </h3>
-                  <p className="text-white/90 text-base leading-relaxed">
-                    {category.description}
-                  </p>
-                </div>
-                
-                {/* Footer */}
-                <div className="flex items-center justify-between pt-6">
-                  <div className="flex items-center gap-2 text-white/80 text-sm">
-                    <span>Découvrir les outils</span>
+              <CardContent className="p-6 h-full flex flex-col justify-between min-h-[200px]">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="p-2 bg-white/20 rounded-lg">
+                      <IconComponent size={24} className="text-white" />
+                    </div>
+                    <div className="bg-white/20 px-2 py-1 rounded-full text-xs font-medium">
+                      {category.toolCount} outils
+                    </div>
                   </div>
-                  <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 group-hover:scale-110 transition-all duration-300">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  
+                  <div>
+                    <h3 className="text-lg font-bold mb-2 text-white">
+                      {category.name}
+                    </h3>
+                    <p className="text-white/90 text-sm leading-relaxed">
+                      {category.description}
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between mt-4 pt-4">
+                  <span className="text-white/80 text-sm">Découvrir</span>
+                  <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </div>
                 </div>
-              </div>
-            </EnhancedCard>
+              </CardContent>
+            </Card>
           );
         })}
       </div>
 
       {/* No Results */}
       {filtered.length === 0 && search && (
-        <div className="text-center py-12 animate-fade-in">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
-            <Search size={24} className="text-muted-foreground" />
-          </div>
-          <h3 className="text-lg font-semibold text-foreground mb-2">
-            Aucun résultat trouvé
-          </h3>
+        <div className="text-center py-12">
+          <Search size={48} className="mx-auto mb-4 text-muted-foreground" />
+          <h3 className="text-lg font-semibold mb-2">Aucun résultat trouvé</h3>
           <p className="text-muted-foreground">
             Essayez avec d'autres mots-clés ou explorez nos catégories.
           </p>

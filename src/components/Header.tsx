@@ -1,7 +1,8 @@
+
 import React from 'react';
 import { ArrowLeft, Home, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
-import { IconButton } from './ui/icon-button';
+import { Button } from './ui/button';
 import { Breadcrumb } from './ui/breadcrumb';
 import type { Category, Tool } from '../App';
 
@@ -22,7 +23,6 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const { theme, toggleTheme } = useTheme();
 
-  // Generate breadcrumb items
   const getBreadcrumbItems = () => {
     const items = [
       { label: 'Accueil', onClick: onBackToHome, current: currentView === 'home' }
@@ -39,7 +39,7 @@ const Header: React.FC<HeaderProps> = ({
     if (selectedTool) {
       items.push({
         label: selectedTool.name,
-        onClick: () => {}, // Empty function for current tool
+        onClick: () => {},
         current: true
       });
     }
@@ -48,38 +48,31 @@ const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/60 shadow-sm">
-      <div className="container flex h-16 items-center justify-between mobile-padding">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-16 items-center justify-between px-4">
         {/* Left Section */}
         <div className="flex items-center space-x-4">
-          {/* Back Button */}
           {currentView !== 'home' && (
-            <IconButton
-              icon={<ArrowLeft size={18} />}
+            <Button
               variant="ghost"
+              size="icon"
               onClick={currentView === 'tool' ? onBackToCategory : onBackToHome}
-              tooltip={currentView === 'tool' ? 'Retour aux outils' : 'Retour à l\'accueil'}
-              className="touch-target"
-            />
+            >
+              <ArrowLeft size={18} />
+            </Button>
           )}
           
-          {/* Logo & Brand */}
           <button 
             onClick={onBackToHome}
-            className="flex items-center space-x-3 focus-ring rounded-lg p-2 -m-2 group"
+            className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
           >
-            <div className="h-10 w-10 bg-gradient-to-br from-primary to-primary/80 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-105 transition-transform duration-200">
+            <div className="h-8 w-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center text-white font-bold text-sm">
               FM
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+              <h1 className="text-lg font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
                 FitMASTER PRO
               </h1>
-              {currentView !== 'home' && (
-                <p className="text-xs text-muted-foreground">
-                  Suite complète fitness & nutrition
-                </p>
-              )}
             </div>
           </button>
         </div>
@@ -91,24 +84,23 @@ const Header: React.FC<HeaderProps> = ({
 
         {/* Right Section */}
         <div className="flex items-center space-x-2">
-          {/* Theme Toggle */}
-          <IconButton
-            icon={theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+          <Button
             variant="ghost"
+            size="icon"
             onClick={toggleTheme}
-            tooltip={`Passer en mode ${theme === 'light' ? 'sombre' : 'clair'}`}
-            className="touch-target"
-          />
+          >
+            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+          </Button>
 
-          {/* Home Button (mobile) */}
           {currentView !== 'home' && (
-            <IconButton
-              icon={<Home size={18} />}
+            <Button
               variant="ghost"
+              size="icon"
               onClick={onBackToHome}
-              tooltip="Retour à l'accueil"
-              className="touch-target sm:hidden"
-            />
+              className="sm:hidden"
+            >
+              <Home size={18} />
+            </Button>
           )}
         </div>
       </div>

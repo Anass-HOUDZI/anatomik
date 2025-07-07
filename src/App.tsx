@@ -70,19 +70,18 @@ const App = () => {
             onBackToCategory={handleBackToCategory}
           />
           
-          <main className="container mx-auto mobile-padding py-8">
+          <main className="container mx-auto px-4 py-8">
             {currentView === 'home' && (
               <div className="space-y-12">
-                {/* Hero Section */}
-                <div className="text-center space-y-6 animate-fade-in-up">
-                  <h1 className="heading-primary">
+                <div className="text-center space-y-6">
+                  <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent">
                     FitMASTER PRO
                   </h1>
                   <div className="space-y-4">
                     <p className="text-xl md:text-2xl text-muted-foreground font-medium">
                       60 outils gratuits de musculation et nutrition
                     </p>
-                    <p className="text-body max-w-3xl mx-auto text-lg">
+                    <p className="text-base max-w-3xl mx-auto text-muted-foreground leading-relaxed">
                       Suite complète d'outils professionnels fonctionnant 100% côté client.
                       Calculateurs, trackers, planificateurs - tout ce dont vous avez besoin pour optimiser vos performances.
                     </p>
@@ -102,13 +101,17 @@ const App = () => {
             
             {currentView === 'tool' && selectedTool && (
               <div className="space-y-8">
-                <div className="text-center space-y-4 animate-fade-in-up">
-                  <h2 className="heading-secondary">{selectedTool.name}</h2>
-                  <p className="text-body text-lg max-w-3xl mx-auto">{selectedTool.description}</p>
+                <div className="text-center space-y-4">
+                  <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+                    {selectedTool.name}
+                  </h2>
+                  <p className="text-base max-w-3xl mx-auto text-muted-foreground leading-relaxed">
+                    {selectedTool.description}
+                  </p>
                 </div>
                 
                 {selectedTool.component && (
-                  <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+                  <div className="animate-in fade-in-50 duration-500">
                     <selectedTool.component />
                   </div>
                 )}
@@ -117,7 +120,7 @@ const App = () => {
           </main>
           
           <footer className="bg-muted/30 text-center py-8 mt-16 border-t">
-            <div className="container mx-auto mobile-padding">
+            <div className="container mx-auto px-4">
               <p className="text-sm text-muted-foreground">
                 Copyright © 2025 Anass Houdzi – Tous droits réservés.
               </p>
