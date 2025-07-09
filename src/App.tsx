@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Header from './components/Header';
-import CategoryGrid from './components/CategoryGrid';
+import ModernCategoryGrid from './components/modern-category-grid';
 import ToolView from './components/ToolView';
 import { StorageManager } from './utils/StorageManager';
 import { ThemeProvider } from './context/ThemeContext';
@@ -51,8 +51,8 @@ const App = () => {
         // Initialize storage
         await StorageManager.init();
         
-        // Small delay to ensure smooth loading
-        await new Promise(resolve => setTimeout(resolve, 300));
+        // Small delay for smooth loading
+        await new Promise(resolve => setTimeout(resolve, 500));
         
         setIsLoading(false);
       } catch (err) {
@@ -102,12 +102,20 @@ const App = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center space-y-6">
-          <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <div className="space-y-2">
-            <h2 className="text-2xl font-bold text-foreground">FitMASTER PRO</h2>
-            <p className="text-muted-foreground">Chargement en cours...</p>
+      <div className="min-h-screen bg-gradient-to-br from-blue-600 via-purple-700 to-indigo-800 flex items-center justify-center">
+        <div className="text-center space-y-8">
+          <div className="relative">
+            <div className="w-20 h-20 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>
+            <div className="absolute inset-0 w-20 h-20 border-4 border-transparent border-t-purple-300 rounded-full animate-spin mx-auto" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
+          </div>
+          <div className="space-y-4">
+            <h2 className="text-4xl font-bold text-white">FitMASTER PRO</h2>
+            <p className="text-white/80 text-lg">Chargement de votre expérience premium...</p>
+            <div className="flex justify-center space-x-2">
+              <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+              <div className="w-2 h-2 bg-white rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+              <div className="w-2 h-2 bg-white rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+            </div>
           </div>
         </div>
       </div>
@@ -116,18 +124,18 @@ const App = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center space-y-6 max-w-md mx-auto p-6">
-          <div className="w-16 h-16 bg-destructive/20 rounded-full flex items-center justify-center mx-auto">
-            <span className="text-2xl">⚠️</span>
+      <div className="min-h-screen bg-gradient-to-br from-red-500 via-pink-500 to-purple-600 flex items-center justify-center">
+        <div className="text-center space-y-8 max-w-md mx-auto p-8">
+          <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto backdrop-blur-sm">
+            <span className="text-4xl">⚠️</span>
           </div>
-          <div className="space-y-2">
-            <h2 className="text-2xl font-bold text-foreground">Erreur</h2>
-            <p className="text-muted-foreground">{error}</p>
+          <div className="space-y-4">
+            <h2 className="text-3xl font-bold text-white">Erreur de Chargement</h2>
+            <p className="text-white/90 text-lg">{error}</p>
           </div>
           <button
             onClick={() => window.location.reload()}
-            className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+            className="px-8 py-4 bg-white/20 backdrop-blur-sm text-white rounded-2xl font-semibold hover:bg-white/30 transition-all duration-300 border border-white/30"
           >
             Recharger l'application
           </button>
@@ -140,35 +148,19 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <div className="min-h-screen bg-background">
-          <Header 
-            currentView={currentView}
-            selectedCategory={selectedCategory}
-            selectedTool={selectedTool}
-            onBackToHome={handleBackToHome}
-            onBackToCategory={handleBackToCategory}
-          />
+          {currentView !== 'home' && (
+            <Header 
+              currentView={currentView}
+              selectedCategory={selectedCategory}
+              selectedTool={selectedTool}
+              onBackToHome={handleBackToHome}
+              onBackToCategory={handleBackToCategory}
+            />
+          )}
           
-          <main className="container mx-auto px-4 py-12">
+          <main className={currentView === 'home' ? '' : 'container mx-auto px-4 py-12'}>
             {currentView === 'home' && (
-              <div className="space-y-16">
-                <div className="text-center space-y-8">
-                  <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent">
-                    FitMASTER PRO
-                  </h1>
-                  <div className="space-y-6 max-w-4xl mx-auto">
-                    <p className="text-2xl md:text-3xl text-muted-foreground font-medium">
-                      60 outils gratuits de musculation et nutrition
-                    </p>
-                    <p className="text-lg text-muted-foreground leading-relaxed">
-                      Suite complète d'outils professionnels fonctionnant 100% côté client.
-                      Calculateurs avancés, trackers intelligents, planificateurs personnalisés - 
-                      tout ce dont vous avez besoin pour optimiser vos performances et atteindre vos objectifs.
-                    </p>
-                  </div>
-                </div>
-                
-                <CategoryGrid onCategorySelect={handleCategorySelect} />
-              </div>
+              <ModernCategoryGrid onCategorySelect={handleCategorySelect} />
             )}
             
             {currentView === 'category' && selectedCategory && (
@@ -208,16 +200,18 @@ const App = () => {
             )}
           </main>
           
-          <footer className="bg-muted/30 text-center py-12 mt-20 border-t">
-            <div className="container mx-auto px-4 space-y-4">
-              <p className="text-base font-medium text-foreground">
-                Copyright © 2025 Anass Houdzi – Tous droits réservés.
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Application web progressive optimisée pour tous les appareils • 60 outils professionnels
-              </p>
-            </div>
-          </footer>
+          {currentView !== 'home' && (
+            <footer className="bg-muted/30 text-center py-12 mt-20 border-t">
+              <div className="container mx-auto px-4 space-y-4">
+                <p className="text-base font-medium text-foreground">
+                  Copyright © 2025 Anass Houdzi – Tous droits réservés.
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Application web progressive optimisée pour tous les appareils • 60 outils professionnels
+                </p>
+              </div>
+            </footer>
+          )}
         </div>
         
         <Toaster />
