@@ -51,8 +51,8 @@ const App = () => {
         // Initialize storage
         await StorageManager.init();
         
-        // Small delay for smooth loading
-        await new Promise(resolve => setTimeout(resolve, 500));
+        // Optimized loading - reduced delay
+        await new Promise(resolve => setTimeout(resolve, 200));
         
         setIsLoading(false);
       } catch (err) {
@@ -158,7 +158,7 @@ const App = () => {
             />
           )}
           
-          <main className={currentView === 'home' ? '' : 'container mx-auto px-4 py-12'}>
+          <main className={currentView === 'home' ? '' : ''}>
             {currentView === 'home' && (
               <ModernCategoryGrid onCategorySelect={handleCategorySelect} />
             )}
@@ -171,47 +171,38 @@ const App = () => {
             )}
             
             {currentView === 'tool' && selectedTool && (
-              <div className="space-y-12">
-                <div className="text-center space-y-6">
-                  <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-                    {selectedTool.name}
-                  </h2>
-                  <p className="text-lg max-w-4xl mx-auto text-muted-foreground leading-relaxed">
-                    {selectedTool.description}
-                  </p>
-                </div>
-                
-                {selectedTool.component ? (
-                  <div className="animate-in fade-in-50 duration-500">
-                    <selectedTool.component />
-                  </div>
-                ) : (
-                  <div className="text-center py-20">
-                    <div className="w-24 h-24 mx-auto mb-6 bg-muted rounded-full flex items-center justify-center">
-                      <span className="text-3xl">🚧</span>
+              <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20">
+                <div className="container mx-auto px-4 py-20">
+                  <div className="space-y-12">
+                    <div className="text-center space-y-6">
+                      <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent">
+                        {selectedTool.name}
+                      </h2>
+                      <p className="text-xl max-w-4xl mx-auto text-gray-600 dark:text-gray-300 leading-relaxed">
+                        {selectedTool.description}
+                      </p>
                     </div>
-                    <h3 className="text-2xl font-bold mb-4">Outil en développement</h3>
-                    <p className="text-muted-foreground text-lg">
-                      Cet outil sera bientôt disponible. Revenez prochainement !
-                    </p>
+                    
+                    {selectedTool.component ? (
+                      <div className="animate-in fade-in-50 duration-500">
+                        <selectedTool.component />
+                      </div>
+                    ) : (
+                      <div className="text-center py-20">
+                        <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                          <span className="text-3xl">🚧</span>
+                        </div>
+                        <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Outil en développement</h3>
+                        <p className="text-gray-600 dark:text-gray-300 text-lg">
+                          Cet outil sera bientôt disponible. Revenez prochainement !
+                        </p>
+                      </div>
+                    )}
                   </div>
-                )}
+                </div>
               </div>
             )}
           </main>
-          
-          {currentView !== 'home' && (
-            <footer className="bg-muted/30 text-center py-12 mt-20 border-t">
-              <div className="container mx-auto px-4 space-y-4">
-                <p className="text-base font-medium text-foreground">
-                  Copyright © 2025 Anass Houdzi – Tous droits réservés.
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Application web progressive optimisée pour tous les appareils • 60 outils professionnels
-                </p>
-              </div>
-            </footer>
-          )}
         </div>
         
         <Toaster />

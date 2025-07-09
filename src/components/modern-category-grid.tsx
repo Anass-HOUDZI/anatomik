@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Calculator, Dumbbell, TrendingUp, Calendar, ArrowRight, Star, CheckCircle, Search } from 'lucide-react';
+import { Calculator, Dumbbell, TrendingUp, Calendar, ArrowRight, Star, CheckCircle, Search, Linkedin } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Category } from '../App';
 import { ModernCard } from './ui/modern-card';
@@ -90,7 +90,7 @@ const ModernCategoryGrid: React.FC<ModernCategoryGridProps> = ({ onCategorySelec
       cat.description.toLowerCase().includes(search.toLowerCase())
   );
 
-  // Calculate total tools implemented
+  // Calculate total tools implemented (43 total)
   const totalImplemented = categories.reduce((sum, cat) => {
     const tools = getToolCountForCategory(cat.id);
     return sum + tools;
@@ -204,6 +204,43 @@ const ModernCategoryGrid: React.FC<ModernCategoryGridProps> = ({ onCategorySelec
           )}
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="relative bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white py-16">
+        <div className="absolute inset-0 opacity-10">
+          <svg width="60" height="60" viewBox="0 0 60 60" className="w-full h-full">
+            <defs>
+              <pattern id="footer-dots" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+                <circle cx="30" cy="30" r="2" fill="white" fillOpacity="0.1" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#footer-dots)" />
+          </svg>
+        </div>
+        
+        <div className="container mx-auto px-4 text-center relative z-10 space-y-6">
+          <div className="flex items-center justify-center gap-6 mb-8">
+            <a
+              href="https://www.linkedin.com/in/anasshoudzi/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl hover:bg-white/20 transition-all duration-300 group"
+            >
+              <Linkedin className="w-5 h-5 text-blue-400 group-hover:text-blue-300 transition-colors" />
+              <span className="font-medium">Anass Houdzi</span>
+            </a>
+          </div>
+          
+          <div className="space-y-4">
+            <p className="text-lg font-medium">
+              Copyright © 2025 Anass Houdzi – Tous droits réservés.
+            </p>
+            <p className="text-white/80">
+              Application web progressive optimisée pour tous les appareils • {totalImplemented} outils professionnels
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };

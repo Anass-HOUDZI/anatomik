@@ -4,12 +4,21 @@ import { Search, Sparkles, Trophy, Users, Zap } from 'lucide-react';
 import { Input } from './input';
 import { StatsCounter } from './stats-counter';
 
+// Import tool configs to get exact count
+import nutritionalToolsConfig from '../tool-configs/nutritionalToolsConfig';
+import trainingToolsConfig from '../tool-configs/trainingToolsConfig';
+import trackingToolsConfig from '../tool-configs/trackingToolsConfig';
+import generatorToolsConfig from '../tool-configs/generatorToolsConfig';
+
 interface HeroSectionProps {
   onSearch: (query: string) => void;
   searchValue: string;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onSearch, searchValue }) => {
+  // Calculate exact total tools (43)
+  const totalTools = nutritionalToolsConfig.length + trainingToolsConfig.length + trackingToolsConfig.length + generatorToolsConfig.length;
+  
   return (
     <div className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-purple-700 to-indigo-800 text-white">
       {/* Background Pattern */}
@@ -33,7 +42,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onSearch, searchValue 
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-sm font-medium">
               <Sparkles className="w-4 h-4" />
-              60 Outils Professionnels Gratuits
+              {totalTools} Outils Professionnels Gratuits
             </div>
             
             <h1 className="text-6xl md:text-8xl font-black leading-tight">
@@ -71,13 +80,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onSearch, searchValue 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
             <StatsCounter
-              value={60}
+              value={totalTools}
               label="Outils"
               icon={<Zap className="w-5 h-5 text-yellow-400" />}
               delay={0}
             />
             <StatsCounter
-              value={15}
+              value={4}
               label="Catégories"
               icon={<Trophy className="w-5 h-5 text-orange-400" />}
               delay={200}
