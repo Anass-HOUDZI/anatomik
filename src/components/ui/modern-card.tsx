@@ -11,6 +11,8 @@ interface ModernCardProps {
   onClick?: () => void;
   image?: string;
   glow?: boolean;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }
 
 export const ModernCard: React.FC<ModernCardProps> = ({
@@ -21,7 +23,9 @@ export const ModernCard: React.FC<ModernCardProps> = ({
   clickable = false,
   onClick,
   image,
-  glow = false
+  glow = false,
+  onMouseEnter,
+  onMouseLeave
 }) => {
   const baseClasses = "relative overflow-hidden rounded-3xl transition-all duration-500 ease-out group";
   
@@ -44,6 +48,8 @@ export const ModernCard: React.FC<ModernCardProps> = ({
         className
       )}
       onClick={clickable ? onClick : undefined}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       {/* Background Image */}
       {image && (

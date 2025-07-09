@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { Calculator, Dumbbell, TrendingUp, Calendar, ArrowRight, Star, CheckCircle } from 'lucide-react';
+import { Calculator, Dumbbell, TrendingUp, Calendar, ArrowRight, Star, CheckCircle, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Category } from '../App';
 import { ModernCard } from './ui/modern-card';
