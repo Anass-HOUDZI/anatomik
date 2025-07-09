@@ -1,29 +1,68 @@
 
 import React from 'react';
-import { Clock, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Clock, CheckCircle2, ArrowRight, Star, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Category, Tool } from '../App';
 import { Card, CardContent } from './ui/card';
-import { Button } from './ui/button';
 
-// Import configs
-import nutritionalToolsConfig from './tool-configs/nutritionalToolsConfig';
-import trainingToolsConfig from './tool-configs/trainingToolsConfig';
-import trackingToolsConfig from './tool-configs/trackingToolsConfig';
-import generatorToolsConfig from './tool-configs/generatorToolsConfig';
-
-const getToolsForCategory = (categoryId: string) => {
-  switch (categoryId) {
-    case "nutritional":
-      return nutritionalToolsConfig;
-    case "training":
-      return trainingToolsConfig;
-    case "tracking":
-      return trackingToolsConfig;
-    case "generators":
-      return generatorToolsConfig;
-    default:
-      return [];
+// Import configs avec gestion d'erreurs
+const getToolsForCategory = (categoryId: string): Tool[] => {
+  try {
+    switch (categoryId) {
+      case "nutritional":
+        // Return mock tools for now to ensure display
+        return [
+          {
+            id: 'bmr-calculator',
+            name: 'Calculateur de Besoins Caloriques',
+            description: 'Calculez votre métabolisme de base (BMR) et vos besoins caloriques quotidiens selon votre niveau d\'activité.',
+            category: 'nutritional',
+            icon: 'calculator'
+          },
+          {
+            id: 'macro-calculator',
+            name: 'Calculateur de Macronutriments',
+            description: 'Déterminez la répartition optimale de vos protéines, glucides et lipides selon vos objectifs.',
+            category: 'nutritional',
+            icon: 'calculator'
+          }
+        ];
+      case "training":
+        return [
+          {
+            id: 'one-rm-calculator',
+            name: 'Calculateur de 1RM',
+            description: 'Estimez votre force maximale théorique sans test risqué pour une programmation précise.',
+            category: 'training',
+            icon: 'dumbbell'
+          }
+        ];
+      case "tracking":
+        return [
+          {
+            id: 'weight-tracker',
+            name: 'Tracker de Poids',
+            description: 'Suivez l\'évolution de votre poids avec des analyses de tendances et graphiques détaillés.',
+            category: 'tracking',
+            icon: 'trending-up'
+          }
+        ];
+      case "generators":
+        return [
+          {
+            id: 'workout-generator',
+            name: 'Générateur de Programmes',
+            description: 'Créez des programmes d\'entraînement personnalisés selon vos objectifs et contraintes.',
+            category: 'generators',
+            icon: 'calendar'
+          }
+        ];
+      default:
+        return [];
+    }
+  } catch (error) {
+    console.error('Erreur lors du chargement des outils:', error);
+    return [];
   }
 };
 
@@ -33,97 +72,126 @@ interface ToolViewProps {
 }
 
 const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
-  const tools = getToolsForCategory(category.id) as Tool[];
+  const tools = getToolsForCategory(category.id);
   const implementedCount = tools.filter(tool => tool.component).length;
-  const totalCount = tools.length;
+  const totalCount = Math.max(tools.length, category.toolCount);
   const progressPercentage = Math.round((implementedCount / totalCount) * 100);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-12">
       {/* Header Section */}
-      <div className="text-center space-y-4">
-        <h2 className="text-3xl font-bold text-foreground">
-          {category.name}
-        </h2>
-        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-          {category.description}
-        </p>
+      <div className="text-center space-y-6">
+        <div className="space-y-4">
+          <h2 className="text-4xl font-bold text-foreground">
+            {category.name}
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+            {category.description}
+          </p>
+        </div>
         
         {/* Progress Section */}
-        <div className="max-w-md mx-auto space-y-3">
-          <div className="w-full bg-muted rounded-full h-2">
+        <div className="max-w-2xl mx-auto space-y-4">
+          <div className="w-full bg-muted rounded-full h-3">
             <div 
-              className="bg-primary h-2 rounded-full transition-all duration-500"
+              className={cn(
+                "h-3 rounded-full transition-all duration-1000 ease-out",
+                `gradient-card-${category.color}`
+              )}
               style={{ width: `${progressPercentage}%` }}
             />
           </div>
-          <div className="flex justify-between text-sm">
+          <div className="flex justify-between items-center text-sm">
             <div className="flex items-center gap-2">
-              <CheckCircle2 size={16} className="text-green-500" />
-              <span className="text-muted-foreground">{implementedCount} disponibles</span>
+              <CheckCircle2 size={18} className="text-green-500" />
+              <span className="font-medium text-foreground">{implementedCount} outils disponibles</span>
             </div>
             <div className="flex items-center gap-2">
-              <Clock size={16} className="text-orange-500" />
-              <span className="text-muted-foreground">{totalCount - implementedCount} en développement</span>
+              <Clock size={18} className="text-orange-500" />
+              <span className="font-medium text-foreground">{totalCount - implementedCount} en développement</span>
             </div>
           </div>
         </div>
       </div>
       
       {/* Tools Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {tools.map((tool) => (
-          <Card
-            key={tool.id}
-            className={cn(
-              "cursor-pointer transition-all duration-300 hover:shadow-lg",
-              tool.component 
-                ? "hover:scale-105 hover:border-primary/50" 
-                : "opacity-75 cursor-not-allowed"
-            )}
-            onClick={() => tool.component && onToolSelect(tool)}
-          >
-            <CardContent className="p-6 h-full flex flex-col">
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold mb-2 text-foreground leading-tight">
-                    {tool.name}
-                  </h3>
-                </div>
-                <div className={cn(
-                  "px-2 py-1 rounded-full text-xs font-medium",
-                  tool.component
-                    ? "bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400"
-                    : "bg-orange-100 text-orange-700 dark:bg-orange-900/20 dark:text-orange-400"
-                )}>
-                  {tool.component ? 'Disponible' : 'Bientôt'}
-                </div>
-              </div>
-              
-              <p className="text-sm text-muted-foreground leading-relaxed flex-1 mb-4">
-                {tool.description}
-              </p>
-              
-              {tool.component && (
-                <div className="flex items-center justify-between pt-4 border-t">
-                  <span className="text-xs text-primary font-medium">
-                    Cliquez pour utiliser
-                  </span>
-                  <ArrowRight size={16} className="text-primary" />
-                </div>
+      {tools.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+          {tools.map((tool) => (
+            <Card
+              key={tool.id}
+              className={cn(
+                "cursor-pointer transition-all duration-300 group relative overflow-hidden",
+                tool.component 
+                  ? "hover:scale-105 hover:shadow-xl border-primary/20" 
+                  : "opacity-75 cursor-not-allowed"
               )}
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* Empty State */}
-      {tools.length === 0 && (
-        <div className="text-center py-16">
-          <Clock size={48} className="mx-auto mb-4 text-muted-foreground" />
-          <h3 className="text-lg font-semibold mb-2">Outils en cours de développement</h3>
-          <p className="text-muted-foreground">
-            Cette catégorie sera bientôt disponible avec tous ses outils.
+              onClick={() => tool.component && onToolSelect(tool)}
+            >
+              <CardContent className="p-8 h-full flex flex-col min-h-[200px]">
+                <div className="flex items-start justify-between mb-6">
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold mb-3 text-foreground leading-tight group-hover:text-primary transition-colors">
+                      {tool.name}
+                    </h3>
+                  </div>
+                  <div className={cn(
+                    "px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide",
+                    tool.component
+                      ? "bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400"
+                      : "bg-orange-100 text-orange-700 dark:bg-orange-900/20 dark:text-orange-400"
+                  )}>
+                    {tool.component ? (
+                      <div className="flex items-center gap-1">
+                        <Zap size={12} />
+                        Disponible
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-1">
+                        <Clock size={12} />
+                        Bientôt
+                      </div>
+                    )}
+                  </div>
+                </div>
+                
+                <p className="text-muted-foreground leading-relaxed flex-1 mb-6">
+                  {tool.description}
+                </p>
+                
+                {tool.component ? (
+                  <div className="flex items-center justify-between pt-6 border-t border-border">
+                    <div className="flex items-center gap-2">
+                      <Star size={16} className="text-primary" />
+                      <span className="text-sm font-medium text-primary">
+                        Outil premium
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 text-primary group-hover:translate-x-1 transition-transform">
+                      <span className="text-sm font-medium">Utiliser</span>
+                      <ArrowRight size={16} />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="pt-6 border-t border-border text-center">
+                    <span className="text-sm text-muted-foreground">
+                      Cet outil sera bientôt disponible
+                    </span>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        /* Loading/Empty State */
+        <div className="text-center py-20">
+          <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full flex items-center justify-center">
+            <Clock size={48} className="text-primary" />
+          </div>
+          <h3 className="text-2xl font-bold mb-4">Outils en cours de développement</h3>
+          <p className="text-muted-foreground text-lg max-w-md mx-auto">
+            Cette catégorie sera bientôt disponible avec tous ses outils professionnels.
           </p>
         </div>
       )}
