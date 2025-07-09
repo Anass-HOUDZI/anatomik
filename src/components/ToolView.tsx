@@ -5,58 +5,23 @@ import { cn } from '@/lib/utils';
 import type { Category, Tool } from '../App';
 import { Card, CardContent } from './ui/card';
 
-// Import configs avec gestion d'erreurs
+// Import real tool configurations
+import nutritionalToolsConfig from './tool-configs/nutritionalToolsConfig';
+import trainingToolsConfig from './tool-configs/trainingToolsConfig';
+import trackingToolsConfig from './tool-configs/trackingToolsConfig';
+import generatorToolsConfig from './tool-configs/generatorToolsConfig';
+
 const getToolsForCategory = (categoryId: string): Tool[] => {
   try {
     switch (categoryId) {
       case "nutritional":
-        // Return mock tools for now to ensure display
-        return [
-          {
-            id: 'bmr-calculator',
-            name: 'Calculateur de Besoins Caloriques',
-            description: 'Calculez votre métabolisme de base (BMR) et vos besoins caloriques quotidiens selon votre niveau d\'activité.',
-            category: 'nutritional',
-            icon: 'calculator'
-          },
-          {
-            id: 'macro-calculator',
-            name: 'Calculateur de Macronutriments',
-            description: 'Déterminez la répartition optimale de vos protéines, glucides et lipides selon vos objectifs.',
-            category: 'nutritional',
-            icon: 'calculator'
-          }
-        ];
+        return nutritionalToolsConfig;
       case "training":
-        return [
-          {
-            id: 'one-rm-calculator',
-            name: 'Calculateur de 1RM',
-            description: 'Estimez votre force maximale théorique sans test risqué pour une programmation précise.',
-            category: 'training',
-            icon: 'dumbbell'
-          }
-        ];
+        return trainingToolsConfig;
       case "tracking":
-        return [
-          {
-            id: 'weight-tracker',
-            name: 'Tracker de Poids',
-            description: 'Suivez l\'évolution de votre poids avec des analyses de tendances et graphiques détaillés.',
-            category: 'tracking',
-            icon: 'trending-up'
-          }
-        ];
+        return trackingToolsConfig;
       case "generators":
-        return [
-          {
-            id: 'workout-generator',
-            name: 'Générateur de Programmes',
-            description: 'Créez des programmes d\'entraînement personnalisés selon vos objectifs et contraintes.',
-            category: 'generators',
-            icon: 'calendar'
-          }
-        ];
+        return generatorToolsConfig;
       default:
         return [];
     }
@@ -74,7 +39,7 @@ interface ToolViewProps {
 const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
   const tools = getToolsForCategory(category.id);
   const implementedCount = tools.filter(tool => tool.component).length;
-  const totalCount = Math.max(tools.length, category.toolCount);
+  const totalCount = tools.length;
   const progressPercentage = Math.round((implementedCount / totalCount) * 100);
 
   return (

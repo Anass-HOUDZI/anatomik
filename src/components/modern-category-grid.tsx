@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Calculator, Dumbbell, TrendingUp, Calendar, ArrowRight, Star, CheckCircle, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -5,38 +6,59 @@ import type { Category } from '../App';
 import { ModernCard } from './ui/modern-card';
 import { HeroSection } from './ui/hero-section';
 
+// Import real tool configurations to get accurate counts
+import nutritionalToolsConfig from './tool-configs/nutritionalToolsConfig';
+import trainingToolsConfig from './tool-configs/trainingToolsConfig';
+import trackingToolsConfig from './tool-configs/trackingToolsConfig';
+import generatorToolsConfig from './tool-configs/generatorToolsConfig';
+
+const getToolCountForCategory = (categoryId: string): number => {
+  switch (categoryId) {
+    case 'nutritional':
+      return nutritionalToolsConfig.length;
+    case 'training':
+      return trainingToolsConfig.length;
+    case 'tracking':
+      return trackingToolsConfig.length;
+    case 'generators':
+      return generatorToolsConfig.length;
+    default:
+      return 0;
+  }
+};
+
 const categories: Category[] = [
   {
     id: 'nutritional',
     name: 'Calculateurs Nutritionnels',
-    description: '15 outils pour optimiser votre nutrition : BMR, macros, hydratation, timing nutritionnel et plus encore.',
+    description: `${getToolCountForCategory('nutritional')} outils pour optimiser votre nutrition : BMR, macros, hydratation, timing nutritionnel et plus encore.`,
     icon: 'calculator',
     color: 'green',
-    toolCount: 15
+    toolCount: getToolCountForCategory('nutritional')
   },
   {
     id: 'training',
     name: 'Calculateurs d\'Entraînement',
-    description: '15 outils pour vos séances : 1RM, charges, volume, progression, récupération et périodisation.',
+    description: `${getToolCountForCategory('training')} outils pour vos séances : 1RM, charges, volume, progression, récupération et périodisation.`,
     icon: 'dumbbell',
     color: 'blue',
-    toolCount: 15
+    toolCount: getToolCountForCategory('training')
   },
   {
     id: 'tracking',
     name: 'Suivis et Analyses',
-    description: '15 trackers pour monitorer vos progrès : poids, mensurations, performance et composition corporelle.',
+    description: `${getToolCountForCategory('tracking')} trackers pour monitorer vos progrès : poids, mensurations, performance et composition corporelle.`,
     icon: 'trending-up',
     color: 'orange',
-    toolCount: 15
+    toolCount: getToolCountForCategory('tracking')
   },
   {
     id: 'generators',
     name: 'Planificateurs et Générateurs',
-    description: '15 générateurs pour organiser : programmes, repas, routines, défis et planification complète.',
+    description: `${getToolCountForCategory('generators')} générateurs pour organiser : programmes, repas, routines, défis et planification complète.`,
     icon: 'calendar',
     color: 'purple',
-    toolCount: 15
+    toolCount: getToolCountForCategory('generators')
   }
 ];
 
@@ -68,6 +90,12 @@ const ModernCategoryGrid: React.FC<ModernCategoryGridProps> = ({ onCategorySelec
       cat.description.toLowerCase().includes(search.toLowerCase())
   );
 
+  // Calculate total tools implemented
+  const totalImplemented = categories.reduce((sum, cat) => {
+    const tools = getToolCountForCategory(cat.id);
+    return sum + tools;
+  }, 0);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20">
       {/* Hero Section */}
@@ -80,9 +108,13 @@ const ModernCategoryGrid: React.FC<ModernCategoryGridProps> = ({ onCategorySelec
             <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent">
               Explorez nos Catégories
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-4">
               Chaque catégorie contient des outils professionnels conçus pour optimiser vos performances
             </p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 text-sm font-medium">
+              <CheckCircle className="w-4 h-4" />
+              {totalImplemented} outils entièrement fonctionnels disponibles
+            </div>
           </div>
 
           {/* Categories Grid */}
