@@ -70,10 +70,10 @@ const iconMap = {
 };
 
 const categoryImages = {
-  nutritional: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=500&q=80",
-  training: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&q=80",
-  tracking: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=500&q=80",
-  generators: "https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=500&q=80"
+  nutritional: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=500&q=80", // Healthy vegetables and fruits
+  training: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=500&q=80", // Gym dumbbells
+  tracking: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&q=80", // Analytics dashboard
+  generators: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=500&q=80" // Planning notebook
 };
 
 interface ModernCategoryGridProps {
