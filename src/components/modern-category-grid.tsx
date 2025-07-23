@@ -218,7 +218,49 @@ const ModernCategoryGrid: React.FC<ModernCategoryGridProps> = ({ onCategorySelec
           </svg>
         </div>
         
-        <div className="container mx-auto px-4 text-center relative z-10 space-y-6">
+        <div className="container mx-auto px-4 text-center relative z-10 space-y-8">
+          {/* Navigation Links */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-8">
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white mb-3">À propos</h3>
+              <ul className="space-y-2 text-white/80">
+                <li><a href="#" className="hover:text-white transition-colors">Notre mission</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Fonctionnalités</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
+              </ul>
+            </div>
+            
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white mb-3">Contact</h3>
+              <ul className="space-y-2 text-white/80">
+                <li><a href="#" className="hover:text-white transition-colors">Support</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Feedback</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Signaler un bug</a></li>
+              </ul>
+            </div>
+            
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white mb-3">Catégories</h3>
+              <ul className="space-y-2 text-white/80">
+                <li><a href="#nutritional" className="hover:text-white transition-colors">Nutrition</a></li>
+                <li><a href="#training" className="hover:text-white transition-colors">Entraînement</a></li>
+                <li><a href="#tracking" className="hover:text-white transition-colors">Suivi</a></li>
+                <li><a href="#generators" className="hover:text-white transition-colors">Planificateurs</a></li>
+              </ul>
+            </div>
+            
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white mb-3">Outils</h3>
+              <ul className="space-y-2 text-white/80">
+                <li><a href="#" className="hover:text-white transition-colors">Calculateur BMR</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Tracker de poids</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Planificateur repas</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Tous les outils</a></li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Contact CTA */}
           <div className="flex items-center justify-center gap-6 mb-8">
             <a
               href="https://www.linkedin.com/in/anasshoudzi/"
