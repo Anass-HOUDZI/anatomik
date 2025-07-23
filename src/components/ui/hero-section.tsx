@@ -20,7 +20,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onSearch, searchValue 
   const totalTools = nutritionalToolsConfig.length + trainingToolsConfig.length + trackingToolsConfig.length + generatorToolsConfig.length;
   
   return (
-    <div className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-purple-700 to-indigo-800 text-white">
+    <div className="relative overflow-hidden text-white" style={{background: 'linear-gradient(to bottom right, #1fa2ff, #12d8fa, #a6ffcb)'}}>
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-50">
         <svg width="60" height="60" viewBox="0 0 60 60" className="w-full h-full">
