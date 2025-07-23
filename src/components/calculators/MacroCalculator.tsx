@@ -147,7 +147,7 @@ const MacroCalculator: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Input Form */}
         <div className="space-y-6">
-          <h3 className="text-2xl font-bold mb-6">Configuration</h3>
+          <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Configuration</h3>
           
           <div className="input-group-custom">
             <label htmlFor="calories">Calories quotidiennes</label>
@@ -248,7 +248,7 @@ const MacroCalculator: React.FC = () => {
 
         {/* Results */}
         <div className="lg:col-span-2 space-y-6">
-          <h3 className="text-2xl font-bold mb-6">Vos macronutriments</h3>
+          <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Vos macronutriments</h3>
           
           {results.totalCalories > 0 ? (
             <div className="space-y-6">

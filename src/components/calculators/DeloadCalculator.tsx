@@ -84,7 +84,7 @@ const DeloadCalculator = () => {
       <MobileCard className="w-full">
         <div className="p-4 md:p-6">
           <div className="text-center mb-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
               Calculateur de Deload
             </h2>
             <p className="text-sm md:text-base text-gray-600 leading-relaxed">

@@ -118,7 +118,7 @@ const BulkCalculator: React.FC = () => {
         {/* Input Form */}
         <MobileCard className="w-full">
           <div className="p-4 md:p-6">
-            <h3 className="text-xl md:text-2xl font-bold mb-6 text-black">Paramètres de prise de masse</h3>
+            <h3 className="text-xl md:text-2xl font-bold mb-6 text-gray-900 dark:text-white">Paramètres de prise de masse</h3>
             
             <div className="space-y-6">
               <div className="space-y-2">
@@ -224,7 +224,7 @@ const BulkCalculator: React.FC = () => {
         {/* Results */}
         <MobileCard className="w-full">
           <div className="p-4 md:p-6">
-            <h3 className="text-xl md:text-2xl font-bold mb-6 text-black">Plan de prise de masse</h3>
+            <h3 className="text-xl md:text-2xl font-bold mb-6 text-gray-900 dark:text-white">Plan de prise de masse</h3>
             
             {results.weeklyGain > 0 ? (
               <div className="space-y-6">

@@ -118,7 +118,7 @@ const HydrationCalculator: React.FC = () => {
         <MobileCard className="w-full">
           <div className="p-4 md:p-6">
             <div className="text-center mb-6">
-              <h3 className="text-2xl md:text-3xl font-bold text-black mb-2">Calculateur d'Hydratation</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">Calculateur d'Hydratation</h3>
               <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                 Calculez vos besoins quotidiens en eau selon votre profil et activité
               </p>
@@ -228,7 +228,7 @@ const HydrationCalculator: React.FC = () => {
           <MobileCard className="w-full">
             <div className="p-4 md:p-6">
               <div className="space-y-6">
-                <h3 className="text-xl font-bold text-center text-black">
+                <h3 className="text-xl font-bold text-center text-gray-900 dark:text-white">
                   💧 Vos besoins en hydratation
                 </h3>
 

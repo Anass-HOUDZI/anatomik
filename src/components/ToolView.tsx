@@ -46,10 +46,10 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
           {/* Header Section - Simplified */}
           <div className="text-center space-y-6">
             <div className="space-y-4">
-              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent">
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
                 {category.name}
               </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
+              <p className="text-xl text-gray-900 dark:text-white max-w-4xl mx-auto leading-relaxed">
                 {category.description}
               </p>
             </div>
@@ -76,7 +76,7 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
                     {/* Header */}
                     <div className="flex items-start justify-between mb-6">
                       <div className="flex-1">
-                        <h3 className="text-xl font-bold mb-3 text-foreground leading-tight group-hover:text-blue-600 transition-colors">
+                        <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white leading-tight group-hover:text-blue-600 transition-colors">
                           {tool.name}
                         </h3>
                       </div>
@@ -101,7 +101,7 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
                     </div>
                     
                     {/* Content */}
-                    <p className="text-muted-foreground leading-relaxed flex-1 mb-6 text-base">
+                    <p className="text-gray-900 dark:text-white leading-relaxed flex-1 mb-6 text-base">
                       {tool.description}
                     </p>
                     

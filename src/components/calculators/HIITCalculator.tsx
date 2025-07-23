@@ -84,7 +84,7 @@ const HIITCalculator = () => {
       <MobileCard className="w-full">
         <div className="p-4 md:p-6">
           <div className="text-center mb-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
               Calculateur HIIT
             </h2>
             <p className="text-sm md:text-base text-gray-600 leading-relaxed">
@@ -182,7 +182,7 @@ const HIITCalculator = () => {
             </form>
           ) : (
             <div className="space-y-6">
-              <h3 className="text-xl font-bold text-center text-black">Protocole HIIT Généré</h3>
+              <h3 className="text-xl font-bold text-center text-gray-900 dark:text-white">Protocole HIIT Généré</h3>
               
               <div className="overflow-x-auto">
                 <table className="w-full text-sm border rounded-lg">
