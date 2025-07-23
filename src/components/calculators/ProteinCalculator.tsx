@@ -170,7 +170,7 @@ const ProteinCalculator: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="w-full p-4 space-y-6">
       <Card className="p-6">
         <div className="space-y-6">
           <div className="text-center">

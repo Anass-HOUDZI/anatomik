@@ -143,7 +143,7 @@ const MacroCalculator: React.FC = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="w-full p-4">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Input Form */}
         <div className="space-y-6">

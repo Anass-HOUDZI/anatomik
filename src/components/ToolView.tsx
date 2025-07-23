@@ -40,11 +40,11 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
   const tools = getToolsForCategory(category.id);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20">
-      <div className="container mx-auto px-4 py-20">
-        <div className="space-y-12">
+    <div className="w-full bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20">
+      <div className="w-full">
+        <div className="space-y-8">
           {/* Header Section - Simplified */}
-          <div className="text-center space-y-6">
+          <div className="text-center space-y-6 p-4">
             <div className="space-y-4">
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
                 {category.name}
@@ -57,7 +57,7 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
           
           {/* Modern Tools Grid */}
           {tools.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 p-4">
               {tools.map((tool) => (
                 <ModernCard
                   key={tool.id}

@@ -163,7 +163,7 @@ const VolumeCalculator = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6">
+    <div className="w-full p-4 space-y-6">
       {/* Exercise Input */}
       <Card>
         <CardHeader>

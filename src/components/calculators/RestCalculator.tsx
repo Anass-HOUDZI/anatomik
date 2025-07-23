@@ -190,7 +190,7 @@ const RestCalculator = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6">
+    <div className="w-full p-4 space-y-6">
       {/* Input Section */}
       <Card>
         <CardHeader>

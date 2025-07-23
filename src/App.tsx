@@ -171,10 +171,10 @@ const App = () => {
             )}
             
             {currentView === 'tool' && selectedTool && (
-              <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20">
-                <div className="container mx-auto px-4 py-20">
-                  <div className="space-y-12">
-                    <div className="text-center space-y-6">
+              <div className="w-full bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20">
+                <div className="w-full">
+                  <div className="space-y-8">
+                    <div className="text-center space-y-6 p-4">
                       <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent">
                         {selectedTool.name}
                       </h2>
@@ -184,7 +184,7 @@ const App = () => {
                     </div>
                     
                     {selectedTool.component ? (
-                      <div className="animate-in fade-in-50 duration-500">
+                      <div className="animate-in fade-in-50 duration-500 w-full">
                         <selectedTool.component />
                       </div>
                     ) : (

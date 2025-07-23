@@ -72,7 +72,7 @@ const RecoveryCalculator = () => {
   }
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <div className="w-full p-4">
       <SimpleCard>
         <div className="text-center mb-6">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
