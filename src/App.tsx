@@ -7,6 +7,17 @@ import ModernCategoryGrid from './components/modern-category-grid';
 import ToolView from './components/ToolView';
 import { StorageManager } from './utils/StorageManager';
 import { ThemeProvider } from './context/ThemeContext';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import FAQ from './pages/FAQ';
+import Features from './pages/Features';
+import AllTools from './pages/AllTools';
+
+// Import all tool configs to get tools for AllTools page
+import nutritionalToolsConfig from './components/tool-configs/nutritionalToolsConfig';
+import trainingToolsConfig from './components/tool-configs/trainingToolsConfig';
+import trackingToolsConfig from './components/tool-configs/trackingToolsConfig';
+import generatorToolsConfig from './components/tool-configs/generatorToolsConfig';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,7 +47,7 @@ export interface Category {
 }
 
 const App = () => {
-  const [currentView, setCurrentView] = useState<'home' | 'category' | 'tool'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'category' | 'tool' | 'about' | 'contact' | 'faq' | 'features' | 'all-tools'>('home');
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [selectedTool, setSelectedTool] = useState<Tool | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -100,6 +111,37 @@ const App = () => {
     setError(null);
   };
 
+  const handleNavigate = (view: 'about' | 'contact' | 'faq' | 'features' | 'all-tools' | 'nutritional' | 'training' | 'tracking' | 'generators') => {
+    if (['nutritional', 'training', 'tracking', 'generators'].includes(view)) {
+      // Handle category navigation
+      const categories = [
+        { id: 'nutritional' as const, name: 'Nutrition', description: 'Calculateurs nutritionnels', icon: 'fa-apple-alt', color: 'from-blue-600 to-blue-800', toolCount: nutritionalToolsConfig.length },
+        { id: 'training' as const, name: 'Entraînement', description: 'Calculateurs d\'entraînement', icon: 'fa-dumbbell', color: 'from-green-600 to-green-800', toolCount: trainingToolsConfig.length },
+        { id: 'tracking' as const, name: 'Suivi', description: 'Outils de suivi', icon: 'fa-chart-line', color: 'from-purple-600 to-purple-800', toolCount: trackingToolsConfig.length },
+        { id: 'generators' as const, name: 'Planificateurs', description: 'Générateurs et planificateurs', icon: 'fa-cogs', color: 'from-orange-600 to-orange-800', toolCount: generatorToolsConfig.length }
+      ];
+      const category = categories.find(cat => cat.id === view);
+      if (category) {
+        handleCategorySelect(category);
+      }
+    } else {
+      setCurrentView(view as 'about' | 'contact' | 'faq' | 'features' | 'all-tools');
+      setSelectedCategory(null);
+      setSelectedTool(null);
+      setError(null);
+    }
+  };
+
+  // Get all tools for AllTools page
+  const getAllTools = () => {
+    return [
+      ...nutritionalToolsConfig,
+      ...trainingToolsConfig,
+      ...trackingToolsConfig,
+      ...generatorToolsConfig
+    ];
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-600 via-purple-700 to-indigo-800 flex items-center justify-center">
@@ -160,7 +202,10 @@ const App = () => {
           
           <main className={currentView === 'home' ? '' : ''}>
             {currentView === 'home' && (
-              <ModernCategoryGrid onCategorySelect={handleCategorySelect} />
+              <ModernCategoryGrid 
+                onCategorySelect={handleCategorySelect} 
+                onNavigate={handleNavigate}
+              />
             )}
             
             {currentView === 'category' && selectedCategory && (
@@ -201,6 +246,29 @@ const App = () => {
                   </div>
                 </div>
               </div>
+            )}
+
+            {currentView === 'about' && (
+              <About onBack={handleBackToHome} />
+            )}
+
+            {currentView === 'contact' && (
+              <Contact onBack={handleBackToHome} />
+            )}
+
+            {currentView === 'faq' && (
+              <FAQ onBack={handleBackToHome} />
+            )}
+
+            {currentView === 'features' && (
+              <Features onBack={handleBackToHome} />
+            )}
+
+            {currentView === 'all-tools' && (
+              <AllTools 
+                onBack={handleBackToHome}
+                onToolSelect={handleToolSelect}
+              />
             )}
           </main>
         </div>

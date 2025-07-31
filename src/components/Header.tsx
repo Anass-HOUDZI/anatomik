@@ -7,7 +7,7 @@ import { Breadcrumb } from './ui/breadcrumb';
 import type { Category, Tool } from '../App';
 
 interface HeaderProps {
-  currentView: 'home' | 'category' | 'tool';
+  currentView: 'home' | 'category' | 'tool' | 'about' | 'contact' | 'faq' | 'features' | 'all-tools';
   selectedCategory: Category | null;
   selectedTool: Tool | null;
   onBackToHome: () => void;

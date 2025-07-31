@@ -78,9 +78,10 @@ const categoryImages = {
 
 interface ModernCategoryGridProps {
   onCategorySelect: (category: Category) => void;
+  onNavigate?: (view: 'nutritional' | 'training' | 'tracking' | 'generators' | 'about' | 'contact' | 'faq' | 'features' | 'all-tools') => void;
 }
 
-const ModernCategoryGrid: React.FC<ModernCategoryGridProps> = ({ onCategorySelect }) => {
+const ModernCategoryGrid: React.FC<ModernCategoryGridProps> = ({ onCategorySelect, onNavigate }) => {
   const [search, setSearch] = useState('');
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
@@ -223,39 +224,39 @@ const ModernCategoryGrid: React.FC<ModernCategoryGridProps> = ({ onCategorySelec
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-8">
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-white mb-3">À propos</h3>
-              <ul className="space-y-2 text-white/80">
-                <li><a href="#" className="hover:text-white transition-colors">Notre mission</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Fonctionnalités</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
+               <ul className="space-y-2 text-white/80">
+                <li><button onClick={() => onNavigate?.('about')} className="hover:text-white transition-colors">Notre mission</button></li>
+                <li><button onClick={() => onNavigate?.('features')} className="hover:text-white transition-colors">Fonctionnalités</button></li>
+                <li><button onClick={() => onNavigate?.('faq')} className="hover:text-white transition-colors">FAQ</button></li>
               </ul>
             </div>
             
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-white mb-3">Contact</h3>
-              <ul className="space-y-2 text-white/80">
-                <li><a href="#" className="hover:text-white transition-colors">Support</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Feedback</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Signaler un bug</a></li>
+               <ul className="space-y-2 text-white/80">
+                <li><button onClick={() => onNavigate?.('contact')} className="hover:text-white transition-colors">Support</button></li>
+                <li><button onClick={() => onNavigate?.('contact')} className="hover:text-white transition-colors">Feedback</button></li>
+                <li><button onClick={() => onNavigate?.('contact')} className="hover:text-white transition-colors">Signaler un bug</button></li>
               </ul>
             </div>
             
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-white mb-3">Catégories</h3>
-              <ul className="space-y-2 text-white/80">
-                <li><a href="#nutritional" className="hover:text-white transition-colors">Nutrition</a></li>
-                <li><a href="#training" className="hover:text-white transition-colors">Entraînement</a></li>
-                <li><a href="#tracking" className="hover:text-white transition-colors">Suivi</a></li>
-                <li><a href="#generators" className="hover:text-white transition-colors">Planificateurs</a></li>
+               <ul className="space-y-2 text-white/80">
+                <li><button onClick={() => onNavigate?.('nutritional')} className="hover:text-white transition-colors">Nutrition</button></li>
+                <li><button onClick={() => onNavigate?.('training')} className="hover:text-white transition-colors">Entraînement</button></li>
+                <li><button onClick={() => onNavigate?.('tracking')} className="hover:text-white transition-colors">Suivi</button></li>
+                <li><button onClick={() => onNavigate?.('generators')} className="hover:text-white transition-colors">Planificateurs</button></li>
               </ul>
             </div>
             
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-white mb-3">Outils</h3>
-              <ul className="space-y-2 text-white/80">
-                <li><a href="#" className="hover:text-white transition-colors">Calculateur BMR</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Tracker de poids</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Planificateur repas</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Tous les outils</a></li>
+               <ul className="space-y-2 text-white/80">
+                <li><button onClick={() => onNavigate?.('nutritional')} className="hover:text-white transition-colors">Calculateur BMR</button></li>
+                <li><button onClick={() => onNavigate?.('tracking')} className="hover:text-white transition-colors">Tracker de poids</button></li>
+                <li><button onClick={() => onNavigate?.('generators')} className="hover:text-white transition-colors">Planificateur repas</button></li>
+                <li><button onClick={() => onNavigate?.('all-tools')} className="hover:text-white transition-colors">Tous les outils</button></li>
               </ul>
             </div>
           </div>
