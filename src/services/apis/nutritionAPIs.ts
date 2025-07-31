@@ -1,5 +1,6 @@
 
 import { APIResponse, NutritionAPIFood, FoodItem } from '../../types';
+import { RateLimiter, SecurityMonitor } from '../../utils/SecurityManager';
 
 // Configuration des APIs nutritionnelles
 export const API_CONFIG = {
@@ -65,6 +66,17 @@ const cache = new APICache();
 // Service USDA Food Data Central
 export class USDAService {
   private async makeRequest(endpoint: string, params: Record<string, any>): Promise<APIResponse<any>> {
+    const rateLimiter = RateLimiter.getInstance('usda_api', 10, 60000);
+    
+    if (!rateLimiter.canMakeRequest()) {
+      SecurityMonitor.logSecurityEvent('rate_limit_exceeded', { service: 'usda', endpoint });
+      return { 
+        success: false, 
+        error: 'Rate limit exceeded. Please wait before making more requests.',
+        timestamp: new Date()
+      };
+    }
+    
     const cacheKey = `usda_${endpoint}_${JSON.stringify(params)}`;
     const cached = cache.get(cacheKey);
     
