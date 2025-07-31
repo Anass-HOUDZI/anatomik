@@ -66,7 +66,7 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
                   onClick={() => tool.component && onToolSelect(tool)}
                   glow={!!tool.component}
                   className={cn(
-                    "min-h-[280px] transition-all duration-200",
+                    "min-h-[280px] transition-all duration-75",
                     tool.component 
                       ? "hover:scale-105 hover:-translate-y-2 cursor-pointer" 
                       : "opacity-75 cursor-not-allowed"
@@ -76,14 +76,14 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
                     {/* Header */}
                     <div className="flex items-start justify-between mb-6">
                       <div className="flex-1">
-                        <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white leading-tight group-hover:text-blue-600 transition-colors">
+                        <h3 className="text-xl font-bold mb-3 text-white leading-tight group-hover:text-[#4A00E0] transition-colors duration-75">
                           {tool.name}
                         </h3>
                       </div>
                       <div className={cn(
                         "px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide backdrop-blur-sm",
                         tool.component
-                          ? "bg-green-100/80 text-green-700 dark:bg-green-900/40 dark:text-green-400"
+                          ? "bg-white/20 text-[#4A00E0] border border-[#4A00E0]/30"
                           : "bg-orange-100/80 text-orange-700 dark:bg-orange-900/40 dark:text-orange-400"
                       )}>
                         {tool.component ? (
@@ -101,7 +101,7 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
                     </div>
                     
                     {/* Content */}
-                    <p className="text-gray-900 dark:text-white leading-relaxed flex-1 mb-6 text-base">
+                    <p className="text-white leading-relaxed flex-1 mb-6 text-base">
                       {tool.description}
                     </p>
                     
@@ -109,12 +109,12 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
                     {tool.component ? (
                       <div className="flex items-center justify-between pt-6 border-t border-border/50">
                         <div className="flex items-center gap-2">
-                          <Star size={16} className="text-blue-600" />
-                          <span className="text-sm font-medium text-blue-600">
+                          <Star size={16} className="text-white" />
+                          <span className="text-sm font-medium text-white">
                             Outil premium
                           </span>
                         </div>
-                        <div className="flex items-center gap-2 text-blue-600 group-hover:translate-x-1 transition-transform">
+                        <div className="flex items-center gap-2 text-white group-hover:translate-x-1 transition-transform duration-75">
                           <span className="text-sm font-medium">Utiliser</span>
                           <ArrowRight size={16} />
                         </div>
