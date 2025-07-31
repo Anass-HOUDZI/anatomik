@@ -78,9 +78,11 @@ const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Center Section - Breadcrumb */}
-        <div className="hidden md:flex flex-1 justify-center max-w-2xl mx-8">
-          <Breadcrumb items={getBreadcrumbItems()} />
-        </div>
+        {currentView !== 'about' && currentView !== 'contact' && (
+          <div className="hidden md:flex flex-1 justify-center max-w-2xl mx-8">
+            <Breadcrumb items={getBreadcrumbItems()} />
+          </div>
+        )}
 
         {/* Right Section */}
         <div className="flex items-center space-x-2">
@@ -106,9 +108,11 @@ const Header: React.FC<HeaderProps> = ({
       </div>
 
       {/* Mobile Breadcrumb */}
-      <div className="md:hidden border-t bg-muted/30 px-4 py-2">
-        <Breadcrumb items={getBreadcrumbItems()} className="text-xs" />
-      </div>
+      {currentView !== 'about' && currentView !== 'contact' && (
+        <div className="md:hidden border-t bg-muted/30 px-4 py-2">
+          <Breadcrumb items={getBreadcrumbItems()} className="text-xs" />
+        </div>
+      )}
     </header>
   );
 };
