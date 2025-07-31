@@ -66,7 +66,7 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
                   onClick={() => tool.component && onToolSelect(tool)}
                   glow={!!tool.component}
                   className={cn(
-                    "min-h-[280px] transition-all duration-500",
+                    "min-h-[280px] transition-all duration-200",
                     tool.component 
                       ? "hover:scale-105 hover:-translate-y-2 cursor-pointer" 
                       : "opacity-75 cursor-not-allowed"

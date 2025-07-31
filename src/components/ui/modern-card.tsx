@@ -27,12 +27,12 @@ export const ModernCard: React.FC<ModernCardProps> = ({
   onMouseEnter,
   onMouseLeave
 }) => {
-  const baseClasses = "relative overflow-hidden rounded-3xl transition-all duration-500 ease-out group";
+  const baseClasses = "relative overflow-hidden rounded-3xl transition-all duration-150 ease-out group";
   
   const variants = {
     glass: "bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 dark:border-white/10",
     gradient: `bg-gradient-to-br ${getGradientColors(color)} text-white border-0`,
-    premium: "bg-gradient-to-br from-white/95 to-white/80 dark:from-gray-900/95 dark:to-gray-800/80 backdrop-blur-xl border border-white/30 dark:border-white/10"
+    premium: "bg-gradient-to-br from-[#7303c0] to-[#4a00e0] text-white border-0"
   };
 
   const clickableClasses = clickable ? "cursor-pointer hover:scale-[1.02] hover:-translate-y-1 active:scale-[0.98]" : "";
@@ -53,7 +53,7 @@ export const ModernCard: React.FC<ModernCardProps> = ({
     >
       {/* Background Image */}
       {image && (
-        <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
+        <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-200">
           <img 
             src={image} 
             alt="" 
@@ -68,7 +68,7 @@ export const ModernCard: React.FC<ModernCardProps> = ({
       {/* Glow Effect */}
       {glow && (
         <div className={cn(
-          "absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl",
+          "absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 blur-xl",
           `bg-gradient-to-br ${getGradientColors(color)}`
         )} />
       )}
@@ -79,7 +79,7 @@ export const ModernCard: React.FC<ModernCardProps> = ({
       </div>
       
       {/* Shine Effect */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white/20 to-transparent group-hover:animate-shine" />
       </div>
     </div>
