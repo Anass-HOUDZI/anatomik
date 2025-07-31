@@ -40,16 +40,16 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
   const tools = getToolsForCategory(category.id);
 
   return (
-    <div className="w-full bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20">
+    <div className="w-full">{/* Transparent background to show gradient */}
       <div className="w-full">
         <div className="space-y-8">
           {/* Header Section - Simplified */}
           <div className="text-center space-y-6 p-4">
             <div className="space-y-4">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
+              <h2 className="text-4xl md:text-5xl font-bold text-white">
                 {category.name}
               </h2>
-              <p className="text-xl text-gray-900 dark:text-white max-w-4xl mx-auto leading-relaxed">
+              <p className="text-xl text-white/80 max-w-4xl mx-auto leading-relaxed">
                 {category.description}
               </p>
             </div>
@@ -133,11 +133,11 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
           ) : (
             /* Loading/Empty State */
             <div className="text-center py-20">
-              <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                <Clock size={48} className="text-blue-600" />
+              <div className="w-32 h-32 mx-auto mb-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                <Clock size={48} className="text-white" />
               </div>
-              <h3 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">Outils en cours de développement</h3>
-              <p className="text-gray-600 dark:text-gray-300 text-lg max-w-md mx-auto">
+              <h3 className="text-3xl font-bold mb-4 text-white">Outils en cours de développement</h3>
+              <p className="text-white/80 text-lg max-w-md mx-auto">
                 Cette catégorie sera bientôt disponible avec tous ses outils professionnels.
               </p>
             </div>

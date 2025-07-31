@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Header from './components/Header';
+import Footer from './components/Footer';
 import ModernCategoryGrid from './components/modern-category-grid';
 import ToolView from './components/ToolView';
 import { StorageManager } from './utils/StorageManager';
@@ -144,7 +145,7 @@ const App = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-600 via-purple-700 to-indigo-800 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-[#7303c0] to-[#4a00e0] flex items-center justify-center">
         <div className="text-center space-y-8">
           <div className="relative">
             <div className="w-20 h-20 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>
@@ -189,7 +190,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <div className="min-h-screen bg-background">
+        <div className="min-h-screen bg-gradient-to-br from-[#7303c0] to-[#4a00e0]">
           {currentView !== 'home' && (
             <Header 
               currentView={currentView}
@@ -209,66 +210,87 @@ const App = () => {
             )}
             
             {currentView === 'category' && selectedCategory && (
-              <ToolView 
-                category={selectedCategory}
-                onToolSelect={handleToolSelect}
-              />
+              <>
+                <ToolView 
+                  category={selectedCategory}
+                  onToolSelect={handleToolSelect}
+                />
+                <Footer onNavigate={handleNavigate} />
+              </>
             )}
             
             {currentView === 'tool' && selectedTool && (
-              <div className="w-full bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20">
-                <div className="w-full">
-                  <div className="space-y-8">
-                    <div className="text-center space-y-6 p-4">
-                      <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent">
-                        {selectedTool.name}
-                      </h2>
-                      <p className="text-xl max-w-4xl mx-auto text-gray-600 dark:text-gray-300 leading-relaxed">
-                        {selectedTool.description}
-                      </p>
-                    </div>
-                    
-                    {selectedTool.component ? (
-                      <div className="animate-in fade-in-50 duration-500 w-full">
-                        <selectedTool.component />
-                      </div>
-                    ) : (
-                      <div className="text-center py-20">
-                        <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                          <span className="text-3xl">🚧</span>
-                        </div>
-                        <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Outil en développement</h3>
-                        <p className="text-gray-600 dark:text-gray-300 text-lg">
-                          Cet outil sera bientôt disponible. Revenez prochainement !
+              <>
+                <div className="w-full bg-gradient-to-br from-[#7303c0] to-[#4a00e0] text-white">
+                  <div className="w-full">
+                    <div className="space-y-8">
+                      <div className="text-center space-y-6 p-4">
+                        <h2 className="text-4xl md:text-5xl font-bold text-white">
+                          {selectedTool.name}
+                        </h2>
+                        <p className="text-xl max-w-4xl mx-auto text-white/80 leading-relaxed">
+                          {selectedTool.description}
                         </p>
                       </div>
-                    )}
+                      
+                      {selectedTool.component ? (
+                        <div className="animate-in fade-in-50 duration-500 w-full">
+                          <selectedTool.component />
+                        </div>
+                      ) : (
+                        <div className="text-center py-20">
+                          <div className="w-24 h-24 mx-auto mb-6 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                            <span className="text-3xl">🚧</span>
+                          </div>
+                          <h3 className="text-2xl font-bold mb-4 text-white">Outil en développement</h3>
+                          <p className="text-white/80 text-lg">
+                            Cet outil sera bientôt disponible. Revenez prochainement !
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
+                <Footer onNavigate={handleNavigate} />
+              </>
             )}
 
             {currentView === 'about' && (
-              <About onBack={handleBackToHome} />
+              <>
+                <About onBack={handleBackToHome} />
+                <Footer onNavigate={handleNavigate} />
+              </>
             )}
 
             {currentView === 'contact' && (
-              <Contact onBack={handleBackToHome} />
+              <>
+                <Contact onBack={handleBackToHome} />
+                <Footer onNavigate={handleNavigate} />
+              </>
             )}
 
             {currentView === 'faq' && (
-              <FAQ onBack={handleBackToHome} />
+              <>
+                <FAQ onBack={handleBackToHome} />
+                <Footer onNavigate={handleNavigate} />
+              </>
             )}
 
             {currentView === 'features' && (
-              <Features onBack={handleBackToHome} />
+              <>
+                <Features onBack={handleBackToHome} />
+                <Footer onNavigate={handleNavigate} />
+              </>
             )}
 
             {currentView === 'all-tools' && (
-              <AllTools 
-                onBack={handleBackToHome}
-                onToolSelect={handleToolSelect}
-              />
+              <>
+                <AllTools 
+                  onBack={handleBackToHome}
+                  onToolSelect={handleToolSelect}
+                />
+                <Footer onNavigate={handleNavigate} />
+              </>
             )}
           </main>
         </div>
