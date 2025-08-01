@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Zap } from 'lucide-react';
 
 interface ModernCardProps {
   children: React.ReactNode;
@@ -74,13 +73,6 @@ export const ModernCard: React.FC<ModernCardProps> = ({
         )} />
       )}
       
-      {/* Badge Disponible */}
-      <div className="absolute top-4 right-4 z-20">
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/30">
-          <Zap className="w-4 h-4 text-white" />
-          <span className="text-sm font-semibold text-white">DISPONIBLE</span>
-        </div>
-      </div>
 
       {/* Content */}
       <div className="relative z-10">
