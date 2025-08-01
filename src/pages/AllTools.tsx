@@ -1,4 +1,4 @@
-import { ArrowLeft, Search } from "lucide-react";
+import { ArrowLeft, Search, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
@@ -113,10 +113,18 @@ const AllTools = ({ onBack, onToolSelect }: AllToolsProps) => {
               return (
                 <Card
                   key={tool.id}
-                  className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border-white/20 hover:bg-white/80 dark:hover:bg-gray-800/80 transition-all duration-300 cursor-pointer group"
+                  className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border-white/20 hover:bg-white/80 dark:hover:bg-gray-800/80 transition-all duration-300 cursor-pointer group relative"
                   onClick={() => onToolSelect(tool)}
                 >
-                  <CardHeader className="pb-3">
+                  {/* Badge Disponible */}
+                  <div className="absolute top-4 right-4 z-10">
+                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg">
+                      <Zap className="w-4 h-4 text-white" />
+                      <span className="text-sm font-semibold text-white">DISPONIBLE</span>
+                    </div>
+                  </div>
+                  
+                  <CardHeader className="pb-3 pr-32">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg flex items-center justify-center">

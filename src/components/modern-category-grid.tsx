@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Calculator, Dumbbell, TrendingUp, Calendar, ArrowRight, Star, CheckCircle, Search, Linkedin } from 'lucide-react';
+import { Calculator, Dumbbell, TrendingUp, Calendar, ArrowRight, Star, CheckCircle, Search, Linkedin, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Category } from '../App';
 import { ModernCard } from './ui/modern-card';
@@ -151,8 +151,9 @@ const ModernCategoryGrid: React.FC<ModernCategoryGridProps> = ({ onCategorySelec
                         <div className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-sm font-semibold text-white">
                           {category.toolCount} outils
                         </div>
-                        <div className="p-2 rounded-full bg-green-500/20 backdrop-blur-sm">
-                          <CheckCircle className="w-4 h-4 text-green-300" />
+                        <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-white/20 backdrop-blur-sm">
+                          <Zap className="w-3 h-3 text-white" />
+                          <span className="text-xs font-semibold text-white">DISPONIBLE</span>
                         </div>
                       </div>
                     </div>

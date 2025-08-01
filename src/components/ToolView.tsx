@@ -83,13 +83,13 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
                       <div className={cn(
                         "px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide backdrop-blur-sm",
                         tool.component
-                          ? "bg-white/20 text-[#4A00E0] border border-[#4A00E0]/30"
+                          ? "bg-white/20 text-white border border-white/30"
                           : "bg-orange-100/80 text-orange-700 dark:bg-orange-900/40 dark:text-orange-400"
                       )}>
                         {tool.component ? (
                           <div className="flex items-center gap-1">
-                            <Zap size={12} />
-                            Disponible
+                            <Zap size={12} className="text-white" />
+                            <span className="text-white">Disponible</span>
                           </div>
                         ) : (
                           <div className="flex items-center gap-1">
