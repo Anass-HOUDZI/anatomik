@@ -47,7 +47,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onSearch, searchValue 
             
             <h1 className="text-6xl md:text-8xl font-black leading-tight">
               <span className="bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent animate-pulse">
-                Anatomik 🔬💪
+                Anatomik 🔬
               </span>
               <br />
               <span className="bg-gradient-to-r from-purple-200 via-pink-200 to-blue-200 bg-clip-text text-transparent">
@@ -56,7 +56,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onSearch, searchValue 
             </h1>
             
             <p className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed">
-              Suite complète d'outils de musculation et nutrition fonctionnant 100% côté client.
+              Suite complète d'outils de musculation et nutrition.
               <br />
               <span className="text-lg text-white/70">Calculateurs avancés • Trackers intelligents • Planificateurs personnalisés</span>
             </p>
