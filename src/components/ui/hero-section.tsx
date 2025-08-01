@@ -47,11 +47,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onSearch, searchValue 
             
             <h1 className="text-6xl md:text-8xl font-black leading-tight">
               <span className="bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent animate-pulse">
-                Anatomik
+                Anatomik 🔬💪
               </span>
               <br />
               <span className="bg-gradient-to-r from-purple-200 via-pink-200 to-blue-200 bg-clip-text text-transparent">
-                PRO
+                L'anatomie réinventée
               </span>
             </h1>
             
