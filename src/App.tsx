@@ -203,13 +203,10 @@ const App = () => {
           
           <main className={currentView === 'home' ? '' : ''}>
             {currentView === 'home' && (
-              <>
-                <ModernCategoryGrid 
-                  onCategorySelect={handleCategorySelect} 
-                  onNavigate={handleNavigate}
-                />
-                <Footer onNavigate={handleNavigate} />
-              </>
+              <ModernCategoryGrid 
+                onCategorySelect={handleCategorySelect} 
+                onNavigate={handleNavigate}
+              />
             )}
             
             {currentView === 'category' && selectedCategory && (
