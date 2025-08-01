@@ -1,4 +1,4 @@
-# FitMASTER PRO
+# Anatomik
 
 Anatomik est une suite complète de 43 outils gratuits conçus pour la musculation et la nutrition, fonctionnant entièrement côté client. Ces outils couvrent une large gamme de fonctionnalités pour l'analyse nutritionnelle, l'entraînement, le suivi des performances, et bien plus encore.
 

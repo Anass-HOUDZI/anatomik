@@ -10,7 +10,7 @@ const FAQ = ({ onBack }: FAQProps) => {
   const faqData = [
     {
       question: "Anatomik est-il vraiment gratuit ?",
-      answer: "Oui, absolument ! Tous nos 60 outils sont et resteront toujours gratuits. Nous ne vendons aucun abonnement premium et n'imposons aucune limitation sur l'utilisation de nos calculateurs et trackers."
+      answer: "Oui, absolument ! Tous nos 43 outils sont et resteront toujours gratuits. Nous ne vendons aucun abonnement premium et n'imposons aucune limitation sur l'utilisation de nos calculateurs et trackers."
     },
     {
       question: "Mes données sont-elles sécurisées ?",
