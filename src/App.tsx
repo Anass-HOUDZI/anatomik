@@ -152,8 +152,8 @@ const App = () => {
             <div className="absolute inset-0 w-20 h-20 border-4 border-transparent border-t-purple-300 rounded-full animate-spin mx-auto" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
           </div>
           <div className="space-y-4">
-            <h2 className="text-4xl font-bold text-white">FitMASTER PRO</h2>
-            <p className="text-white/80 text-lg">Chargement de votre expérience premium...</p>
+            <h2 className="text-4xl font-bold text-white">Anatomik</h2>
+            <p className="text-white/80 text-lg">Votre anatomie entre vos mains...</p>
             <div className="flex justify-center space-x-2">
               <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
               <div className="w-2 h-2 bg-white rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>

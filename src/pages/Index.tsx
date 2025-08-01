@@ -14,7 +14,7 @@ const Index = () => {
     <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="text-center">
         <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
-        <p className="text-lg text-muted-foreground">Chargement de FitMASTER PRO...</p>
+        <p className="text-lg text-muted-foreground">Chargement d'Anatomik...</p>
       </div>
     </div>
   );

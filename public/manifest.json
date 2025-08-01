@@ -1,8 +1,8 @@
 
 {
-  "name": "FitMASTER PRO - Suite Complète Fitness & Nutrition",
-  "short_name": "FitMASTER PRO",
-  "description": "Suite complète de 60 outils gratuits de musculation et nutrition fonctionnant 100% côté client. Calculateurs, trackers, planificateurs - tout accessible offline !",
+  "name": "Anatomik - Suite Complète Fitness & Nutrition",
+  "short_name": "Anatomik",
+  "description": "Suite complète de 43 outils gratuits de musculation et nutrition fonctionnant 100% côté client. Calculateurs, trackers, planificateurs - tout accessible offline !",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
@@ -18,14 +18,14 @@
       "sizes": "1280x720",
       "type": "image/svg+xml",
       "form_factor": "wide",
-      "label": "Interface principale FitMASTER PRO"
+      "label": "Interface principale Anatomik"
     },
     {
       "src": "/placeholder.svg", 
       "sizes": "640x1136",
       "type": "image/svg+xml",
       "form_factor": "narrow",
-      "label": "Version mobile FitMASTER PRO"
+      "label": "Version mobile Anatomik"
     }
   ],
   "icons": [

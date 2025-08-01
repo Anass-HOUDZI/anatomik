@@ -22,7 +22,7 @@ const About = ({ onBack }: AboutProps) => {
           {/* Hero Section */}
           <div className="text-center space-y-6">
             <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-              À propos de FitMASTER PRO
+              À propos d'Anatomik
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               Votre plateforme complète de musculation et nutrition, entièrement gratuite et fonctionnant 100% côté client.
@@ -76,10 +76,10 @@ const About = ({ onBack }: AboutProps) => {
 
           {/* Stats Section */}
           <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-2xl p-8 text-white">
-            <h2 className="text-3xl font-bold mb-8 text-center">FitMASTER PRO en chiffres</h2>
+            <h2 className="text-3xl font-bold mb-8 text-center">Anatomik en chiffres</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               <div>
-                <div className="text-4xl font-bold mb-2">60</div>
+                <div className="text-4xl font-bold mb-2">43</div>
                 <div className="text-sm opacity-90">Outils Gratuits</div>
               </div>
               <div>

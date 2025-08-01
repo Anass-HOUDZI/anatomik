@@ -1,5 +1,5 @@
 
-// Types principaux pour FitMASTER PRO
+// Types principaux pour Anatomik
 export interface Demographics {
   age: number;
   gender: 'M' | 'F';

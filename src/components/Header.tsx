@@ -71,7 +71,7 @@ const Header: React.FC<HeaderProps> = ({
             </div>
             <div className="hidden sm:block">
               <h1 className="text-lg font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-                FitMASTER PRO
+                Anatomik
               </h1>
             </div>
           </button>

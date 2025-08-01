@@ -93,7 +93,7 @@ const Contact = ({ onBack }: ContactProps) => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-gray-600 dark:text-gray-300">
-                  Un calcul incorrect ? Un problème d'affichage ? Aidez-nous à améliorer FitMASTER PRO.
+                  Un calcul incorrect ? Un problème d'affichage ? Aidez-nous à améliorer Anatomik.
                 </p>
                 <Button className="w-full bg-red-600 hover:bg-red-700">
                   Signaler un Bug

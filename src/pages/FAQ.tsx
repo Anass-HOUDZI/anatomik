@@ -9,7 +9,7 @@ interface FAQProps {
 const FAQ = ({ onBack }: FAQProps) => {
   const faqData = [
     {
-      question: "FitMASTER PRO est-il vraiment gratuit ?",
+      question: "Anatomik est-il vraiment gratuit ?",
       answer: "Oui, absolument ! Tous nos 60 outils sont et resteront toujours gratuits. Nous ne vendons aucun abonnement premium et n'imposons aucune limitation sur l'utilisation de nos calculateurs et trackers."
     },
     {
@@ -17,7 +17,7 @@ const FAQ = ({ onBack }: FAQProps) => {
       answer: "Toutes vos données restent sur votre appareil. Rien n'est envoyé vers nos serveurs. L'application fonctionne entièrement côté client, garantissant une confidentialité totale de vos informations personnelles."
     },
     {
-      question: "Puis-je utiliser FitMASTER PRO hors ligne ?",
+      question: "Puis-je utiliser Anatomik hors ligne ?",
       answer: "Oui ! Après le premier chargement, l'application fonctionne entièrement hors ligne. Tous les calculs se font sur votre appareil, vous permettant d'utiliser tous les outils sans connexion internet."
     },
     {
@@ -29,7 +29,7 @@ const FAQ = ({ onBack }: FAQProps) => {
       answer: "Vos données sont automatiquement sauvegardées dans votre navigateur (localStorage). Pour les sauvegarder ailleurs, utilisez la fonction d'export disponible dans chaque tracker pour générer un fichier CSV."
     },
     {
-      question: "Puis-je utiliser FitMASTER PRO sur mobile ?",
+      question: "Puis-je utiliser Anatomik sur mobile ?",
       answer: "Oui ! L'application est entièrement responsive et optimisée pour mobile. Vous pouvez même l'installer comme une app native sur votre téléphone via le navigateur."
     },
     {
@@ -45,12 +45,12 @@ const FAQ = ({ onBack }: FAQProps) => {
       answer: "Non. Nos calculateurs sont des outils informatifs basés sur des formules scientifiques, mais ils ne remplacent pas l'avis d'un professionnel de santé. Consultez toujours un médecin pour des conseils personnalisés."
     },
     {
-      question: "Puis-je utiliser FitMASTER PRO pour mes clients (coach) ?",
+      question: "Puis-je utiliser Anatomik pour mes clients (coach) ?",
       answer: "Bien sûr ! Nos outils sont parfaits pour les coachs sportifs et nutritionnistes. Vous pouvez les utiliser librement avec vos clients sans aucune restriction commerciale."
     },
     {
       question: "Comment l'application se maintient-elle sans revenus ?",
-      answer: "FitMASTER PRO est un projet passion créé pour démocratiser l'accès aux outils fitness. Les coûts sont minimaux grâce à l'architecture côté client, et le projet est maintenu par une équipe bénévole."
+      answer: "Anatomik est un projet passion créé pour démocratiser l'accès aux outils fitness. Les coûts sont minimaux grâce à l'architecture côté client, et le projet est maintenu par une équipe bénévole."
     },
     {
       question: "Puis-je contribuer au développement ?",
@@ -77,7 +77,7 @@ const FAQ = ({ onBack }: FAQProps) => {
               Questions Fréquentes
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Trouvez rapidement les réponses aux questions les plus courantes sur FitMASTER PRO.
+              Trouvez rapidement les réponses aux questions les plus courantes sur Anatomik.
             </p>
           </div>
 

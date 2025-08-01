@@ -26,7 +26,7 @@ const PWAIndicator: React.FC = () => {
     if (success) {
       toast({
         title: "Installation réussie !",
-        description: "FitMASTER PRO a été installé sur votre appareil.",
+        description: "Anatomik a été installé sur votre appareil.",
       });
     }
   };

@@ -5,7 +5,7 @@ import './index.css'
 
 // Initialisation simplifiée sans PWA Optimizer bloquant
 const initializeApp = () => {
-  console.log('🚀 Démarrage FitMASTER PRO...');
+  console.log('🚀 Démarrage Anatomik...');
   
   // Service Worker registration non-bloquant
   if ('serviceWorker' in navigator) {

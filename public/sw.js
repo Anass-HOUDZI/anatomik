@@ -167,7 +167,7 @@ async function networkFirstWithOfflineStrategy(request) {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>FitMASTER PRO - Mode Hors Ligne</title>
+          <title>Anatomik - Mode Hors Ligne</title>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <style>

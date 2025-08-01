@@ -10,7 +10,7 @@ const SeoOffline: React.FC = () => {
     <MobileLayout
       header={
         <MobileHeader 
-          title="FitMASTER PRO"
+          title="Anatomik"
           subtitle="Mode Offline"
         />
       }
@@ -23,7 +23,7 @@ const SeoOffline: React.FC = () => {
             </div>
             <h1 className="text-2xl font-bold mb-2">Application Offline</h1>
             <p className="text-muted-foreground mb-4">
-              FitMASTER PRO fonctionne entièrement hors ligne. Tous vos outils de musculation et nutrition sont disponibles sans connexion internet.
+              Anatomik fonctionne entièrement hors ligne. Tous vos outils de musculation et nutrition sont disponibles sans connexion internet.
             </p>
           </MobileCard>
 
@@ -84,7 +84,7 @@ const SeoOffline: React.FC = () => {
           <MobileCard>
             <h2 className="text-xl font-semibold mb-4">🚀 Installation PWA</h2>
             <p className="text-sm text-muted-foreground mb-4">
-              Installez FitMASTER PRO sur votre écran d'accueil pour une expérience app native complète.
+              Installez Anatomik sur votre écran d'accueil pour une expérience app native complète.
             </p>
             <div className="space-y-2 text-xs text-muted-foreground">
               <p><strong>iPhone/iPad :</strong> Safari → Partager → "Sur l'écran d'accueil"</p>
