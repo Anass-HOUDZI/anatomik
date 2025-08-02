@@ -130,30 +130,6 @@ Anatomik est une suite complète de 43 outils gratuits conçus pour la musculati
   - Générateur de routines basé sur l'évaluation.
   - Module d'analyse de la corrélation entre la flexibilité et la performance.
 
-### Tracker de Stress
-- **Objectif** : Monitorer les niveaux de stress et leur impact sur la récupération et la performance pour l'optimisation.
-- **Fonctionnalités** :
-  - Questionnaire de stress validé.
-  - Module d'analyse de la corrélation entre le stress et la performance.
-  - Module de recommandations pour la gestion du stress.
-  - Module de suivi des tendances de stress à long terme.
-
-### Tracker de Cycle Féminin
-- **Objectif** : Optimiser l'entraînement et la nutrition selon les phases du cycle menstruel pour les athlètes féminines.
-- **Fonctionnalités** :
-  - Module de suivi des phases du cycle et des symptômes.
-  - Module d'optimisation avec des recommandations spécifiques aux phases.
-  - Module éducatif sur l'impact du cycle sur la performance et la récupération.
-  - Module de personnalisation pour les variations individuelles.
-
-### Tracker de Bien-être
-- **Objectif** : Monitorer le bien-être général pour une approche holistique de la performance fitness.
-- **Fonctionnalités** :
-  - Questionnaire de bien-être multidimensionnel.
-  - Module de scoring de l'équilibre.
-  - Module de recommandations pour le bien-être basé sur des preuves.
-  - Module de suivi des tendances de bien-être à long terme.
-
 ### Planificateurs et Générateurs
 
 #### Générateur de Plans d'Entraînement
