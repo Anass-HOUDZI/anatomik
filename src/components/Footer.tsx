@@ -122,12 +122,22 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         {/* Signature */}
         <div className="text-center border-t border-white/20 pt-12">
           <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-white/30">
+            <a
+              href="https://www.linkedin.com/in/anasshoudzi/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-white/30 hover:bg-white/30 transition-all duration-300"
+            >
               <BarChart3 size={24} className="text-white" />
-            </div>
-            <span className="text-xl font-bold bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm border border-white/30">
+            </a>
+            <a
+              href="https://www.linkedin.com/in/anasshoudzi/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xl font-bold bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm border border-white/30 hover:bg-white/30 transition-all duration-300"
+            >
               Anass Houdzi
-            </span>
+            </a>
           </div>
           <p className="text-white/80 text-lg mb-4">
             Copyright © 2025 Anass Houdzi – Tous droits réservés.
