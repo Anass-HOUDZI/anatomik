@@ -64,16 +64,13 @@ const Header: React.FC<HeaderProps> = ({
           
           <button 
             onClick={onBackToHome}
-            className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
+            className="flex items-center hover:opacity-80 transition-opacity"
           >
-            <div className="h-8 w-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center text-white font-bold text-sm">
-              FM
-            </div>
-            <div className="hidden sm:block">
-              <h1 className="text-lg font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-                Anatomik
-              </h1>
-            </div>
+            <img 
+              src="/lovable-uploads/41f3eec7-2593-4eec-ae9f-6f215340e234.png" 
+              alt="Anatomik Logo" 
+              className="h-8 w-auto"
+            />
           </button>
         </div>
 
