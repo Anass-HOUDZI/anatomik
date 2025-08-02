@@ -27,10 +27,10 @@ const categories: Category[] = [
   {
     id: 'tracking',
     name: 'Suivis et Analyses',
-    description: '15 trackers pour monitorer vos progrès : poids, mensurations, performance et composition corporelle.',
+    description: '7 trackers pour monitorer vos progrès : poids, mensurations, performance et composition corporelle.',
     icon: 'trending-up',
     color: 'orange',
-    toolCount: 15
+    toolCount: 7
   },
   {
     id: 'generators',

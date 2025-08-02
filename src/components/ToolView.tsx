@@ -40,16 +40,16 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
   const tools = getToolsForCategory(category.id);
 
   return (
-    <div className="w-full">{/* Transparent background to show gradient */}
+    <div className="w-full bg-white dark:bg-gray-900 min-h-screen">
       <div className="w-full">
         <div className="space-y-8">
           {/* Header Section - Simplified */}
           <div className="text-center space-y-6 p-4">
             <div className="space-y-4">
-              <h2 className="text-4xl md:text-5xl font-bold text-white">
+              <h2 className="text-4xl md:text-5xl font-bold" style={{ color: '#4a00e0' }}>
                 {category.name}
               </h2>
-              <p className="text-xl text-white/80 max-w-4xl mx-auto leading-relaxed">
+              <p className="text-xl max-w-4xl mx-auto leading-relaxed" style={{ color: '#4a00e0' }}>
                 {category.description}
               </p>
             </div>

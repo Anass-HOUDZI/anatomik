@@ -47,7 +47,7 @@ const categories: Category[] = [
   {
     id: 'tracking',
     name: 'Suivis et Analyses',
-    description: `${getToolCountForCategory('tracking')} trackers pour monitorer vos progrès : poids, mensurations, performance et composition corporelle.`,
+    description: '7 trackers pour monitorer vos progrès : poids, mensurations, performance et composition corporelle.',
     icon: 'trending-up',
     color: 'orange',
     toolCount: getToolCountForCategory('tracking')
@@ -98,7 +98,7 @@ const ModernCategoryGrid: React.FC<ModernCategoryGridProps> = ({ onCategorySelec
   }, 0);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20">
+    <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Hero Section */}
       <HeroSection onSearch={setSearch} searchValue={search} />
       
@@ -106,10 +106,10 @@ const ModernCategoryGrid: React.FC<ModernCategoryGridProps> = ({ onCategorySelec
       <div className="relative py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: '#4a00e0' }}>
               Explorez nos Catégories
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-4">
+            <p className="text-xl max-w-3xl mx-auto mb-4" style={{ color: '#4a00e0' }}>
               Chaque catégorie contient des outils professionnels conçus pour optimiser vos performances
             </p>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 text-sm font-medium">
