@@ -48,7 +48,7 @@ const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-white dark:bg-gray-900 backdrop-blur supports-[backdrop-filter]:bg-white/95 dark:supports-[backdrop-filter]:bg-gray-900/95">
       <div className="container flex h-16 items-center justify-between px-4">
         {/* Left Section */}
         <div className="flex items-center space-x-4">
@@ -106,7 +106,7 @@ const Header: React.FC<HeaderProps> = ({
 
       {/* Mobile Breadcrumb */}
       {currentView !== 'about' && currentView !== 'contact' && (
-        <div className="md:hidden border-t bg-muted/30 px-4 py-2">
+        <div className="md:hidden border-t bg-white dark:bg-gray-900 px-4 py-2">
           <Breadcrumb items={getBreadcrumbItems()} className="text-xs" />
         </div>
       )}
