@@ -2,7 +2,7 @@
 
 Anatomik est une suite complète de 43 outils gratuits conçus pour la musculation et la nutrition, fonctionnant entièrement côté client. Ces outils couvrent une large gamme de fonctionnalités pour l'analyse nutritionnelle, l'entraînement, le suivi des performances, et bien plus encore.
 
-**Lien du Projet** : [Anatomik](https://fit-master-pro-suite.lovable.app/)
+**Lien du Projet** : [Anatomik](https://anatomik.netlify.app/)
 
 ## Fonctionnalités Principales
 
