@@ -106,10 +106,10 @@ const ModernCategoryGrid: React.FC<ModernCategoryGridProps> = ({ onCategorySelec
       <div className="relative py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: '#4a00e0' }}>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-[#7303c0] to-[#4a00e0] bg-clip-text text-transparent">
               Explorez nos Catégories
             </h2>
-            <p className="text-xl max-w-3xl mx-auto mb-4" style={{ color: '#4a00e0' }}>
+            <p className="text-xl max-w-3xl mx-auto mb-4 bg-gradient-to-r from-[#7303c0] to-[#4a00e0] bg-clip-text text-transparent">
               Chaque catégorie contient des outils professionnels conçus pour optimiser vos performances
             </p>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 text-sm font-medium">

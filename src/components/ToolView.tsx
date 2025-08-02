@@ -46,10 +46,10 @@ const ToolView: React.FC<ToolViewProps> = ({ category, onToolSelect }) => {
           {/* Header Section - Simplified */}
           <div className="text-center space-y-6 p-4">
             <div className="space-y-4">
-              <h2 className="text-4xl md:text-5xl font-bold" style={{ color: '#4a00e0' }}>
+              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#7303c0] to-[#4a00e0] bg-clip-text text-transparent">
                 {category.name}
               </h2>
-              <p className="text-xl max-w-4xl mx-auto leading-relaxed" style={{ color: '#4a00e0' }}>
+              <p className="text-xl max-w-4xl mx-auto leading-relaxed bg-gradient-to-r from-[#7303c0] to-[#4a00e0] bg-clip-text text-transparent">
                 {category.description}
               </p>
             </div>
