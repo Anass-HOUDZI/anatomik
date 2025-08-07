@@ -208,7 +208,7 @@ const App = () => {
                   onCategorySelect={handleCategorySelect} 
                   onNavigate={handleNavigate}
                 />
-                <Footer onNavigate={handleNavigate} />
+                <Footer onNavigate={handleNavigate} onToolSelect={handleToolSelect} />
               </>
             )}
             
@@ -218,7 +218,7 @@ const App = () => {
                   category={selectedCategory}
                   onToolSelect={handleToolSelect}
                 />
-                <Footer onNavigate={handleNavigate} />
+                <Footer onNavigate={handleNavigate} onToolSelect={handleToolSelect} />
               </>
             )}
             
@@ -254,35 +254,35 @@ const App = () => {
                     </div>
                   </div>
                 </div>
-                <Footer onNavigate={handleNavigate} />
+                <Footer onNavigate={handleNavigate} onToolSelect={handleToolSelect} />
               </>
             )}
 
             {currentView === 'about' && (
               <>
                 <About onBack={handleBackToHome} />
-                <Footer onNavigate={handleNavigate} />
+                <Footer onNavigate={handleNavigate} onToolSelect={handleToolSelect} />
               </>
             )}
 
             {currentView === 'contact' && (
               <>
                 <Contact onBack={handleBackToHome} />
-                <Footer onNavigate={handleNavigate} />
+                <Footer onNavigate={handleNavigate} onToolSelect={handleToolSelect} />
               </>
             )}
 
             {currentView === 'faq' && (
               <>
                 <FAQ onBack={handleBackToHome} />
-                <Footer onNavigate={handleNavigate} />
+                <Footer onNavigate={handleNavigate} onToolSelect={handleToolSelect} />
               </>
             )}
 
             {currentView === 'features' && (
               <>
                 <Features onBack={handleBackToHome} />
-                <Footer onNavigate={handleNavigate} />
+                <Footer onNavigate={handleNavigate} onToolSelect={handleToolSelect} />
               </>
             )}
 
@@ -292,7 +292,7 @@ const App = () => {
                   onBack={handleBackToHome}
                   onToolSelect={handleToolSelect}
                 />
-                <Footer onNavigate={handleNavigate} />
+                <Footer onNavigate={handleNavigate} onToolSelect={handleToolSelect} />
               </>
             )}
           </main>

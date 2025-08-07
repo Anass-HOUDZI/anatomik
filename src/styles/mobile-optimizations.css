@@ -79,15 +79,13 @@
 
 /* Dark mode mobile optimizations */
 @media (prefers-color-scheme: dark) {
-  .mobile-dark-optimized {
-    -webkit-scrollbar-track: {
-      background: rgba(255, 255, 255, 0.05);
-    }
-    
-    -webkit-scrollbar-thumb: {
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 6px;
-    }
+  .mobile-dark-optimized::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  .mobile-dark-optimized::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
   }
 }
 

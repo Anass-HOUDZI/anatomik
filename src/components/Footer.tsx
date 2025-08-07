@@ -1,11 +1,13 @@
 import React from 'react';
 import { BarChart3 } from 'lucide-react';
+import type { Tool } from '../App';
 
 interface FooterProps {
   onNavigate?: (view: 'about' | 'contact' | 'faq' | 'features' | 'all-tools' | 'nutritional' | 'training' | 'tracking' | 'generators') => void;
+  onToolSelect?: (tool: Tool) => void;
 }
 
-const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+const Footer: React.FC<FooterProps> = ({ onNavigate, onToolSelect }) => {
   return (
     <footer className="relative bg-gradient-to-br from-[#7303c0] to-[#4a00e0] text-white py-16">
       <div className="absolute inset-0 opacity-10">
@@ -106,9 +108,42 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <div className="space-y-6">
             <h3 className="text-xl font-bold mb-6">Outils</h3>
             <div className="space-y-4">
-              <span className="block text-white/80">Calculateur BMR</span>
-              <span className="block text-white/80">Tracker de poids</span>
-              <span className="block text-white/80">Planificateur repas</span>
+              <button
+                onClick={() => onToolSelect?.({
+                  id: 'bmr-calculator',
+                  name: 'Calculateur BMR',
+                  description: 'Calculez vos besoins caloriques quotidiens selon votre profil et objectifs',
+                  category: 'nutritional',
+                  icon: 'fa-calculator'
+                })}
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-left"
+              >
+                Calculateur BMR
+              </button>
+              <button
+                onClick={() => onToolSelect?.({
+                  id: 'weight-tracker',
+                  name: 'Tracker de Poids',
+                  description: 'Suivez l\'évolution de votre poids corporel avec des analyses de tendances',
+                  category: 'tracking',
+                  icon: 'fa-weight'
+                })}
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-left"
+              >
+                Tracker de poids
+              </button>
+              <button
+                onClick={() => onToolSelect?.({
+                  id: 'meal-planner',
+                  name: 'Planificateur de Repas',
+                  description: 'Créez des plans de repas équilibrés respectant vos objectifs nutritionnels',
+                  category: 'generators',
+                  icon: 'fa-utensils'
+                })}
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-left"
+              >
+                Planificateur repas
+              </button>
               <button 
                 onClick={() => onNavigate?.('all-tools')}
                 className="block text-white/80 hover:text-white transition-colors duration-200 text-left"
