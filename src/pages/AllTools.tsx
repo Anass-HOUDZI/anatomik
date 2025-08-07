@@ -51,7 +51,7 @@ const AllTools = ({ onBack, onToolSelect }: AllToolsProps) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto mobile-container mobile-spacing py-4 sm:py-8">
         <Button
           onClick={onBack}
           variant="ghost"
@@ -63,31 +63,31 @@ const AllTools = ({ onBack, onToolSelect }: AllToolsProps) => {
 
         <div className="max-w-6xl mx-auto space-y-8">
           {/* Hero Section */}
-          <div className="text-center space-y-6">
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+          <div className="text-center space-y-4 sm:space-y-6">
+            <h1 className="mobile-title text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
               Tous les Outils
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            <p className="mobile-body text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto px-4">
               Découvrez nos {allTools.length} outils gratuits pour optimiser votre entraînement et nutrition.
             </p>
           </div>
 
           {/* Search Bar */}
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto px-4">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <Input
                 type="text"
                 placeholder="Rechercher un outil..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 py-3 text-lg bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border-white/20"
+                className="pl-12 py-3 h-12 sm:h-11 text-base sm:text-lg bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border-white/20 mobile-input-field"
               />
             </div>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 px-4">
             <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-lg p-4 text-center border border-white/20">
               <div className="text-2xl font-bold text-blue-600">{nutritionalToolsConfig.length}</div>
               <div className="text-sm text-gray-600 dark:text-gray-300">Nutrition</div>
@@ -107,7 +107,7 @@ const AllTools = ({ onBack, onToolSelect }: AllToolsProps) => {
           </div>
 
           {/* Tools Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 px-4">
             {filteredTools.map((tool) => {
               const categoryInfo = getCategoryInfo(tool.category);
               return (

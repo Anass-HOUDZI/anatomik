@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { MobileCalculatorLayout, MobileInputGroup, MobileResultCard, MobileGrid, MobileButton } from '../ui/mobile-calculator';
+import '../../styles/mobile-responsive.css';
 
 const OneRMCalculator: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -91,83 +93,83 @@ const OneRMCalculator: React.FC = () => {
   const selectedExercise = exercises.find(ex => ex.value === formData.exercise);
 
   return (
-    <div className="w-full p-4">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <MobileCalculatorLayout 
+      title="Calculateur 1RM" 
+      description="Estimez votre force maximale théorique sur un mouvement"
+    >
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
         {/* Input Form */}
-        <div className="space-y-6">
-          <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Informations de performance</h3>
+        <div className="space-y-4 lg:space-y-6">
+          <h3 className="mobile-subtitle lg:text-2xl font-bold text-gray-900 dark:text-white">Informations de performance</h3>
           
-          <div className="input-group-custom">
-            <label htmlFor="exercise" className="text-gray-900 dark:text-white">Exercice</label>
+          <MobileInputGroup label="Exercice">
             <select
               id="exercise"
               name="exercise"
               value={formData.exercise}
               onChange={handleInputChange}
-              className="form-control-custom text-gray-900 dark:text-white"
+              className="mobile-select"
             >
               {exercises.map(exercise => (
-                <option key={exercise.value} value={exercise.value} className="text-gray-900 dark:text-white">
+                <option key={exercise.value} value={exercise.value}>
                   {exercise.label}
                 </option>
               ))}
             </select>
-          </div>
+          </MobileInputGroup>
 
-          <div className="input-group-custom">
-            <label htmlFor="weight" className="text-gray-900 dark:text-white">Poids soulevé (kg)</label>
+          <MobileInputGroup label="Poids soulevé (kg)">
             <input
               type="number"
               id="weight"
               name="weight"
               value={formData.weight}
               onChange={handleInputChange}
-              className="form-control-custom text-gray-900 dark:text-white"
+              className="mobile-input-field"
               placeholder="Ex: 100"
               min="5"
               max="500"
               step="0.5"
             />
-          </div>
+          </MobileInputGroup>
 
-          <div className="input-group-custom">
-            <label htmlFor="reps" className="text-gray-900 dark:text-white">Nombre de répétitions</label>
+          <MobileInputGroup 
+            label="Nombre de répétitions"
+            helper="Pour une estimation précise, utilisez 1-12 répétitions"
+          >
             <input
               type="number"
               id="reps"
               name="reps"
               value={formData.reps}
               onChange={handleInputChange}
-              className="form-control-custom text-gray-900 dark:text-white"
+              className="mobile-input-field"
               placeholder="Ex: 5"
               min="1"
               max="20"
             />
-            <small className="text-muted-foreground mt-1 block">
-              Pour une estimation précise, utilisez 1-12 répétitions
-            </small>
-          </div>
+          </MobileInputGroup>
 
           {selectedExercise && (
-            <div className="bg-card border border-custom rounded-lg p-4">
+            <div className="mobile-card bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border border-blue-200 dark:border-blue-800">
               <div className="flex items-center space-x-3 mb-3">
-                <div className="w-10 h-10 rounded-lg bg-gradient-primary text-white flex items-center justify-center">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 text-white flex items-center justify-center">
                   <i className={`fas ${selectedExercise.icon}`}></i>
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">{selectedExercise.label}</h4>
-                  <p className="text-sm text-muted-foreground">Exercice sélectionné</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">Exercice sélectionné</p>
                 </div>
               </div>
             </div>
           )}
 
-          <div className="bg-card border border-custom rounded-lg p-4">
+          <div className="mobile-card bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 border border-green-200 dark:border-green-800">
             <h4 className="font-semibold mb-3 flex items-center text-gray-900 dark:text-white">
-              <i className="fas fa-info-circle text-info mr-2"></i>
+              <i className="fas fa-info-circle text-blue-500 mr-2"></i>
               À propos du calcul
             </h4>
-            <ul className="text-sm text-muted-foreground space-y-2">
+            <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-2">
               <li>• Utilise 4 formules scientifiques (Brzycki, Epley, etc.)</li>
               <li>• Plus précis avec 1-8 répétitions</li>
               <li>• Estimation théorique, testez progressivement</li>
@@ -177,24 +179,24 @@ const OneRMCalculator: React.FC = () => {
         </div>
 
         {/* Results */}
-        <div className="lg:col-span-2 space-y-6">
-          <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Votre 1RM et charges d'entraînement</h3>
+        <div className="lg:col-span-2 space-y-4 lg:space-y-6">
+          <h3 className="mobile-subtitle lg:text-2xl font-bold text-gray-900 dark:text-white">Votre 1RM et charges d'entraînement</h3>
           
           {results.oneRM > 0 ? (
-            <div className="space-y-6">
+            <div className="space-y-4 lg:space-y-6">
               {/* 1RM Result */}
-              <div className="result-card bg-gradient-primary">
-                <div className="result-value text-5xl text-gray-900 dark:text-white">{results.oneRM}kg</div>
-                <div className="result-label text-xl text-gray-900 dark:text-white">1RM Estimé</div>
-                <small className="text-sm opacity-75 mt-2 block text-gray-900 dark:text-white">
-                  Basé sur {formData.weight}kg × {formData.reps} répétitions
-                </small>
-              </div>
+              <MobileResultCard
+                value={`${results.oneRM}kg`}
+                label="1RM Estimé"
+                helper={`Basé sur ${formData.weight}kg × ${formData.reps} répétitions`}
+                variant="primary"
+                className="text-center"
+              />
 
               {/* Training Percentages */}
-              <div className="bg-card border border-custom rounded-lg p-6">
-                <h4 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Charges d'entraînement recommandées</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="mobile-card border border-gray-200 dark:border-gray-700">
+                <h4 className="mobile-subtitle lg:text-xl font-semibold mb-4 lg:mb-6 text-gray-900 dark:text-white">Charges d'entraînement recommandées</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:gap-4">
                   {percentageRanges.map((range, index) => (
                     <div
                       key={range.percentage}
@@ -228,7 +230,7 @@ const OneRMCalculator: React.FC = () => {
               </div>
 
               {/* Training Programs */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
                 <div className="bg-card border border-custom rounded-lg p-4">
                   <h5 className="font-semibold text-primary mb-3 text-gray-900 dark:text-white">Force (1-5 reps)</h5>
                   <div className="space-y-2 text-sm">
@@ -285,12 +287,12 @@ const OneRMCalculator: React.FC = () => {
               </div>
 
               {/* Safety Warning */}
-              <div className="bg-warning bg-opacity-10 border border-warning rounded-lg p-4">
-                <h4 className="font-semibold text-warning mb-2 flex items-center text-gray-900 dark:text-white">
+              <div className="mobile-card bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 border border-orange-200 dark:border-orange-800">
+                <h4 className="font-semibold mb-2 flex items-center text-orange-600 dark:text-orange-400">
                   <i className="fas fa-exclamation-triangle mr-2"></i>
                   Sécurité et Précautions
                 </h4>
-                <ul className="text-sm space-y-1 text-gray-900 dark:text-white">
+                <ul className="text-sm space-y-1 text-gray-700 dark:text-gray-300">
                   <li>• Ne tentez jamais un 1RM sans échauffement complet</li>
                   <li>• Utilisez toujours un spotteur pour les exercices dangereux</li>
                   <li>• Ces valeurs sont des estimations, progressez graduellement</li>
@@ -299,14 +301,14 @@ const OneRMCalculator: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="text-center py-12 text-muted-foreground">
-              <i className="fas fa-weight-hanging text-4xl mb-4"></i>
-              <p className="text-lg text-gray-900 dark:text-white">Entrez votre performance pour calculer votre 1RM</p>
+            <div className="text-center py-8 lg:py-12 text-gray-500 dark:text-gray-400">
+              <i className="fas fa-weight-hanging text-3xl lg:text-4xl mb-4"></i>
+              <p className="mobile-body lg:text-lg">Entrez votre performance pour calculer votre 1RM</p>
             </div>
           )}
         </div>
       </div>
-    </div>
+    </MobileCalculatorLayout>
   );
 };
 

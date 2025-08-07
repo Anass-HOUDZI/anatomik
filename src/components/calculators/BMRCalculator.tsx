@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StorageManager } from '../../utils/StorageManager';
+import { MobileCalculatorLayout, MobileInputGroup, MobileResultCard, MobileGrid, MobileButton } from '../ui/mobile-calculator';
+import '../../styles/mobile-responsive.css';
 
 const BMRCalculator: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -110,80 +112,78 @@ const BMRCalculator: React.FC = () => {
   };
 
   return (
-    <div className="w-full p-4">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <MobileCalculatorLayout 
+      title="Calculateur BMR" 
+      description="Calculez vos besoins caloriques quotidiens selon votre profil et objectifs"
+    >
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
         {/* Input Form */}
-        <div className="space-y-6">
-          <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Vos informations</h3>
+        <div className="space-y-4 lg:space-y-6">
+          <h3 className="mobile-subtitle lg:text-2xl font-bold text-gray-900 dark:text-white">Vos informations</h3>
           
-          <div className="input-group-custom">
-            <label htmlFor="age">Âge (années)</label>
+          <MobileInputGroup label="Âge (années)">
             <input
               type="number"
               id="age"
               name="age"
               value={formData.age}
               onChange={handleInputChange}
-              className="form-control-custom"
+              className="mobile-input-field"
               placeholder="Ex: 25"
               min="15"
               max="100"
             />
-          </div>
+          </MobileInputGroup>
 
-          <div className="input-group-custom">
-            <label htmlFor="gender">Sexe</label>
+          <MobileInputGroup label="Sexe">
             <select
               id="gender"
               name="gender"
               value={formData.gender}
               onChange={handleInputChange}
-              className="form-control-custom"
+              className="mobile-select"
             >
               <option value="M">Homme</option>
               <option value="F">Femme</option>
             </select>
-          </div>
+          </MobileInputGroup>
 
-          <div className="input-group-custom">
-            <label htmlFor="weight">Poids (kg)</label>
+          <MobileInputGroup label="Poids (kg)">
             <input
               type="number"
               id="weight"
               name="weight"
               value={formData.weight}
               onChange={handleInputChange}
-              className="form-control-custom"
+              className="mobile-input-field"
               placeholder="Ex: 70"
               min="30"
               max="200"
               step="0.1"
             />
-          </div>
+          </MobileInputGroup>
 
-          <div className="input-group-custom">
-            <label htmlFor="height">Taille (cm)</label>
+          <MobileInputGroup label="Taille (cm)">
             <input
               type="number"
               id="height"
               name="height"
               value={formData.height}
               onChange={handleInputChange}
-              className="form-control-custom"
+              className="mobile-input-field"
               placeholder="Ex: 175"
               min="120"
               max="220"
             />
-          </div>
+          </MobileInputGroup>
 
-          <div className="input-group-custom">
-            <label htmlFor="activityLevel">Niveau d'activité</label>
+          <MobileInputGroup label="Niveau d'activité">
             <select
               id="activityLevel"
               name="activityLevel"
               value={formData.activityLevel}
               onChange={handleInputChange}
-              className="form-control-custom"
+              className="mobile-select"
             >
               {activityLevels.map(level => (
                 <option key={level.value} value={level.value}>
@@ -191,59 +191,61 @@ const BMRCalculator: React.FC = () => {
                 </option>
               ))}
             </select>
-          </div>
+          </MobileInputGroup>
 
-          <button
+          <MobileButton
             onClick={saveProfile}
-            className="btn-gradient-primary w-full py-3 rounded-lg font-semibold"
+            variant="primary"
+            fullWidth
+            className="mt-6"
           >
             <i className="fas fa-save mr-2"></i>
             Sauvegarder le profil
-          </button>
+          </MobileButton>
         </div>
 
         {/* Results */}
-        <div className="space-y-6">
-          <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Vos résultats</h3>
+        <div className="space-y-4 lg:space-y-6">
+          <h3 className="mobile-subtitle lg:text-2xl font-bold text-gray-900 dark:text-white">Vos résultats</h3>
           
           {results.bmr > 0 ? (
             <div className="space-y-4">
-              <div className="result-card">
-                <div className="result-value">{results.bmr}</div>
-                <div className="result-label">BMR - Métabolisme de base</div>
-                <small className="text-sm opacity-75 mt-2 block">
-                  Calories brûlées au repos
-                </small>
-              </div>
+              <MobileResultCard
+                value={results.bmr}
+                label="BMR - Métabolisme de base"
+                helper="Calories brûlées au repos"
+                variant="default"
+              />
 
-              <div className="result-card bg-gradient-success">
-                <div className="result-value">{results.maintenance}</div>
-                <div className="result-label">TDEE - Maintien</div>
-                <small className="text-sm opacity-75 mt-2 block">
-                  Besoins quotidiens avec activité
-                </small>
-              </div>
+              <MobileResultCard
+                value={results.maintenance}
+                label="TDEE - Maintien"
+                helper="Besoins quotidiens avec activité"
+                variant="success"
+              />
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="result-card bg-gradient-secondary">
-                  <div className="result-value text-2xl">{results.bulk}</div>
-                  <div className="result-label text-base">Prise de masse</div>
-                  <small className="text-xs opacity-75">+15%</small>
-                </div>
+              <MobileGrid cols={2} className="gap-3 lg:gap-4">
+                <MobileResultCard
+                  value={results.bulk}
+                  label="Prise de masse"
+                  helper="+15%"
+                  variant="primary"
+                />
 
-                <div className="result-card bg-gradient-dark">
-                  <div className="result-value text-2xl">{results.cut}</div>
-                  <div className="result-label text-base">Sèche</div>
-                  <small className="text-xs opacity-75">-20%</small>
-                </div>
-              </div>
+                <MobileResultCard
+                  value={results.cut}
+                  label="Sèche"
+                  helper="-20%"
+                  variant="warning"
+                />
+              </MobileGrid>
 
-              <div className="bg-card border border-custom rounded-lg p-4">
-                <h4 className="font-semibold mb-3 flex items-center">
-                  <i className="fas fa-lightbulb text-warning mr-2"></i>
+              <div className="mobile-card bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border border-blue-200 dark:border-blue-800">
+                <h4 className="font-semibold mb-3 flex items-center text-gray-900 dark:text-white">
+                  <i className="fas fa-lightbulb text-yellow-500 mr-2"></i>
                   Conseils d'utilisation
                 </h4>
-                <ul className="text-sm text-muted-foreground space-y-2">
+                <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-2">
                   <li>• <strong>Maintenance :</strong> Pour stabiliser votre poids</li>
                   <li>• <strong>Prise de masse :</strong> Augmentation progressive, pesez-vous chaque semaine</li>
                   <li>• <strong>Sèche :</strong> Déficit contrôlé, ajustez selon les résultats</li>
@@ -252,14 +254,14 @@ const BMRCalculator: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="text-center py-12 text-muted-foreground">
-              <i className="fas fa-calculator text-4xl mb-4"></i>
-              <p className="text-lg">Remplissez vos informations pour voir les résultats</p>
+            <div className="text-center py-8 lg:py-12 text-gray-500 dark:text-gray-400">
+              <i className="fas fa-calculator text-3xl lg:text-4xl mb-4"></i>
+              <p className="mobile-body lg:text-lg">Remplissez vos informations pour voir les résultats</p>
             </div>
           )}
         </div>
       </div>
-    </div>
+    </MobileCalculatorLayout>
   );
 };
 

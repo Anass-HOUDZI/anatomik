@@ -63,7 +63,7 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({ onCategorySelect }) => {
   );
 
   return (
-    <div className="w-full max-w-7xl mx-auto space-y-12">
+    <div className="w-full max-w-7xl mx-auto mobile-container mobile-spacing space-y-8">
       {/* Search Section */}
       <div className="flex justify-center">
         <div className="relative w-full max-w-lg">
@@ -71,7 +71,7 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({ onCategorySelect }) => {
           <Input
             type="text"
             placeholder="Rechercher un outil ou une catégorie..."
-            className="pl-12 pr-12"
+            className="pl-12 pr-12 mobile-input-field h-12 sm:h-10"
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
@@ -79,7 +79,7 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({ onCategorySelect }) => {
             <Button
               variant="ghost"
               size="sm"
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 hover:bg-transparent"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 hover:bg-transparent touch-target"
               onClick={() => setSearch('')}
             >
               ×
@@ -89,7 +89,7 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({ onCategorySelect }) => {
       </div>
       
       {/* Categories Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
         {filteredCategories.map((category) => {
           const IconComponent = iconMap[category.icon as keyof typeof iconMap];
           
@@ -103,7 +103,7 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({ onCategorySelect }) => {
               )}
               onClick={() => onCategorySelect(category)}
             >
-              <CardContent className="p-8 h-full flex flex-col justify-between min-h-[280px] relative">
+              <CardContent className="p-6 sm:p-8 h-full flex flex-col justify-between min-h-[240px] sm:min-h-[280px] relative">
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-10">
                   <IconComponent size={120} className="absolute -top-6 -right-6 text-white" />
