@@ -224,36 +224,34 @@ const App = () => {
             
             {currentView === 'tool' && selectedTool && (
               <>
-                <div className="w-full bg-gradient-to-br from-[#7303c0] to-[#4a00e0] text-white">
-                  <div className="w-full">
-                    <div className="space-y-8">
-                      <div className="text-center space-y-6 p-4">
-                        <h2 className="text-4xl md:text-5xl font-bold text-white">
-                          {selectedTool.name}
-                        </h2>
-                        <p className="text-xl max-w-4xl mx-auto text-white/80 leading-relaxed">
-                          {selectedTool.description}
-                        </p>
-                      </div>
-                      
-                      {selectedTool.component ? (
-                        <div className="animate-in fade-in-50 duration-500 w-full">
-                          <selectedTool.component />
-                        </div>
-                      ) : (
-                        <div className="text-center py-20">
-                          <div className="w-24 h-24 mx-auto mb-6 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                            <span className="text-3xl">🚧</span>
-                          </div>
-                          <h3 className="text-2xl font-bold mb-4 text-white">Outil en développement</h3>
-                          <p className="text-white/80 text-lg">
-                            Cet outil sera bientôt disponible. Revenez prochainement !
-                          </p>
-                        </div>
-                      )}
-                    </div>
+                {/* Hero header - gradient, white text only here */}
+                <section className="w-full bg-gradient-to-br from-[#7303c0] to-[#4a00e0]">
+                  <div className="text-center space-y-6 p-4 text-white">
+                    <h2 className="text-4xl md:text-5xl font-bold">
+                      {selectedTool.name}
+                    </h2>
+                    <p className="text-xl max-w-4xl mx-auto text-white/80 leading-relaxed">
+                      {selectedTool.description}
+                    </p>
                   </div>
-                </div>
+                </section>
+
+                {/* Tool content - reset to design system foreground/background */}
+                <section className="w-full bg-background text-foreground">
+                  {selectedTool.component ? (
+                    <div className="animate-in fade-in-50 duration-500 w-full">
+                      <selectedTool.component />
+                    </div>
+                  ) : (
+                    <div className="text-center py-20">
+                      <h3 className="text-2xl font-bold mb-4">Outil en développement</h3>
+                      <p className="text-muted-foreground text-lg">
+                        Cet outil sera bientôt disponible. Revenez prochainement !
+                      </p>
+                    </div>
+                  )}
+                </section>
+
                 <Footer onNavigate={handleNavigate} onToolSelect={handleToolSelect} />
               </>
             )}
