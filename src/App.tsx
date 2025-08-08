@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Header from './components/Header';
@@ -53,6 +53,16 @@ const App = () => {
   const [selectedTool, setSelectedTool] = useState<Tool | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  useLayoutEffect(() => {
+    try {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      const el = document.scrollingElement || document.documentElement;
+      if (el) el.scrollTop = 0;
+    } catch {}
+    const main = document.querySelector('main') as HTMLElement | null;
+    main?.focus?.();
+  }, [currentView, selectedTool?.id, selectedCategory?.id]);
 
   useEffect(() => {
     const initializeApp = async () => {
