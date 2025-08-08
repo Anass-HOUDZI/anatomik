@@ -24,6 +24,14 @@ const Header: React.FC<HeaderProps> = ({
   const { theme, toggleTheme } = useTheme();
 
   const getBreadcrumbItems = () => {
+    // Remove "Accueil" crumb on specific standalone pages
+    if (currentView === 'features' || currentView === 'faq') {
+      const label = currentView === 'features' ? 'Fonctionnalités' : 'FAQ';
+      return [
+        { label, onClick: () => {}, current: true }
+      ];
+    }
+
     const items = [
       { label: 'Accueil', onClick: onBackToHome, current: currentView === 'home' }
     ];
