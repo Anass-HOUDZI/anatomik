@@ -22,26 +22,26 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onToolSelect }) => {
       </div>
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16 place-items-center text-center">
           {/* À propos */}
           <div className="space-y-6">
             <h3 className="text-xl font-bold mb-6">À propos</h3>
             <div className="space-y-4">
               <button 
                 onClick={() => onNavigate?.('about')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left"
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-center"
               >
                 Notre mission
               </button>
               <button 
                 onClick={() => onNavigate?.('features')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left"
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-center"
               >
                 Fonctionnalités
               </button>
               <button 
                 onClick={() => onNavigate?.('faq')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left"
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-center"
               >
                 FAQ
               </button>
@@ -54,19 +54,19 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onToolSelect }) => {
             <div className="space-y-4">
               <button 
                 onClick={() => onNavigate?.('contact')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left"
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-center"
               >
                 Support
               </button>
               <button 
                 onClick={() => onNavigate?.('contact')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left"
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-center"
               >
                 Feedback
               </button>
               <button 
                 onClick={() => onNavigate?.('contact')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left"
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-center"
               >
                 Signaler un bug
               </button>
@@ -79,79 +79,31 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onToolSelect }) => {
             <div className="space-y-4">
               <button 
                 onClick={() => onNavigate?.('nutritional')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left"
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-center"
               >
                 Nutrition
               </button>
               <button 
                 onClick={() => onNavigate?.('training')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left"
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-center"
               >
                 Entraînement
               </button>
               <button 
                 onClick={() => onNavigate?.('tracking')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left"
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-center"
               >
                 Suivi
               </button>
               <button 
                 onClick={() => onNavigate?.('generators')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left"
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-center"
               >
                 Planificateurs
               </button>
             </div>
           </div>
 
-          {/* Outils */}
-          <div className="space-y-6">
-            <h3 className="text-xl font-bold mb-6">Outils</h3>
-            <div className="space-y-4">
-              <button
-                onClick={() => onToolSelect?.({
-                  id: 'bmr-calculator',
-                  name: 'Calculateur BMR',
-                  description: 'Calculez vos besoins caloriques quotidiens selon votre profil et objectifs',
-                  category: 'nutritional',
-                  icon: 'fa-calculator'
-                })}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left"
-              >
-                Calculateur BMR
-              </button>
-              <button
-                onClick={() => onToolSelect?.({
-                  id: 'weight-tracker',
-                  name: 'Tracker de Poids',
-                  description: 'Suivez l\'évolution de votre poids corporel avec des analyses de tendances',
-                  category: 'tracking',
-                  icon: 'fa-weight'
-                })}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left"
-              >
-                Tracker de poids
-              </button>
-              <button
-                onClick={() => onToolSelect?.({
-                  id: 'meal-planner',
-                  name: 'Planificateur de Repas',
-                  description: 'Créez des plans de repas équilibrés respectant vos objectifs nutritionnels',
-                  category: 'generators',
-                  icon: 'fa-utensils'
-                })}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left"
-              >
-                Planificateur repas
-              </button>
-              <button 
-                onClick={() => onNavigate?.('all-tools')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left"
-              >
-                Tous les outils
-              </button>
-            </div>
-          </div>
         </div>
 
         {/* Signature */}
