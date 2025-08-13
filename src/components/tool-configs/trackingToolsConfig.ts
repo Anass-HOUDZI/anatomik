@@ -7,6 +7,10 @@ import BodyCompositionTracker from '../trackers/BodyCompositionTracker';
 import HydrationTracker from '../trackers/HydrationTracker';
 import SleepTracker from '../trackers/SleepTracker';
 import FatigueTracker from '../trackers/FatigueTracker';
+import EnergyTracker from '../trackers/EnergyTracker';
+import MotivationTracker from '../trackers/MotivationTracker';
+import PhotoTracker from '../trackers/PhotoTracker';
+import InjuryTracker from '../trackers/InjuryTracker';
 
 const trackingToolsConfig: Tool[] = [
   {
@@ -64,6 +68,38 @@ const trackingToolsConfig: Tool[] = [
     category: 'tracking',
     icon: 'fa-battery-quarter',
     component: FatigueTracker
+  },
+  {
+    id: 'energy-tracker',
+    name: 'Tracker d\'Énergie',
+    description: 'Niveaux énergétiques quotidiens pour optimiser planning',
+    category: 'tracking',
+    icon: 'fa-bolt',
+    component: EnergyTracker
+  },
+  {
+    id: 'motivation-tracker',
+    name: 'Tracker de Motivation',
+    description: 'État psychologique et facteurs de motivation',
+    category: 'tracking',
+    icon: 'fa-heart',
+    component: MotivationTracker
+  },
+  {
+    id: 'photo-tracker',
+    name: 'Tracker de Photos',
+    description: 'Évolution physique visuelle avec photos progression',
+    category: 'tracking',
+    icon: 'fa-camera',
+    component: PhotoTracker
+  },
+  {
+    id: 'injury-tracker',
+    name: 'Tracker de Blessures',
+    description: 'Historique et prévention des blessures',
+    category: 'tracking',
+    icon: 'fa-band-aid',
+    component: InjuryTracker
   }
 ];
 
