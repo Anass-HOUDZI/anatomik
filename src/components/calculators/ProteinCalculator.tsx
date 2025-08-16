@@ -170,133 +170,151 @@ const ProteinCalculator: React.FC = () => {
   };
 
   return (
-    <div className="w-full p-4 space-y-6">
-      <Card className="p-6">
-        <div className="space-y-6">
-          <div className="text-center">
-            <h3 className="text-2xl font-bold mb-2">Calculateur de Protéines</h3>
-            <p className="text-muted-foreground">
-              Calculez vos besoins en protéines selon vos objectifs et votre activité
-            </p>
+    <div className="w-full p-4 space-y-4">
+      <div className="text-center mb-4">
+        <h3 className="text-xl font-bold mb-1">Calculateur de Protéines</h3>
+        <p className="text-sm text-muted-foreground">
+          Calculez vos besoins en protéines selon vos objectifs et votre activité
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Inputs Section */}
+        <Card className="bg-card border border-border p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <i className="fas fa-edit text-primary"></i>
+            <h3 className="text-lg font-semibold text-foreground">Paramètres</h3>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="weight">Poids corporel (kg)</Label>
-                <Input
-                  id="weight"
-                  type="number"
-                  value={weight}
-                  onChange={(e) => setWeight(Number(e.target.value))}
-                  min="40"
-                  max="200"
-                  step="0.1"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="age">Âge (années)</Label>
-                <Input
-                  id="age"
-                  type="number"
-                  value={age}
-                  onChange={(e) => setAge(Number(e.target.value))}
-                  min="16"
-                  max="80"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="goal">Objectif</Label>
-                <select
-                  id="goal"
-                  className="w-full p-2 border rounded-md"
-                  value={goal}
-                  onChange={(e) => setGoal(e.target.value)}
-                >
-                  <option value="maintenance">Maintien</option>
-                  <option value="cutting">Sèche/Perte de poids</option>
-                  <option value="bulking">Prise de masse</option>
-                  <option value="performance">Performance sportive</option>
-                </select>
-              </div>
-
-              <div>
-                <Label htmlFor="activity">Niveau d'activité</Label>
-                <select
-                  id="activity"
-                  className="w-full p-2 border rounded-md"
-                  value={activityLevel}
-                  onChange={(e) => setActivityLevel(e.target.value)}
-                >
-                  <option value="sedentary">Sédentaire</option>
-                  <option value="light">Légèrement actif</option>
-                  <option value="moderate">Modérément actif</option>
-                  <option value="active">Très actif</option>
-                  <option value="very_active">Extrêmement actif</option>
-                </select>
-              </div>
-
-              <div>
-                <Label htmlFor="diet">Type d'alimentation</Label>
-                <select
-                  id="diet"
-                  className="w-full p-2 border rounded-md"
-                  value={dietType}
-                  onChange={(e) => setDietType(e.target.value)}
-                >
-                  <option value="omnivore">Omnivore</option>
-                  <option value="vegetarian">Végétarien</option>
-                  <option value="vegan">Végétalien</option>
-                </select>
-              </div>
+          <div className="space-y-3">
+            <div className="space-y-2">
+              <Label htmlFor="weight" className="text-sm font-medium">Poids corporel (kg)</Label>
+              <Input
+                id="weight"
+                type="number"
+                value={weight}
+                onChange={(e) => setWeight(Number(e.target.value))}
+                min="40"
+                max="200"
+                step="0.1"
+                className="h-8 text-sm"
+              />
             </div>
 
-            <div className="space-y-4">
-              <div className="bg-gradient-to-r from-green-50 to-blue-50 p-4 rounded-lg">
-                <h4 className="font-semibold text-green-900 mb-2">
-                  <i className="fas fa-dumbbell mr-2"></i>
+            <div className="space-y-2">
+              <Label htmlFor="age" className="text-sm font-medium">Âge (années)</Label>
+              <Input
+                id="age"
+                type="number"
+                value={age}
+                onChange={(e) => setAge(Number(e.target.value))}
+                min="16"
+                max="80"
+                className="h-8 text-sm"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="goal" className="text-sm font-medium">Objectif</Label>
+              <select
+                id="goal"
+                className="w-full p-1 border rounded-md h-8 text-sm"
+                value={goal}
+                onChange={(e) => setGoal(e.target.value)}
+              >
+                <option value="maintenance">Maintien</option>
+                <option value="cutting">Sèche/Perte de poids</option>
+                <option value="bulking">Prise de masse</option>
+                <option value="performance">Performance sportive</option>
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="activity" className="text-sm font-medium">Niveau d'activité</Label>
+              <select
+                id="activity"
+                className="w-full p-1 border rounded-md h-8 text-sm"
+                value={activityLevel}
+                onChange={(e) => setActivityLevel(e.target.value)}
+              >
+                <option value="sedentary">Sédentaire</option>
+                <option value="light">Légèrement actif</option>
+                <option value="moderate">Modérément actif</option>
+                <option value="active">Très actif</option>
+                <option value="very_active">Extrêmement actif</option>
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="diet" className="text-sm font-medium">Type d'alimentation</Label>
+              <select
+                id="diet"
+                className="w-full p-1 border rounded-md h-8 text-sm"
+                value={dietType}
+                onChange={(e) => setDietType(e.target.value)}
+              >
+                <option value="omnivore">Omnivore</option>
+                <option value="vegetarian">Végétarien</option>
+                <option value="vegan">Végétalien</option>
+              </select>
+            </div>
+
+            <div className="border-t border-border pt-3 mt-3">
+              <Button onClick={calculateProtein} className="w-full h-8 text-sm mb-2">
+                <i className="fas fa-calculator mr-1"></i>
+                Appliquer et Calculer
+              </Button>
+              {result && (
+                <Button onClick={saveResult} variant="outline" className="w-full h-8 text-sm">
+                  <i className="fas fa-save mr-1"></i>
+                  Sauvegarder
+                </Button>
+              )}
+            </div>
+          </div>
+        </Card>
+
+        {/* Results Section */}
+        <Card className="bg-card border border-border p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <i className="fas fa-calculator text-primary"></i>
+            <h3 className="text-lg font-semibold text-foreground">Résultats</h3>
+          </div>
+          
+          {!result ? (
+            <div className="text-center py-6 text-muted-foreground">
+              <i className="fas fa-drumstick-bite text-2xl mb-2"></i>
+              <p className="text-sm">Calculez vos besoins pour voir les résultats</p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              <div className="bg-muted border border-border rounded-lg p-2">
+                <h4 className="font-medium mb-2 flex items-center text-foreground text-sm">
+                  <i className="fas fa-dumbbell text-primary mr-1"></i>
                   Besoins selon activité
                 </h4>
-                <ul className="text-sm text-green-800 space-y-1">
+                <ul className="text-xs text-muted-foreground space-y-1">
                   <li>• Sédentaire : 0.8g/kg</li>
                   <li>• Actif : 1.2-1.6g/kg</li>
                   <li>• Très actif : 2.0-2.4g/kg</li>
                   <li>• Sèche : +30% pour préserver muscle</li>
-                  <li>• +65 ans : +20% (sarcopénie)</li>
                 </ul>
               </div>
 
-              <div className="bg-orange-50 p-4 rounded-lg">
-                <h4 className="font-semibold text-orange-900 mb-2">
-                  <i className="fas fa-clock mr-2"></i>
+              <div className="bg-muted border border-border rounded-lg p-2">
+                <h4 className="font-medium mb-2 flex items-center text-foreground text-sm">
+                  <i className="fas fa-clock text-primary mr-1"></i>
                   Timing optimal
                 </h4>
-                <ul className="text-sm text-orange-800 space-y-1">
+                <ul className="text-xs text-muted-foreground space-y-1">
                   <li>• Post-entraînement : dans les 2h</li>
                   <li>• Répartition : 4-6 repas/jour</li>
-                  <li>• Avant coucher : caséine ou fromage blanc</li>
-                  <li>• Pré-entraînement : 15-20g</li>
+                  <li>• Avant coucher : caséine</li>
                 </ul>
               </div>
             </div>
-          </div>
-
-          <div className="flex gap-3">
-            <Button onClick={calculateProtein} className="flex-1">
-              <i className="fas fa-calculator mr-2"></i>
-              Calculer mes besoins
-            </Button>
-            {result && (
-              <Button onClick={saveResult} variant="outline">
-                <i className="fas fa-save mr-2"></i>
-                Sauvegarder
-              </Button>
-            )}
-          </div>
-        </div>
-      </Card>
+          )}
+        </Card>
+      </div>
 
       {result && (
         <div className="space-y-6">

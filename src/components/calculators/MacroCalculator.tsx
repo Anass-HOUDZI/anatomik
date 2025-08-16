@@ -144,165 +144,170 @@ const MacroCalculator: React.FC = () => {
 
   return (
     <div className="w-full p-4">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Input Form */}
-        <div className="space-y-6">
-          <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Configuration</h3>
-          
-          <div className="input-group-custom">
-            <label htmlFor="calories">Calories quotidiennes</label>
-            <input
-              type="number"
-              id="calories"
-              name="calories"
-              value={formData.calories}
-              onChange={(e) => setFormData(prev => ({ ...prev, calories: e.target.value }))}
-              className="form-control-custom"
-              placeholder="Ex: 2000"
-              min="1000"
-              max="5000"
-            />
-            <small className="text-muted-foreground mt-1 block">
-              Utilisez le calculateur BMR pour estimer vos besoins
-            </small>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        {/* Inputs Section */}
+        <div className="bg-card border border-border rounded-lg p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <i className="fas fa-edit text-primary"></i>
+            <h3 className="text-lg font-semibold text-foreground">Paramètres</h3>
           </div>
-
-          <div className="input-group-custom">
-            <label htmlFor="goal">Objectif</label>
-            <select
-              id="goal"
-              name="goal"
-              value={formData.goal}
-              onChange={(e) => handleGoalChange(e.target.value)}
-              className="form-control-custom"
-            >
-              {goals.map(goal => (
-                <option key={goal.value} value={goal.value}>
-                  {goal.label}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Custom Ratios */}
-          <div className="space-y-4">
-            <h4 className="font-semibold">Répartition des macronutriments</h4>
-            
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <label className="text-sm font-medium">Protéines</label>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="range"
-                    min="5"
-                    max="70"
-                    value={formData.proteinRatio}
-                    onChange={(e) => handleRatioChange('protein', e.target.value)}
-                    className="flex-1"
-                    disabled={formData.goal !== 'custom'}
-                  />
-                  <span className="text-sm font-semibold w-12">{formData.proteinRatio}%</span>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <label className="text-sm font-medium">Lipides</label>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="range"
-                    min="5"
-                    max="70"
-                    value={formData.fatRatio}
-                    onChange={(e) => handleRatioChange('fat', e.target.value)}
-                    className="flex-1"
-                    disabled={formData.goal !== 'custom'}
-                  />
-                  <span className="text-sm font-semibold w-12">{formData.fatRatio}%</span>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <label className="text-sm font-medium">Glucides</label>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="range"
-                    min="5"
-                    max="70"
-                    value={formData.carbRatio}
-                    onChange={(e) => handleRatioChange('carbs', e.target.value)}
-                    className="flex-1"
-                    disabled={formData.goal !== 'custom'}
-                  />
-                  <span className="text-sm font-semibold w-12">{formData.carbRatio}%</span>
-                </div>
-              </div>
+          <div className="space-y-3">
+            <div className="input-group-custom">
+              <label htmlFor="calories" className="text-sm font-medium">Calories quotidiennes</label>
+              <input
+                type="number"
+                id="calories"
+                name="calories"
+                value={formData.calories}
+                onChange={(e) => setFormData(prev => ({ ...prev, calories: e.target.value }))}
+                className="form-control-custom h-8 text-sm"
+                placeholder="Ex: 2000"
+                min="1000"
+                max="5000"
+              />
+              <small className="text-muted-foreground text-xs">
+                Utilisez le calculateur BMR pour estimer vos besoins
+              </small>
             </div>
 
-            {formData.goal !== 'custom' && (
-              <p className="text-sm text-muted-foreground">
-                Sélectionnez "Personnalisé" pour ajuster manuellement les ratios
-              </p>
-            )}
+            <div className="input-group-custom">
+              <label htmlFor="goal" className="text-sm font-medium">Objectif</label>
+              <select
+                id="goal"
+                name="goal"
+                value={formData.goal}
+                onChange={(e) => handleGoalChange(e.target.value)}
+                className="form-control-custom h-8 text-sm"
+              >
+                {goals.map(goal => (
+                  <option key={goal.value} value={goal.value}>
+                    {goal.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <h4 className="font-medium text-sm">Répartition des macronutriments</h4>
+              
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-medium w-16">Protéines</label>
+                  <div className="flex items-center space-x-2 flex-1">
+                    <input
+                      type="range"
+                      min="5"
+                      max="70"
+                      value={formData.proteinRatio}
+                      onChange={(e) => handleRatioChange('protein', e.target.value)}
+                      className="flex-1 h-1"
+                      disabled={formData.goal !== 'custom'}
+                    />
+                    <span className="text-xs font-semibold w-8">{formData.proteinRatio}%</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-medium w-16">Lipides</label>
+                  <div className="flex items-center space-x-2 flex-1">
+                    <input
+                      type="range"
+                      min="5"
+                      max="70"
+                      value={formData.fatRatio}
+                      onChange={(e) => handleRatioChange('fat', e.target.value)}
+                      className="flex-1 h-1"
+                      disabled={formData.goal !== 'custom'}
+                    />
+                    <span className="text-xs font-semibold w-8">{formData.fatRatio}%</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-medium w-16">Glucides</label>
+                  <div className="flex items-center space-x-2 flex-1">
+                    <input
+                      type="range"
+                      min="5"
+                      max="70"
+                      value={formData.carbRatio}
+                      onChange={(e) => handleRatioChange('carbs', e.target.value)}
+                      className="flex-1 h-1"
+                      disabled={formData.goal !== 'custom'}
+                    />
+                    <span className="text-xs font-semibold w-8">{formData.carbRatio}%</span>
+                  </div>
+                </div>
+              </div>
+
+              {formData.goal !== 'custom' && (
+                <p className="text-xs text-muted-foreground">
+                  Sélectionnez "Personnalisé" pour ajuster manuellement les ratios
+                </p>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* Results */}
-        <div className="lg:col-span-2 space-y-6">
-          <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Vos macronutriments</h3>
-          
+        {/* Results Section */}
+        <div className="lg:col-span-2 bg-card border border-border rounded-lg p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <i className="fas fa-calculator text-primary"></i>
+            <h3 className="text-lg font-semibold text-foreground">Résultats</h3>
+          </div>
           {results.totalCalories > 0 ? (
-            <div className="space-y-6">
+            <div className="space-y-3">
               {/* Macro Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="result-card bg-gradient-primary">
-                  <div className="result-value">{results.protein.grams}g</div>
-                  <div className="result-label">Protéines</div>
-                  <small className="text-sm opacity-75">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                <div className="result-card bg-gradient-primary text-xs p-2">
+                  <div className="result-value text-lg">{results.protein.grams}g</div>
+                  <div className="result-label text-xs">Protéines</div>
+                  <small className="text-xs opacity-75">
                     {results.protein.calories} cal • {results.protein.percentage}%
                   </small>
                 </div>
 
-                <div className="result-card bg-gradient-secondary">
-                  <div className="result-value">{results.carbs.grams}g</div>
-                  <div className="result-label">Glucides</div>
-                  <small className="text-sm opacity-75">
+                <div className="result-card bg-gradient-secondary text-xs p-2">
+                  <div className="result-value text-lg">{results.carbs.grams}g</div>
+                  <div className="result-label text-xs">Glucides</div>
+                  <small className="text-xs opacity-75">
                     {results.carbs.calories} cal • {results.carbs.percentage}%
                   </small>
                 </div>
 
-                <div className="result-card bg-gradient-success">
-                  <div className="result-value">{results.fat.grams}g</div>
-                  <div className="result-label">Lipides</div>
-                  <small className="text-sm opacity-75">
+                <div className="result-card bg-gradient-success text-xs p-2">
+                  <div className="result-value text-lg">{results.fat.grams}g</div>
+                  <div className="result-label text-xs">Lipides</div>
+                  <small className="text-xs opacity-75">
                     {results.fat.calories} cal • {results.fat.percentage}%
                   </small>
                 </div>
               </div>
 
               {/* Visual Chart */}
-              <div className="bg-card border border-custom rounded-lg p-6">
-                <h4 className="font-semibold mb-4">Répartition visuelle</h4>
-                <div className="flex h-8 rounded-lg overflow-hidden">
+              <div className="bg-muted border border-border rounded-lg p-3">
+                <h4 className="font-medium mb-2 text-sm">Répartition visuelle</h4>
+                <div className="flex h-4 rounded overflow-hidden">
                   <div 
-                    className="bg-gradient-primary flex items-center justify-center text-white text-sm font-semibold"
+                    className="bg-gradient-primary flex items-center justify-center text-white text-xs font-semibold"
                     style={{ width: `${results.protein.percentage}%` }}
                   >
                     {results.protein.percentage > 15 && 'P'}
                   </div>
                   <div 
-                    className="bg-gradient-secondary flex items-center justify-center text-white text-sm font-semibold"
+                    className="bg-gradient-secondary flex items-center justify-center text-white text-xs font-semibold"
                     style={{ width: `${results.carbs.percentage}%` }}
                   >
                     {results.carbs.percentage > 15 && 'G'}
                   </div>
                   <div 
-                    className="bg-gradient-success flex items-center justify-center text-white text-sm font-semibold"
+                    className="bg-gradient-success flex items-center justify-center text-white text-xs font-semibold"
                     style={{ width: `${results.fat.percentage}%` }}
                   >
                     {results.fat.percentage > 15 && 'L'}
                   </div>
                 </div>
-                <div className="flex justify-between mt-2 text-sm text-muted-foreground">
+                <div className="flex justify-between mt-1 text-xs text-muted-foreground">
                   <span>Protéines</span>
                   <span>Glucides</span>
                   <span>Lipides</span>
@@ -310,46 +315,43 @@ const MacroCalculator: React.FC = () => {
               </div>
 
               {/* Practical Tips */}
-              <div className="bg-card border border-custom rounded-lg p-6">
-                <h4 className="font-semibold mb-4 flex items-center">
-                  <i className="fas fa-utensils text-primary mr-2"></i>
+              <div className="bg-muted border border-border rounded-lg p-3">
+                <h4 className="font-medium mb-2 flex items-center text-sm">
+                  <i className="fas fa-utensils text-primary mr-1"></i>
                   Exemples d'aliments
                 </h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs">
                   <div>
-                    <h5 className="font-semibold text-primary mb-2">Protéines ({results.protein.grams}g)</h5>
-                    <ul className="space-y-1 text-muted-foreground">
+                    <h5 className="font-medium text-primary mb-1 text-xs">Protéines ({results.protein.grams}g)</h5>
+                    <ul className="space-y-0.5 text-muted-foreground text-xs">
                       <li>• Poulet: {Math.round(results.protein.grams / 0.31)}g</li>
                       <li>• Œufs: {Math.round(results.protein.grams / 6)} œufs</li>
                       <li>• Whey: {Math.round(results.protein.grams / 25)} doses</li>
-                      <li>• Thon: {Math.round(results.protein.grams / 0.26)}g</li>
                     </ul>
                   </div>
                   <div>
-                    <h5 className="font-semibold text-secondary mb-2">Glucides ({results.carbs.grams}g)</h5>
-                    <ul className="space-y-1 text-muted-foreground">
+                    <h5 className="font-medium text-secondary mb-1 text-xs">Glucides ({results.carbs.grams}g)</h5>
+                    <ul className="space-y-0.5 text-muted-foreground text-xs">
                       <li>• Riz cuit: {Math.round(results.carbs.grams / 0.28)}g</li>
                       <li>• Avoine: {Math.round(results.carbs.grams / 0.66)}g</li>
-                      <li>• Banane: {Math.round(results.carbs.grams / 23)} bananes</li>
-                      <li>• Pâtes cuites: {Math.round(results.carbs.grams / 0.31)}g</li>
+                      <li>• Banane: {Math.round(results.carbs.grams / 23)} unités</li>
                     </ul>
                   </div>
                   <div>
-                    <h5 className="font-semibold text-success mb-2">Lipides ({results.fat.grams}g)</h5>
-                    <ul className="space-y-1 text-muted-foreground">
-                      <li>• Huile d'olive: {Math.round(results.fat.grams)} ml</li>
+                    <h5 className="font-medium text-success mb-1 text-xs">Lipides ({results.fat.grams}g)</h5>
+                    <ul className="space-y-0.5 text-muted-foreground text-xs">
+                      <li>• Huile: {Math.round(results.fat.grams)} ml</li>
                       <li>• Amandes: {Math.round(results.fat.grams / 0.49)}g</li>
-                      <li>• Avocat: {Math.round(results.fat.grams / 15)} avocats</li>
-                      <li>• Beurre de cacahuète: {Math.round(results.fat.grams / 0.5)}g</li>
+                      <li>• Avocat: {Math.round(results.fat.grams / 15)} unités</li>
                     </ul>
                   </div>
                 </div>
               </div>
             </div>
           ) : (
-            <div className="text-center py-12 text-muted-foreground">
-              <i className="fas fa-pie-chart text-4xl mb-4"></i>
-              <p className="text-lg">Entrez vos calories pour voir la répartition</p>
+            <div className="text-center py-6 text-muted-foreground">
+              <i className="fas fa-pie-chart text-2xl mb-2"></i>
+              <p className="text-sm">Entrez vos calories pour voir la répartition</p>
             </div>
           )}
         </div>

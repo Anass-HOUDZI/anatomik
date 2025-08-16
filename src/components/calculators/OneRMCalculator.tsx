@@ -97,90 +97,96 @@ const OneRMCalculator: React.FC = () => {
       title="Calculateur 1RM" 
       description="Estimez votre force maximale théorique sur un mouvement"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-        {/* Input Form */}
-        <div className="space-y-4 lg:space-y-6">
-          <h3 className="mobile-subtitle lg:text-2xl font-bold text-gray-900 dark:text-white">Informations de performance</h3>
-          
-          <MobileInputGroup label="Exercice">
-            <select
-              id="exercise"
-              name="exercise"
-              value={formData.exercise}
-              onChange={handleInputChange}
-              className="mobile-select"
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        {/* Inputs Section */}
+        <div className="bg-card border border-border rounded-lg p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <i className="fas fa-edit text-primary"></i>
+            <h3 className="text-lg font-semibold text-foreground">Paramètres</h3>
+          </div>
+          <div className="space-y-3">
+            <MobileInputGroup label="Exercice">
+              <select
+                id="exercise"
+                name="exercise"
+                value={formData.exercise}
+                onChange={handleInputChange}
+                className="mobile-select h-8 text-sm"
+              >
+                {exercises.map(exercise => (
+                  <option key={exercise.value} value={exercise.value}>
+                    {exercise.label}
+                  </option>
+                ))}
+              </select>
+            </MobileInputGroup>
+
+            <MobileInputGroup label="Poids soulevé (kg)">
+              <input
+                type="number"
+                id="weight"
+                name="weight"
+                value={formData.weight}
+                onChange={handleInputChange}
+                className="mobile-input-field h-8 text-sm"
+                placeholder="Ex: 100"
+                min="5"
+                max="500"
+                step="0.5"
+              />
+            </MobileInputGroup>
+
+            <MobileInputGroup 
+              label="Nombre de répétitions"
+              helper="Pour une estimation précise, utilisez 1-12 répétitions"
             >
-              {exercises.map(exercise => (
-                <option key={exercise.value} value={exercise.value}>
-                  {exercise.label}
-                </option>
-              ))}
-            </select>
-          </MobileInputGroup>
+              <input
+                type="number"
+                id="reps"
+                name="reps"
+                value={formData.reps}
+                onChange={handleInputChange}
+                className="mobile-input-field h-8 text-sm"
+                placeholder="Ex: 5"
+                min="1"
+                max="20"
+              />
+            </MobileInputGroup>
 
-          <MobileInputGroup label="Poids soulevé (kg)">
-            <input
-              type="number"
-              id="weight"
-              name="weight"
-              value={formData.weight}
-              onChange={handleInputChange}
-              className="mobile-input-field"
-              placeholder="Ex: 100"
-              min="5"
-              max="500"
-              step="0.5"
-            />
-          </MobileInputGroup>
-
-          <MobileInputGroup 
-            label="Nombre de répétitions"
-            helper="Pour une estimation précise, utilisez 1-12 répétitions"
-          >
-            <input
-              type="number"
-              id="reps"
-              name="reps"
-              value={formData.reps}
-              onChange={handleInputChange}
-              className="mobile-input-field"
-              placeholder="Ex: 5"
-              min="1"
-              max="20"
-            />
-          </MobileInputGroup>
-
-          {selectedExercise && (
-            <div className="mobile-card bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border border-blue-200 dark:border-blue-800">
-              <div className="flex items-center space-x-3 mb-3">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 text-white flex items-center justify-center">
-                  <i className={`fas ${selectedExercise.icon}`}></i>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white">{selectedExercise.label}</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">Exercice sélectionné</p>
+            {selectedExercise && (
+              <div className="bg-muted border border-border rounded-lg p-2">
+                <div className="flex items-center space-x-2">
+                  <div className="w-6 h-6 rounded bg-primary text-primary-foreground flex items-center justify-center text-xs">
+                    <i className={`fas ${selectedExercise.icon}`}></i>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-sm text-foreground">{selectedExercise.label}</h4>
+                    <p className="text-xs text-muted-foreground">Exercice sélectionné</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
-          <div className="mobile-card bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 border border-green-200 dark:border-green-800">
-            <h4 className="font-semibold mb-3 flex items-center text-gray-900 dark:text-white">
-              <i className="fas fa-info-circle text-blue-500 mr-2"></i>
-              À propos du calcul
-            </h4>
-            <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-2">
-              <li>• Utilise 4 formules scientifiques (Brzycki, Epley, etc.)</li>
-              <li>• Plus précis avec 1-8 répétitions</li>
-              <li>• Estimation théorique, testez progressivement</li>
-              <li>• Échauffement complet obligatoire</li>
-            </ul>
+            <div className="bg-muted border border-border rounded-lg p-2">
+              <h4 className="font-medium mb-2 flex items-center text-foreground text-sm">
+                <i className="fas fa-info-circle text-primary mr-1"></i>
+                À propos du calcul
+              </h4>
+              <ul className="text-xs text-muted-foreground space-y-1">
+                <li>• Utilise 4 formules scientifiques</li>
+                <li>• Plus précis avec 1-8 répétitions</li>
+                <li>• Estimation théorique, testez progressivement</li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        {/* Results */}
-        <div className="lg:col-span-2 space-y-4 lg:space-y-6">
-          <h3 className="mobile-subtitle lg:text-2xl font-bold text-gray-900 dark:text-white">Votre 1RM et charges d'entraînement</h3>
+        {/* Results Section */}
+        <div className="lg:col-span-2 bg-card border border-border rounded-lg p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <i className="fas fa-calculator text-primary"></i>
+            <h3 className="text-lg font-semibold text-foreground">Résultats</h3>
+          </div>
           
           {results.oneRM > 0 ? (
             <div className="space-y-4 lg:space-y-6">

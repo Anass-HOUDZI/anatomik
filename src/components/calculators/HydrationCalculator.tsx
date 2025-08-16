@@ -114,115 +114,140 @@ const HydrationCalculator: React.FC = () => {
 
   return (
     <ResponsiveContainer className="w-full">
-      <div className="space-y-6">
-        <MobileCard className="w-full">
-          <div className="p-4 md:p-6">
-            <div className="text-center mb-6">
-              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">Calculateur d'Hydratation</h3>
-              <p className="text-sm md:text-base text-gray-600 leading-relaxed">
-                Calculez vos besoins quotidiens en eau selon votre profil et activité
-              </p>
+      <div className="text-center mb-4">
+        <h3 className="text-xl font-bold text-foreground mb-1">Calculateur d'Hydratation</h3>
+        <p className="text-xs text-muted-foreground">
+          Calculez vos besoins quotidiens en eau selon votre profil et activité
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Inputs Section */}
+        <MobileCard className="bg-card border border-border">
+          <div className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <i className="fas fa-edit text-primary"></i>
+              <h3 className="text-lg font-semibold text-foreground">Paramètres</h3>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="weight" className="text-sm md:text-base font-medium">Poids corporel (kg)</Label>
-                  <Input
-                    id="weight"
-                    type="number"
-                    value={weight}
-                    onChange={(e) => setWeight(Number(e.target.value))}
-                    min="40"
-                    max="200"
-                    step="0.1"
-                    className="mobile-input"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="activity" className="text-sm md:text-base font-medium">Niveau d'activité</Label>
-                  <select
-                    id="activity"
-                    className="w-full p-3 border rounded-lg mobile-input"
-                    value={activityLevel}
-                    onChange={(e) => setActivityLevel(e.target.value)}
-                  >
-                    <option value="sedentary">Sédentaire</option>
-                    <option value="light">Légèrement actif</option>
-                    <option value="moderate">Modérément actif</option>
-                    <option value="active">Très actif</option>
-                    <option value="very_active">Extrêmement actif</option>
-                  </select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="climate" className="text-sm md:text-base font-medium">Climat</Label>
-                  <select
-                    id="climate"
-                    className="w-full p-3 border rounded-lg mobile-input"
-                    value={climate}
-                    onChange={(e) => setClimate(e.target.value as any)}
-                  >
-                    <option value="temperate">Tempéré</option>
-                    <option value="hot">Chaud</option>
-                    <option value="cold">Froid</option>
-                  </select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="exercise" className="text-sm md:text-base font-medium">Durée d'exercice (minutes/jour)</Label>
-                  <Input
-                    id="exercise"
-                    type="number"
-                    value={exerciseDuration}
-                    onChange={(e) => setExerciseDuration(Number(e.target.value))}
-                    min="0"
-                    max="480"
-                    className="mobile-input"
-                  />
-                </div>
+            <div className="space-y-3">
+              <div className="space-y-2">
+                <Label htmlFor="weight" className="text-sm font-medium">Poids corporel (kg)</Label>
+                <Input
+                  id="weight"
+                  type="number"
+                  value={weight}
+                  onChange={(e) => setWeight(Number(e.target.value))}
+                  min="40"
+                  max="200"
+                  step="0.1"
+                  className="h-8 text-sm"
+                />
               </div>
-              
-              <div className="space-y-4">
-                <div className="p-4 bg-blue-50 rounded-lg">
-                  <h4 className="font-semibold text-blue-900 mb-2">💧 Facteurs d'hydratation</h4>
-                  <ul className="text-sm text-blue-800 space-y-1">
+
+              <div className="space-y-2">
+                <Label htmlFor="activity" className="text-sm font-medium">Niveau d'activité</Label>
+                <select
+                  id="activity"
+                  className="w-full p-1 border rounded-lg h-8 text-sm"
+                  value={activityLevel}
+                  onChange={(e) => setActivityLevel(e.target.value)}
+                >
+                  <option value="sedentary">Sédentaire</option>
+                  <option value="light">Légèrement actif</option>
+                  <option value="moderate">Modérément actif</option>
+                  <option value="active">Très actif</option>
+                  <option value="very_active">Extrêmement actif</option>
+                </select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="climate" className="text-sm font-medium">Climat</Label>
+                <select
+                  id="climate"
+                  className="w-full p-1 border rounded-lg h-8 text-sm"
+                  value={climate}
+                  onChange={(e) => setClimate(e.target.value as any)}
+                >
+                  <option value="temperate">Tempéré</option>
+                  <option value="hot">Chaud</option>
+                  <option value="cold">Froid</option>
+                </select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="exercise" className="text-sm font-medium">Durée d'exercice (min/jour)</Label>
+                <Input
+                  id="exercise"
+                  type="number"
+                  value={exerciseDuration}
+                  onChange={(e) => setExerciseDuration(Number(e.target.value))}
+                  min="0"
+                  max="480"
+                  className="h-8 text-sm"
+                />
+              </div>
+
+              <div className="border-t border-border pt-3 mt-3">
+                <MobileButton onClick={calculateHydration} className="w-full h-8 text-sm mb-2">
+                  <span className="mr-1">🧮</span>
+                  Appliquer et Calculer
+                </MobileButton>
+                {result && (
+                  <MobileButton onClick={saveResult} variant="outline" className="w-full h-8 text-sm">
+                    <span className="mr-1">💾</span>
+                    Sauvegarder
+                  </MobileButton>
+                )}
+              </div>
+            </div>
+          </div>
+        </MobileCard>
+
+        {/* Results Section */}
+        <MobileCard className="bg-card border border-border">
+          <div className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <i className="fas fa-calculator text-primary"></i>
+              <h3 className="text-lg font-semibold text-foreground">Résultats</h3>
+            </div>
+            
+            {!result ? (
+              <div className="text-center py-6 text-muted-foreground">
+                <i className="fas fa-tint text-2xl mb-2"></i>
+                <p className="text-sm">Calculez vos besoins pour voir les résultats</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                <div className="bg-muted border border-border rounded-lg p-2">
+                  <h4 className="font-medium mb-2 flex items-center text-foreground text-sm">
+                    <i className="fas fa-tint text-primary mr-1"></i>
+                    Facteurs d'hydratation
+                  </h4>
+                  <ul className="text-xs text-muted-foreground space-y-1">
                     <li>• Poids corporel : base 35ml/kg</li>
                     <li>• Activité physique : +300-1000ml</li>
                     <li>• Climat chaud : +20%</li>
                     <li>• Exercice : +150ml/15min</li>
-                    <li>• Caféine/alcool : effet diurétique</li>
                   </ul>
                 </div>
 
-                <div className="p-4 bg-yellow-50 rounded-lg">
-                  <h4 className="font-semibold text-yellow-900 mb-2">⚠️ Signes de déshydratation</h4>
-                  <ul className="text-sm text-yellow-800 space-y-1">
+                <div className="bg-muted border border-border rounded-lg p-2">
+                  <h4 className="font-medium mb-2 flex items-center text-foreground text-sm">
+                    <i className="fas fa-exclamation-triangle text-primary mr-1"></i>
+                    Signes de déshydratation
+                  </h4>
+                  <ul className="text-xs text-muted-foreground space-y-1">
                     <li>• Urine foncée</li>
                     <li>• Fatigue, maux de tête</li>
                     <li>• Bouche sèche</li>
                     <li>• Diminution performance</li>
-                    <li>• Crampes musculaires</li>
                   </ul>
                 </div>
               </div>
-            </div>
-
-            <div className="flex gap-3 mt-6">
-              <MobileButton onClick={calculateHydration} className="flex-1" size="lg">
-                <span className="mr-2">🧮</span>
-                Calculer mes besoins
-              </MobileButton>
-              {result && (
-                <MobileButton onClick={saveResult} variant="outline" size="lg">
-                  <span className="mr-2">💾</span>
-                  Sauvegarder
-                </MobileButton>
-              )}
-            </div>
+            )}
           </div>
         </MobileCard>
+      </div>
 
         {result && (
           <MobileCard className="w-full">
@@ -278,7 +303,6 @@ const HydrationCalculator: React.FC = () => {
             </div>
           </MobileCard>
         )}
-      </div>
     </ResponsiveContainer>
   );
 };

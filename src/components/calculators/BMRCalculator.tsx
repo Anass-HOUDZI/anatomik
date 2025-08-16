@@ -116,100 +116,108 @@ const BMRCalculator: React.FC = () => {
       title="Calculateur BMR" 
       description="Calculez vos besoins caloriques quotidiens selon votre profil et objectifs"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-        {/* Input Form */}
-        <div className="space-y-4 lg:space-y-6">
-          <h3 className="mobile-subtitle lg:text-2xl font-bold text-gray-900 dark:text-white">Vos informations</h3>
-          
-          <MobileInputGroup label="Âge (années)">
-            <input
-              type="number"
-              id="age"
-              name="age"
-              value={formData.age}
-              onChange={handleInputChange}
-              className="mobile-input-field"
-              placeholder="Ex: 25"
-              min="15"
-              max="100"
-            />
-          </MobileInputGroup>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+        {/* Inputs Section */}
+        <div className="bg-card border border-border rounded-lg p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <i className="fas fa-edit text-primary"></i>
+            <h3 className="text-lg font-semibold text-foreground">Paramètres</h3>
+          </div>
+          <div className="space-y-3">
+            <MobileInputGroup label="Âge (années)">
+              <input
+                type="number"
+                id="age"
+                name="age"
+                value={formData.age}
+                onChange={handleInputChange}
+                className="mobile-input-field h-8 text-sm"
+                placeholder="Ex: 25"
+                min="15"
+                max="100"
+              />
+            </MobileInputGroup>
 
-          <MobileInputGroup label="Sexe">
-            <select
-              id="gender"
-              name="gender"
-              value={formData.gender}
-              onChange={handleInputChange}
-              className="mobile-select"
-            >
-              <option value="M">Homme</option>
-              <option value="F">Femme</option>
-            </select>
-          </MobileInputGroup>
+            <MobileInputGroup label="Sexe">
+              <select
+                id="gender"
+                name="gender"
+                value={formData.gender}
+                onChange={handleInputChange}
+                className="mobile-select h-8 text-sm"
+              >
+                <option value="M">Homme</option>
+                <option value="F">Femme</option>
+              </select>
+            </MobileInputGroup>
 
-          <MobileInputGroup label="Poids (kg)">
-            <input
-              type="number"
-              id="weight"
-              name="weight"
-              value={formData.weight}
-              onChange={handleInputChange}
-              className="mobile-input-field"
-              placeholder="Ex: 70"
-              min="30"
-              max="200"
-              step="0.1"
-            />
-          </MobileInputGroup>
+            <MobileInputGroup label="Poids (kg)">
+              <input
+                type="number"
+                id="weight"
+                name="weight"
+                value={formData.weight}
+                onChange={handleInputChange}
+                className="mobile-input-field h-8 text-sm"
+                placeholder="Ex: 70"
+                min="30"
+                max="200"
+                step="0.1"
+              />
+            </MobileInputGroup>
 
-          <MobileInputGroup label="Taille (cm)">
-            <input
-              type="number"
-              id="height"
-              name="height"
-              value={formData.height}
-              onChange={handleInputChange}
-              className="mobile-input-field"
-              placeholder="Ex: 175"
-              min="120"
-              max="220"
-            />
-          </MobileInputGroup>
+            <MobileInputGroup label="Taille (cm)">
+              <input
+                type="number"
+                id="height"
+                name="height"
+                value={formData.height}
+                onChange={handleInputChange}
+                className="mobile-input-field h-8 text-sm"
+                placeholder="Ex: 175"
+                min="120"
+                max="220"
+              />
+            </MobileInputGroup>
 
-          <MobileInputGroup label="Niveau d'activité">
-            <select
-              id="activityLevel"
-              name="activityLevel"
-              value={formData.activityLevel}
-              onChange={handleInputChange}
-              className="mobile-select"
-            >
-              {activityLevels.map(level => (
-                <option key={level.value} value={level.value}>
-                  {level.label}
-                </option>
-              ))}
-            </select>
-          </MobileInputGroup>
-
-          <MobileButton
-            onClick={saveProfile}
-            variant="primary"
-            fullWidth
-            className="mt-6"
-          >
-            <i className="fas fa-save mr-2"></i>
-            Sauvegarder le profil
-          </MobileButton>
+            <MobileInputGroup label="Niveau d'activité">
+              <select
+                id="activityLevel"
+                name="activityLevel"
+                value={formData.activityLevel}
+                onChange={handleInputChange}
+                className="mobile-select h-8 text-sm"
+              >
+                {activityLevels.map(level => (
+                  <option key={level.value} value={level.value}>
+                    {level.label}
+                  </option>
+                ))}
+              </select>
+            </MobileInputGroup>
+            
+            <div className="border-t border-border pt-3 mt-4">
+              <MobileButton
+                onClick={saveProfile}
+                variant="primary"
+                fullWidth
+                className="h-8 text-sm"
+              >
+                <i className="fas fa-save mr-1"></i>
+                Appliquer et Sauvegarder
+              </MobileButton>
+            </div>
+          </div>
         </div>
 
-        {/* Results */}
-        <div className="space-y-4 lg:space-y-6">
-          <h3 className="mobile-subtitle lg:text-2xl font-bold text-gray-900 dark:text-white">Vos résultats</h3>
-          
+        {/* Results Section */}
+        <div className="bg-card border border-border rounded-lg p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <i className="fas fa-calculator text-primary"></i>
+            <h3 className="text-lg font-semibold text-foreground">Résultats</h3>
+          </div>
           {results.bmr > 0 ? (
-            <div className="space-y-4">
+            <div className="space-y-3">
               <MobileResultCard
                 value={results.bmr}
                 label="BMR - Métabolisme de base"
@@ -224,7 +232,7 @@ const BMRCalculator: React.FC = () => {
                 variant="success"
               />
 
-              <MobileGrid cols={2} className="gap-3 lg:gap-4">
+              <MobileGrid cols={2} className="gap-2">
                 <MobileResultCard
                   value={results.bulk}
                   label="Prise de masse"
@@ -240,23 +248,22 @@ const BMRCalculator: React.FC = () => {
                 />
               </MobileGrid>
 
-              <div className="mobile-card bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border border-blue-200 dark:border-blue-800">
-                <h4 className="font-semibold mb-3 flex items-center text-gray-900 dark:text-white">
-                  <i className="fas fa-lightbulb text-yellow-500 mr-2"></i>
+              <div className="bg-muted border border-border rounded-lg p-3 mt-3">
+                <h4 className="font-medium mb-2 flex items-center text-foreground text-sm">
+                  <i className="fas fa-lightbulb text-primary mr-1"></i>
                   Conseils d'utilisation
                 </h4>
-                <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-2">
+                <ul className="text-xs text-muted-foreground space-y-1">
                   <li>• <strong>Maintenance :</strong> Pour stabiliser votre poids</li>
-                  <li>• <strong>Prise de masse :</strong> Augmentation progressive, pesez-vous chaque semaine</li>
-                  <li>• <strong>Sèche :</strong> Déficit contrôlé, ajustez selon les résultats</li>
-                  <li>• <strong>Important :</strong> Ces valeurs sont des estimations, ajustez selon vos résultats</li>
+                  <li>• <strong>Prise de masse :</strong> Augmentation progressive</li>
+                  <li>• <strong>Sèche :</strong> Déficit contrôlé, ajustez selon résultats</li>
                 </ul>
               </div>
             </div>
           ) : (
-            <div className="text-center py-8 lg:py-12 text-gray-500 dark:text-gray-400">
-              <i className="fas fa-calculator text-3xl lg:text-4xl mb-4"></i>
-              <p className="mobile-body lg:text-lg">Remplissez vos informations pour voir les résultats</p>
+            <div className="text-center py-6 text-muted-foreground">
+              <i className="fas fa-calculator text-2xl mb-2"></i>
+              <p className="text-sm">Remplissez vos informations pour voir les résultats</p>
             </div>
           )}
         </div>
