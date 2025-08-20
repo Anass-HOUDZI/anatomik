@@ -103,23 +103,23 @@ const ModernCategoryGrid: React.FC<ModernCategoryGridProps> = ({ onCategorySelec
       <HeroSection onSearch={setSearch} searchValue={search} />
       
       {/* Categories Section */}
-      <div className="relative py-20">
+      <div className="relative py-12 sm:py-16 md:py-20">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-[#7303c0] to-[#4a00e0] bg-clip-text text-transparent">
+          <div className="text-center mb-12 sm:mb-14 md:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-[#7303c0] to-[#4a00e0] bg-clip-text text-transparent">
               Explorez nos Catégories
             </h2>
-            <p className="text-xl max-w-3xl mx-auto mb-4 bg-gradient-to-r from-[#7303c0] to-[#4a00e0] bg-clip-text text-transparent">
+            <p className="text-lg sm:text-xl max-w-3xl mx-auto mb-3 sm:mb-4 bg-gradient-to-r from-[#7303c0] to-[#4a00e0] bg-clip-text text-transparent px-4">
               Chaque catégorie contient des outils professionnels conçus pour optimiser vos performances
             </p>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 text-sm font-medium">
-              <CheckCircle className="w-4 h-4" />
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 text-xs sm:text-sm font-medium">
+              <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4" />
               {totalImplemented} outils entièrement fonctionnels disponibles
             </div>
           </div>
 
           {/* Categories Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-6xl mx-auto px-2">
             {filteredCategories.map((category, index) => {
               const IconComponent = iconMap[category.icon as keyof typeof iconMap];
               const isHovered = hoveredCard === category.id;
@@ -134,44 +134,44 @@ const ModernCategoryGrid: React.FC<ModernCategoryGridProps> = ({ onCategorySelec
                   image={categoryImages[category.id as keyof typeof categoryImages]}
                   glow
                   className={cn(
-                    "min-h-[350px] transform transition-all duration-700",
+                    "min-h-[280px] sm:min-h-[320px] md:min-h-[350px] transform transition-all duration-700",
                     isHovered ? "scale-105 z-10" : "scale-100"
                   )}
                   onMouseEnter={() => setHoveredCard(category.id)}
                   onMouseLeave={() => setHoveredCard(null)}
                 >
-                  <div className="p-8 h-full flex flex-col justify-between">
+                  <div className="p-6 sm:p-8 h-full flex flex-col justify-between">
                     {/* Header */}
-                    <div className="flex items-start justify-between mb-6">
-                      <div className="p-4 rounded-2xl bg-white/20 backdrop-blur-sm group-hover:bg-white/30 transition-all duration-300">
-                        <IconComponent className="w-8 h-8 text-white" />
+                    <div className="flex items-start justify-between mb-4 sm:mb-6">
+                      <div className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white/20 backdrop-blur-sm group-hover:bg-white/30 transition-all duration-300">
+                        <IconComponent className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                       </div>
                       
-                      <div className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-sm font-semibold text-white">
+                      <div className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-xs sm:text-sm font-semibold text-white">
                         {category.toolCount} outils
                       </div>
                     </div>
                     
                     {/* Content */}
-                    <div className="flex-1 space-y-4">
-                      <h3 className="text-2xl font-bold text-white leading-tight">
+                    <div className="flex-1 space-y-3 sm:space-y-4">
+                      <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight">
                         {category.name}
                       </h3>
-                      <p className="text-white/90 text-base leading-relaxed">
+                      <p className="text-white/90 text-sm sm:text-base leading-relaxed">
                         {category.description}
                       </p>
                     </div>
                     
                     {/* Footer */}
-                    <div className="flex items-center justify-between mt-8 pt-6 border-t border-white/20">
+                    <div className="flex items-center justify-between mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-white/20">
                       <div className="flex items-center gap-2">
-                        <Star className="w-5 h-5 text-yellow-300" />
-                        <span className="text-white/90 font-medium">Premium</span>
+                        <Star className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-300" />
+                        <span className="text-white/90 font-medium text-sm sm:text-base">Premium</span>
                       </div>
                       
                       <div className="flex items-center gap-2 text-white group-hover:translate-x-1 transition-transform duration-300">
-                        <span className="font-semibold">Explorer</span>
-                        <ArrowRight className="w-5 h-5" />
+                        <span className="font-semibold text-sm sm:text-base">Explorer</span>
+                        <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                       </div>
                     </div>
                   </div>
@@ -182,17 +182,17 @@ const ModernCategoryGrid: React.FC<ModernCategoryGridProps> = ({ onCategorySelec
 
           {/* No Results State */}
           {filteredCategories.length === 0 && search && (
-            <div className="text-center py-20">
-              <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-full flex items-center justify-center">
-                <Search className="w-12 h-12 text-gray-400" />
+            <div className="text-center py-16 sm:py-20 px-4">
+              <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-6 sm:mb-8 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-full flex items-center justify-center">
+                <Search className="w-8 h-8 sm:w-12 sm:h-12 text-gray-400" />
               </div>
-              <h3 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">Aucun résultat trouvé</h3>
-              <p className="text-gray-600 dark:text-gray-300 text-lg mb-8 max-w-md mx-auto">
+              <h3 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">Aucun résultat trouvé</h3>
+              <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg mb-6 sm:mb-8 max-w-md mx-auto">
                 Essayez avec d'autres mots-clés ou explorez nos catégories d'outils.
               </p>
               <button
                 onClick={() => setSearch('')}
-                className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="px-6 sm:px-8 py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl sm:rounded-2xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
               >
                 Effacer la recherche
               </button>
