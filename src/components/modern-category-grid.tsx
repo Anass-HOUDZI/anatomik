@@ -147,14 +147,8 @@ const ModernCategoryGrid: React.FC<ModernCategoryGridProps> = ({ onCategorySelec
                         <IconComponent className="w-8 h-8 text-white" />
                       </div>
                       
-                      <div className="flex items-center gap-2">
-                        <div className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-sm font-semibold text-white">
-                          {category.toolCount} outils
-                        </div>
-                        <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-white/20 backdrop-blur-sm">
-                          <Zap className="w-3 h-3 text-white" />
-                          <span className="text-xs font-semibold text-white">DISPONIBLE</span>
-                        </div>
+                      <div className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-sm font-semibold text-white">
+                        {category.toolCount} outils
                       </div>
                     </div>
                     
