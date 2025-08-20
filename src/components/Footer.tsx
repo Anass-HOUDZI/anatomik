@@ -22,26 +22,26 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onToolSelect }) => {
       </div>
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-16 place-items-start lg:place-items-center text-left lg:text-center">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-16 mb-16 place-items-start md:place-items-center text-left md:text-center">
           {/* À propos */}
           <div className="space-y-6">
             <h3 className="text-xl font-bold mb-6">À propos</h3>
             <div className="space-y-4">
               <button 
                 onClick={() => onNavigate?.('about')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left lg:text-center"
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-left md:text-center"
               >
                 Notre mission
               </button>
               <button 
                 onClick={() => onNavigate?.('features')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left lg:text-center"
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-left md:text-center"
               >
                 Fonctionnalités
               </button>
               <button 
                 onClick={() => onNavigate?.('faq')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left lg:text-center"
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-left md:text-center"
               >
                 FAQ
               </button>
@@ -54,19 +54,19 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onToolSelect }) => {
             <div className="space-y-4">
               <button 
                 onClick={() => onNavigate?.('contact')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left lg:text-center"
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-left md:text-center"
               >
                 Support
               </button>
               <button 
                 onClick={() => onNavigate?.('contact')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left lg:text-center"
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-left md:text-center"
               >
                 Feedback
               </button>
               <button 
                 onClick={() => onNavigate?.('contact')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left lg:text-center"
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-left md:text-center"
               >
                 Signaler un bug
               </button>
@@ -79,58 +79,27 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onToolSelect }) => {
             <div className="space-y-4">
               <button 
                 onClick={() => onNavigate?.('nutritional')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left lg:text-center"
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-left md:text-center"
               >
                 Nutrition
               </button>
               <button 
                 onClick={() => onNavigate?.('training')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left lg:text-center"
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-left md:text-center"
               >
                 Entraînement
               </button>
               <button 
                 onClick={() => onNavigate?.('tracking')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left lg:text-center"
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-left md:text-center"
               >
                 Suivi
               </button>
               <button 
                 onClick={() => onNavigate?.('generators')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left lg:text-center"
+                className="block text-white/80 hover:text-white transition-colors duration-200 text-left md:text-center"
               >
                 Planificateurs
-              </button>
-            </div>
-          </div>
-
-          {/* Outils populaires */}
-          <div className="space-y-6">
-            <h3 className="text-xl font-bold mb-6">Outils populaires</h3>
-            <div className="space-y-4">
-              <button 
-                onClick={() => onNavigate?.('all-tools')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left lg:text-center"
-              >
-                Calculateur BMR
-              </button>
-              <button 
-                onClick={() => onNavigate?.('all-tools')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left lg:text-center"
-              >
-                Tracker de poids
-              </button>
-              <button 
-                onClick={() => onNavigate?.('all-tools')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left lg:text-center"
-              >
-                Calculateur 1RM
-              </button>
-              <button 
-                onClick={() => onNavigate?.('all-tools')}
-                className="block text-white/80 hover:text-white transition-colors duration-200 text-left lg:text-center"
-              >
-                Voir tous les outils
               </button>
             </div>
           </div>
