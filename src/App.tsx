@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useState, useEffect, useLayoutEffect, lazy, memo } from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Header from './components/Header';
@@ -8,17 +8,34 @@ import ModernCategoryGrid from './components/modern-category-grid';
 import ToolView from './components/ToolView';
 import { StorageManager } from './utils/StorageManager';
 import { ThemeProvider } from './context/ThemeContext';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import FAQ from './pages/FAQ';
-import Features from './pages/Features';
-import AllTools from './pages/AllTools';
+import OptimizedSuspense from './components/optimized/OptimizedSuspense';
+import OptimizedLoadingSpinner from './components/optimized/OptimizedLoadingSpinner';
+import { LazyLoader } from './utils/LazyLoader';
+import { usePerformanceOptimization } from './hooks/usePerformanceOptimization';
 
-// Import all tool configs to get tools for AllTools page
-import nutritionalToolsConfig from './components/tool-configs/nutritionalToolsConfig';
-import trainingToolsConfig from './components/tool-configs/trainingToolsConfig';
-import trackingToolsConfig from './components/tool-configs/trackingToolsConfig';
-import generatorToolsConfig from './components/tool-configs/generatorToolsConfig';
+// Lazy load pages for better performance
+const About = LazyLoader.loadComponent('About', () => import('./pages/About'));
+const Contact = LazyLoader.loadComponent('Contact', () => import('./pages/Contact'));
+const FAQ = LazyLoader.loadComponent('FAQ', () => import('./pages/FAQ'));
+const Features = LazyLoader.loadComponent('Features', () => import('./pages/Features'));
+const AllTools = LazyLoader.loadComponent('AllTools', () => import('./pages/AllTools'));
+
+// Lazy load tool configs only when needed
+const loadToolConfigs = async () => {
+  const [nutritional, training, tracking, generators] = await Promise.all([
+    import('./components/tool-configs/nutritionalToolsConfig'),
+    import('./components/tool-configs/trainingToolsConfig'),
+    import('./components/tool-configs/trackingToolsConfig'),
+    import('./components/tool-configs/generatorToolsConfig')
+  ]);
+  
+  return {
+    nutritional: nutritional.default,
+    training: training.default,
+    tracking: tracking.default,
+    generators: generators.default
+  };
+};
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,12 +64,19 @@ export interface Category {
   toolCount: number;
 }
 
-const App = () => {
+const App = memo(() => {
   const [currentView, setCurrentView] = useState<'home' | 'category' | 'tool' | 'about' | 'contact' | 'faq' | 'features' | 'all-tools'>('home');
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [selectedTool, setSelectedTool] = useState<Tool | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [toolConfigs, setToolConfigs] = useState<any>(null);
+
+  // Initialize performance optimization
+  const { measureRender, preloadResource } = usePerformanceOptimization({
+    enableCoreWebVitals: true,
+    enableMetrics: process.env.NODE_ENV === 'development'
+  });
 
   useLayoutEffect(() => {
     try {
@@ -66,26 +90,42 @@ const App = () => {
 
   useEffect(() => {
     const initializeApp = async () => {
+      const renderMeasure = measureRender('app-init');
+      renderMeasure.start();
+      
       try {
         setIsLoading(true);
         setError(null);
         
-        // Initialize storage
-        await StorageManager.init();
+        // Initialize storage and load tool configs in parallel
+        const [_, configs] = await Promise.all([
+          StorageManager.init(),
+          loadToolConfigs()
+        ]);
         
-        // Optimized loading - reduced delay
-        await new Promise(resolve => setTimeout(resolve, 200));
+        setToolConfigs(configs);
+        
+        // Preload critical components
+        LazyLoader.preloadComponents([
+          { name: 'About', importFn: () => import('./pages/About') },
+          { name: 'AllTools', importFn: () => import('./pages/AllTools') }
+        ]);
+
+        // Preload critical resources
+        preloadResource('/manifest.json', 'manifest');
         
         setIsLoading(false);
+        renderMeasure.end();
       } catch (err) {
         console.error('Erreur initialisation:', err);
         setError('Erreur lors de l\'initialisation de l\'application');
         setIsLoading(false);
+        renderMeasure.end();
       }
     };
 
     initializeApp();
-  }, []);
+  }, [measureRender, preloadResource]);
 
   const handleCategorySelect = (category: Category) => {
     try {
@@ -123,13 +163,13 @@ const App = () => {
   };
 
   const handleNavigate = (view: 'about' | 'contact' | 'faq' | 'features' | 'all-tools' | 'nutritional' | 'training' | 'tracking' | 'generators') => {
-    if (['nutritional', 'training', 'tracking', 'generators'].includes(view)) {
+    if (['nutritional', 'training', 'tracking', 'generators'].includes(view) && toolConfigs) {
       // Handle category navigation
       const categories = [
-        { id: 'nutritional' as const, name: 'Nutrition', description: 'Calculateurs nutritionnels', icon: 'fa-apple-alt', color: 'from-blue-600 to-blue-800', toolCount: nutritionalToolsConfig.length },
-        { id: 'training' as const, name: 'Entraînement', description: 'Calculateurs d\'entraînement', icon: 'fa-dumbbell', color: 'from-green-600 to-green-800', toolCount: trainingToolsConfig.length },
-        { id: 'tracking' as const, name: 'Suivi', description: 'Outils de suivi', icon: 'fa-chart-line', color: 'from-purple-600 to-purple-800', toolCount: trackingToolsConfig.length },
-        { id: 'generators' as const, name: 'Planificateurs', description: 'Générateurs et planificateurs', icon: 'fa-cogs', color: 'from-orange-600 to-orange-800', toolCount: generatorToolsConfig.length }
+        { id: 'nutritional' as const, name: 'Nutrition', description: 'Calculateurs nutritionnels', icon: 'fa-apple-alt', color: 'from-blue-600 to-blue-800', toolCount: toolConfigs.nutritional.length },
+        { id: 'training' as const, name: 'Entraînement', description: 'Calculateurs d\'entraînement', icon: 'fa-dumbbell', color: 'from-green-600 to-green-800', toolCount: toolConfigs.training.length },
+        { id: 'tracking' as const, name: 'Suivi', description: 'Outils de suivi', icon: 'fa-chart-line', color: 'from-purple-600 to-purple-800', toolCount: toolConfigs.tracking.length },
+        { id: 'generators' as const, name: 'Planificateurs', description: 'Générateurs et planificateurs', icon: 'fa-cogs', color: 'from-orange-600 to-orange-800', toolCount: toolConfigs.generators.length }
       ];
       const category = categories.find(cat => cat.id === view);
       if (category) {
@@ -145,32 +185,23 @@ const App = () => {
 
   // Get all tools for AllTools page
   const getAllTools = () => {
+    if (!toolConfigs) return [];
     return [
-      ...nutritionalToolsConfig,
-      ...trainingToolsConfig,
-      ...trackingToolsConfig,
-      ...generatorToolsConfig
+      ...toolConfigs.nutritional,
+      ...toolConfigs.training,
+      ...toolConfigs.tracking,
+      ...toolConfigs.generators
     ];
   };
 
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#7303c0] to-[#4a00e0] flex items-center justify-center">
-        <div className="text-center space-y-8">
-          <div className="relative">
-            <div className="w-20 h-20 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>
-            <div className="absolute inset-0 w-20 h-20 border-4 border-transparent border-t-purple-300 rounded-full animate-spin mx-auto" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
-          </div>
-          <div className="space-y-4">
-            <h2 className="text-4xl font-bold text-white">Anatomik</h2>
-            <p className="text-white/80 text-lg">Votre anatomie entre vos mains...</p>
-            <div className="flex justify-center space-x-2">
-              <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-              <div className="w-2 h-2 bg-white rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-              <div className="w-2 h-2 bg-white rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
-            </div>
-          </div>
-        </div>
+        <OptimizedLoadingSpinner 
+          size="lg"
+          message="Anatomik - Votre anatomie entre vos mains..."
+          className="text-white"
+        />
       </div>
     );
   }
@@ -267,41 +298,41 @@ const App = () => {
             )}
 
             {currentView === 'about' && (
-              <>
+              <OptimizedSuspense fallback={<OptimizedLoadingSpinner message="Chargement..." />}>
                 <About onBack={handleBackToHome} />
                 <Footer onNavigate={handleNavigate} onToolSelect={handleToolSelect} />
-              </>
+              </OptimizedSuspense>
             )}
 
             {currentView === 'contact' && (
-              <>
+              <OptimizedSuspense fallback={<OptimizedLoadingSpinner message="Chargement..." />}>
                 <Contact onBack={handleBackToHome} />
                 <Footer onNavigate={handleNavigate} onToolSelect={handleToolSelect} />
-              </>
+              </OptimizedSuspense>
             )}
 
             {currentView === 'faq' && (
-              <>
+              <OptimizedSuspense fallback={<OptimizedLoadingSpinner message="Chargement..." />}>
                 <FAQ onBack={handleBackToHome} />
                 <Footer onNavigate={handleNavigate} onToolSelect={handleToolSelect} />
-              </>
+              </OptimizedSuspense>
             )}
 
             {currentView === 'features' && (
-              <>
+              <OptimizedSuspense fallback={<OptimizedLoadingSpinner message="Chargement..." />}>
                 <Features onBack={handleBackToHome} />
                 <Footer onNavigate={handleNavigate} onToolSelect={handleToolSelect} />
-              </>
+              </OptimizedSuspense>
             )}
 
             {currentView === 'all-tools' && (
-              <>
+              <OptimizedSuspense fallback={<OptimizedLoadingSpinner message="Chargement..." />}>
                 <AllTools 
                   onBack={handleBackToHome}
                   onToolSelect={handleToolSelect}
                 />
                 <Footer onNavigate={handleNavigate} onToolSelect={handleToolSelect} />
-              </>
+              </OptimizedSuspense>
             )}
           </main>
         </div>
@@ -310,6 +341,8 @@ const App = () => {
       </ThemeProvider>
     </QueryClientProvider>
   );
-};
+});
+
+App.displayName = 'App';
 
 export default App;

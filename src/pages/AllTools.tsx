@@ -1,40 +1,77 @@
-import { ArrowLeft, Search, Zap } from "lucide-react";
+import { ArrowLeft, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useState, useMemo, memo, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import OptimizedLoadingSpinner from "@/components/optimized/OptimizedLoadingSpinner";
 import type { Tool } from "../App";
 
-// Import all tool configs
-import nutritionalToolsConfig from "../components/tool-configs/nutritionalToolsConfig";
-import trainingToolsConfig from "../components/tool-configs/trainingToolsConfig";
-import trackingToolsConfig from "../components/tool-configs/trackingToolsConfig";
-import generatorToolsConfig from "../components/tool-configs/generatorToolsConfig";
+// Lazy load tool configs only when needed
+const useToolConfigs = () => {
+  const [configs, setConfigs] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadConfigs = async () => {
+      try {
+        const [nutritional, training, tracking, generators] = await Promise.all([
+          import("../components/tool-configs/nutritionalToolsConfig"),
+          import("../components/tool-configs/trainingToolsConfig"),
+          import("../components/tool-configs/trackingToolsConfig"),
+          import("../components/tool-configs/generatorToolsConfig")
+        ]);
+        
+        setConfigs({
+          nutritional: nutritional.default,
+          training: training.default,
+          tracking: tracking.default,
+          generators: generators.default
+        });
+        setLoading(false);
+      } catch (error) {
+        console.error('Error loading tool configs:', error);
+        setLoading(false);
+      }
+    };
+
+    loadConfigs();
+  }, []);
+
+  return { configs, loading };
+};
 
 interface AllToolsProps {
   onBack: () => void;
   onToolSelect: (tool: Tool) => void;
 }
 
-const AllTools = ({ onBack, onToolSelect }: AllToolsProps) => {
+const AllTools = memo(({ onBack, onToolSelect }: AllToolsProps) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const { configs, loading } = useToolConfigs();
 
-  // Combine all tools
-  const allTools = [
-    ...nutritionalToolsConfig,
-    ...trainingToolsConfig,
-    ...trackingToolsConfig,
-    ...generatorToolsConfig
-  ];
+  // Memoize combined tools to avoid recalculation
+  const allTools = useMemo(() => {
+    if (!configs) return [];
+    return [
+      ...configs.nutritional,
+      ...configs.training,
+      ...configs.tracking,
+      ...configs.generators
+    ];
+  }, [configs]);
 
-  // Filter tools based on search term
-  const filteredTools = allTools.filter(tool =>
-    tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    tool.description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Memoize filtered tools for better performance  
+  const filteredTools = useMemo(() => {
+    if (!searchTerm.trim()) return allTools;
+    const term = searchTerm.toLowerCase();
+    return allTools.filter(tool =>
+      tool.name.toLowerCase().includes(term) ||
+      tool.description.toLowerCase().includes(term)
+    );
+  }, [allTools, searchTerm]);
 
-  const getCategoryInfo = (category: string) => {
+  const getCategoryInfo = useMemo(() => (category: string) => {
     switch (category) {
       case 'nutritional':
         return { name: 'Nutrition', color: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' };
@@ -47,7 +84,27 @@ const AllTools = ({ onBack, onToolSelect }: AllToolsProps) => {
       default:
         return { name: category, color: 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300' };
     }
-  };
+  }, []);
+
+  if (loading || !configs) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20">
+        <div className="container mx-auto mobile-container mobile-spacing py-4 sm:py-8">
+          <Button
+            onClick={onBack}
+            variant="ghost"
+            className="mb-8 flex items-center gap-2 hover:bg-white/20"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Retour
+          </Button>
+          <div className="flex items-center justify-center min-h-[400px]">
+            <OptimizedLoadingSpinner message="Chargement des outils..." />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20">
@@ -89,19 +146,19 @@ const AllTools = ({ onBack, onToolSelect }: AllToolsProps) => {
           {/* Stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 px-4">
             <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-lg p-4 text-center border border-white/20">
-              <div className="text-2xl font-bold text-blue-600">{nutritionalToolsConfig.length}</div>
+              <div className="text-2xl font-bold text-blue-600">{configs.nutritional.length}</div>
               <div className="text-sm text-gray-600 dark:text-gray-300">Nutrition</div>
             </div>
             <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-lg p-4 text-center border border-white/20">
-              <div className="text-2xl font-bold text-green-600">{trainingToolsConfig.length}</div>
+              <div className="text-2xl font-bold text-green-600">{configs.training.length}</div>
               <div className="text-sm text-gray-600 dark:text-gray-300">Entraînement</div>
             </div>
             <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-lg p-4 text-center border border-white/20">
-              <div className="text-2xl font-bold text-purple-600">{trackingToolsConfig.length}</div>
+              <div className="text-2xl font-bold text-purple-600">{configs.tracking.length}</div>
               <div className="text-sm text-gray-600 dark:text-gray-300">Suivi</div>
             </div>
             <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-lg p-4 text-center border border-white/20">
-              <div className="text-2xl font-bold text-orange-600">{generatorToolsConfig.length}</div>
+              <div className="text-2xl font-bold text-orange-600">{configs.generators.length}</div>
               <div className="text-sm text-gray-600 dark:text-gray-300">Planificateurs</div>
             </div>
           </div>
@@ -166,6 +223,8 @@ const AllTools = ({ onBack, onToolSelect }: AllToolsProps) => {
       </div>
     </div>
   );
-};
+});
+
+AllTools.displayName = 'AllTools';
 
 export default AllTools;

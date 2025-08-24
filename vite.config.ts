@@ -32,12 +32,29 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    // Security optimizations for production
+    // Security and performance optimizations
     minify: 'terser',
+    sourcemap: false,
     terserOptions: {
       compress: {
         drop_console: mode === 'production',
         drop_debugger: true,
+        pure_funcs: mode === 'production' ? ['console.log', 'console.warn'] : [],
+        reduce_vars: true,
+        unused: true,
+        conditionals: true,
+        comparisons: true,
+        sequences: true,
+        dead_code: true,
+        evaluate: true,
+        if_return: true,
+        join_vars: true,
+      },
+      mangle: {
+        safari10: true,
+      },
+      format: {
+        comments: false,
       },
     },
     rollupOptions: {
@@ -45,8 +62,30 @@ export default defineConfig(({ mode }) => ({
         // Prevent information leakage in production builds
         generatedCode: {
           symbols: false
-        }
-      }
-    }
-  }
+        },
+        // Optimize chunk splitting for better caching
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          ui: ['@radix-ui/react-accordion', '@radix-ui/react-dialog', '@radix-ui/react-select'],
+          utils: ['clsx', 'tailwind-merge', 'class-variance-authority'],
+        },
+      },
+      // Tree shaking optimizations
+      treeshake: {
+        moduleSideEffects: false,
+        propertyReadSideEffects: false,
+        tryCatchDeoptimization: false,
+      },
+    },
+    // Compression and optimization
+    cssCodeSplit: true,
+    assetsInlineLimit: 4096,
+    reportCompressedSize: false,
+    chunkSizeWarningLimit: 1000,
+  },
+  // Performance optimizations
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'lucide-react'],
+    exclude: ['@vite/client', '@vite/env'],
+  },
 }));
