@@ -7,7 +7,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CalendarIcon, Plus } from "lucide-react";
-import { StorageManager, TrackingData } from "@/utils/StorageManager";
+import { StorageManager } from "@/utils/StorageManager";
+import { TrackingData, PerformanceEntry } from "@/types/tracking";
 import {
   ChartContainer,
   ChartTooltip,

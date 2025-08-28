@@ -6,7 +6,8 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CalendarIcon, Ruler } from "lucide-react";
-import { StorageManager, TrackingData } from "@/utils/StorageManager";
+import { StorageManager } from "@/utils/StorageManager";
+import { TrackingData } from "@/types/tracking";
 import {
   Popover,
   PopoverTrigger,

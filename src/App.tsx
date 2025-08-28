@@ -9,8 +9,10 @@ import ToolView from './components/ToolView';
 import { StorageManager } from './utils/StorageManager';
 import { ThemeProvider } from './context/ThemeContext';
 import OptimizedSuspense from './components/optimized/OptimizedSuspense';
-import OptimizedLoadingSpinner from './components/optimized/OptimizedLoadingSpinner';
+import { ErrorBoundaryWrapper } from './components/ui/error-boundary';
+import { useToast } from '@/hooks/use-toast';
 import { LazyLoader } from './utils/LazyLoader';
+import OptimizedLoadingSpinner from './components/optimized/OptimizedLoadingSpinner';
 import { usePerformanceOptimization } from './hooks/usePerformanceOptimization';
 
 // Lazy load pages for better performance
@@ -70,7 +72,8 @@ const App = memo(() => {
   const [selectedTool, setSelectedTool] = useState<Tool | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [toolConfigs, setToolConfigs] = useState<any>(null);
+  const [toolConfigs, setToolConfigs] = useState<Record<string, Tool[]> | null>(null);
+  const { toast } = useToast();
 
   // Initialize performance optimization
   const { measureRender, preloadResource } = usePerformanceOptimization({
@@ -118,7 +121,13 @@ const App = memo(() => {
         renderMeasure.end();
       } catch (err) {
         console.error('Erreur initialisation:', err);
-        setError('Erreur lors de l\'initialisation de l\'application');
+        const errorMessage = err instanceof Error ? err.message : 'Erreur lors de l\'initialisation de l\'application';
+        setError(errorMessage);
+        toast({
+          variant: 'destructive',
+          title: 'Erreur d\'initialisation',
+          description: errorMessage,
+        });
         setIsLoading(false);
         renderMeasure.end();
       }
@@ -231,7 +240,8 @@ const App = memo(() => {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <div className="min-h-screen bg-gradient-to-br from-[#7303c0] to-[#4a00e0]">
+        <ErrorBoundaryWrapper name="App">
+          <div className="min-h-screen bg-gradient-to-br from-[#7303c0] to-[#4a00e0]">
           {currentView !== 'home' && (
             <Header 
               currentView={currentView}
@@ -335,7 +345,8 @@ const App = memo(() => {
               </OptimizedSuspense>
             )}
           </main>
-        </div>
+          </div>
+        </ErrorBoundaryWrapper>
         
         <Toaster />
       </ThemeProvider>

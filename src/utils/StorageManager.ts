@@ -1,38 +1,7 @@
 import { UserProfile, Demographics, FitnessGoals, UserPreferences, AppSettings } from '../types';
+import { TrackingData } from '../types/tracking';
 
-// On ajoute le type SleepEntry pour typings solides (copié de SleepTracker)
-type SleepEntry = {
-  date: string;        // AAAA-MM-JJ
-  bedtime: string;     // HH:MM
-  wakeup: string;      // HH:MM
-  duration: number;    // heures décimal (calculé)
-  quality: number;     // 1-10
-  notes?: string;
-};
-
-// Ajout de FatigueEntry pour typings solides (copié du tracker)
-type FatigueEntry = {
-  date: string;
-  fatigue: number;
-  soreness: number;
-  motivation: number;
-  notes?: string;
-};
-
-// Ajout de sleep ici
-export interface TrackingData {
-  weight: Array<{ date: string; value: number }>;
-  measurements: Record<string, Array<{ date: string; value: number }>>;
-  workouts: Array<{ date: string; exercises: any[] }>;
-  nutrition: Array<{ date: string; calories: number; macros: any }>;
-  hydration?: Array<{ date: string; value: number; unit: string }>;
-  performance?: Record<string, Array<{ date: string; value: number; notes?: string }>>;
-  bodyFat?: Array<{ date: string; value: number }>;
-  // Ajout de la clé sleep pour le tracker de sommeil :
-  sleep?: SleepEntry[]; // <-- AJOUT
-  // ---- CLÉ 'fatigue' ---
-  fatigue?: FatigueEntry[];
-}
+export type { TrackingData };
 
 export class StorageManager {
   private static readonly USER_PROFILE_KEY = 'fitmaster_user_profile';
@@ -115,7 +84,10 @@ export class StorageManager {
         performance: {},
         bodyFat: [],
         sleep: [],
-        fatigue: [] // <-- Valeur par défaut fatigue
+        fatigue: [],
+        energy: [],
+        motivation: [],
+        injuries: []
       };
     } catch (error) {
       console.error('Error loading tracking data:', error);
@@ -128,7 +100,10 @@ export class StorageManager {
         performance: {},
         bodyFat: [],
         sleep: [],
-        fatigue: [] // <-- Valeur par défaut fatigue
+        fatigue: [],
+        energy: [],
+        motivation: [],
+        injuries: []
       };
     }
   }
@@ -146,8 +121,10 @@ export class StorageManager {
         performance: data.performance ?? existing.performance,
         bodyFat: data.bodyFat ?? existing.bodyFat,
         sleep: data.sleep ?? existing.sleep,
-        // Ajout fusion fatigue
-        fatigue: data.fatigue ?? existing.fatigue
+        fatigue: data.fatigue ?? existing.fatigue,
+        energy: data.energy ?? existing.energy,
+        motivation: data.motivation ?? existing.motivation,
+        injuries: data.injuries ?? existing.injuries
       };
       localStorage.setItem(this.TRACKING_DATA_KEY, JSON.stringify(updated));
       console.log('Tracking data saved');
@@ -168,7 +145,7 @@ export class StorageManager {
     if (!trackingData.measurements[measurement]) {
       trackingData.measurements[measurement] = [];
     }
-    trackingData.measurements[measurement].push({ date, value });
+    trackingData.measurements[measurement].push({ date, value, bodyPart: measurement });
     trackingData.measurements[measurement].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
     this.saveTrackingData(trackingData);
   }

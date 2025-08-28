@@ -164,9 +164,9 @@ export class RateLimiter {
 
 // Security event monitoring
 export class SecurityMonitor {
-  private static events: Array<{ type: string; timestamp: number; details: any }> = [];
+  private static events: Array<{ type: string; timestamp: number; details: Record<string, unknown> }> = [];
   
-  static logSecurityEvent(type: string, details: any = {}): void {
+  static logSecurityEvent(type: string, details: Record<string, unknown> = {}): void {
     this.events.push({
       type,
       timestamp: Date.now(),
@@ -184,7 +184,7 @@ export class SecurityMonitor {
     }
   }
   
-  static getSecurityEvents(): Array<{ type: string; timestamp: number; details: any }> {
+  static getSecurityEvents(): Array<{ type: string; timestamp: number; details: Record<string, unknown> }> {
     return [...this.events];
   }
   

@@ -42,7 +42,7 @@ export default function PerformanceTracker() {
           exercise,
           date: dp.date.substring(0, 10),
           weight: dp.value,
-          reps: dp.notes ? Number(dp.notes) : undefined,
+          reps: dp.notes ? Number(dp.notes) : 0,
         }))
       )
       .sort((a, b) => b.date.localeCompare(a.date));
@@ -65,7 +65,7 @@ export default function PerformanceTracker() {
     );
     StorageManager.saveTrackingData({
       ...trackingData,
-      performance: updatedPerf,
+      performance: updatedPerf as Record<string, import("@/types/tracking").PerformanceEntry[]>,
     });
     setWeight(0);
     setReps(0);

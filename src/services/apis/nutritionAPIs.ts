@@ -1,13 +1,44 @@
 
 import { APIResponse, NutritionAPIFood, FoodItem } from '../../types';
+import { USDASearchResponse, USDAFoodResponse, OpenFoodFactsResponse, OpenFoodFactsProduct } from '../../types/api';
 import { RateLimiter, SecurityMonitor } from '../../utils/SecurityManager';
 
-// Configuration des APIs nutritionnelles
+// Gestionnaire sécurisé des clés API
+class APIKeyManager {
+  private static readonly API_KEYS_STORAGE_KEY = 'anatomik_api_keys';
+  
+  static getAPIKey(service: 'usda' | 'nutritionix'): string | null {
+    try {
+      const keys = localStorage.getItem(this.API_KEYS_STORAGE_KEY);
+      if (!keys) return null;
+      const parsedKeys = JSON.parse(keys);
+      return parsedKeys[service] || null;
+    } catch {
+      return null;
+    }
+  }
+  
+  static setAPIKey(service: 'usda' | 'nutritionix', key: string): void {
+    try {
+      const existingKeys = localStorage.getItem(this.API_KEYS_STORAGE_KEY);
+      const keys = existingKeys ? JSON.parse(existingKeys) : {};
+      keys[service] = key;
+      localStorage.setItem(this.API_KEYS_STORAGE_KEY, JSON.stringify(keys));
+    } catch (error) {
+      console.error('Erreur sauvegarde clé API:', error);
+    }
+  }
+  
+  static hasValidKeys(): boolean {
+    return this.getAPIKey('usda') !== null;
+  }
+}
+
+// Configuration sécurisée des APIs nutritionnelles
 export const API_CONFIG = {
   usda: {
     baseUrl: 'https://api.nal.usda.gov/fdc/v1',
-    // Note: Clé API publique USDA (limitée mais gratuite)
-    apiKey: 'DEMO_KEY', // À remplacer par une vraie clé
+    getApiKey: () => APIKeyManager.getAPIKey('usda') || 'DEMO_KEY',
     endpoints: {
       search: '/foods/search',
       food: '/food',
@@ -23,8 +54,8 @@ export const API_CONFIG = {
   },
   nutritionix: {
     baseUrl: 'https://trackapi.nutritionix.com/v2',
-    appId: 'demo_app_id', // À remplacer
-    appKey: 'demo_key', // À remplacer
+    getAppId: () => APIKeyManager.getAPIKey('nutritionix')?.split(':')[0] || 'demo_app_id',
+    getAppKey: () => APIKeyManager.getAPIKey('nutritionix')?.split(':')[1] || 'demo_key',
     endpoints: {
       search: '/search/instant',
       nutrients: '/natural/nutrients'
@@ -32,11 +63,13 @@ export const API_CONFIG = {
   }
 };
 
+export { APIKeyManager };
+
 // Cache management
 class APICache {
-  private cache = new Map<string, { data: any; timestamp: number; ttl: number }>();
+  private cache = new Map<string, { data: unknown; timestamp: number; ttl: number }>();
   
-  set(key: string, data: any, ttl: number = 3600000): void { // 1h par défaut
+  set(key: string, data: unknown, ttl: number = 3600000): void { // 1h par défaut
     this.cache.set(key, {
       data,
       timestamp: Date.now(),
@@ -44,7 +77,7 @@ class APICache {
     });
   }
   
-  get(key: string): any | null {
+  get(key: string): unknown | null {
     const cached = this.cache.get(key);
     if (!cached) return null;
     
@@ -65,7 +98,7 @@ const cache = new APICache();
 
 // Service USDA Food Data Central
 export class USDAService {
-  private async makeRequest(endpoint: string, params: Record<string, any>): Promise<APIResponse<any>> {
+  private async makeRequest(endpoint: string, params: Record<string, unknown>): Promise<APIResponse<unknown>> {
     const rateLimiter = RateLimiter.getInstance('usda_api', 10, 60000);
     
     if (!rateLimiter.canMakeRequest()) {
@@ -81,12 +114,12 @@ export class USDAService {
     const cached = cache.get(cacheKey);
     
     if (cached) {
-      return { success: true, data: cached, cached: true, timestamp: new Date() };
+      return { success: true, data: cached as USDASearchResponse | USDAFoodResponse, cached: true, timestamp: new Date() };
     }
     
     try {
       const url = new URL(`${API_CONFIG.usda.baseUrl}${endpoint}`);
-      url.searchParams.append('api_key', API_CONFIG.usda.apiKey);
+      url.searchParams.append('api_key', API_CONFIG.usda.getApiKey());
       
       Object.entries(params).forEach(([key, value]) => {
         url.searchParams.append(key, String(value));
@@ -101,7 +134,7 @@ export class USDAService {
       const data = await response.json();
       cache.set(cacheKey, data);
       
-      return { success: true, data, cached: false, timestamp: new Date() };
+      return { success: true, data: data as USDASearchResponse | USDAFoodResponse, cached: false, timestamp: new Date() };
     } catch (error) {
       console.error('USDA API error:', error);
       return { 
@@ -123,7 +156,8 @@ export class USDAService {
       return response as APIResponse<NutritionAPIFood[]>;
     }
     
-    const foods: NutritionAPIFood[] = response.data.foods?.map((food: any) => ({
+    const searchData = response.data as USDASearchResponse;
+    const foods: NutritionAPIFood[] = searchData.foods?.map((food: USDAFoodResponse) => ({
       fdcId: food.fdcId,
       name: food.description,
       nutrients: this.parseUSDANutrients(food.foodNutrients || []),
@@ -141,10 +175,11 @@ export class USDAService {
       return response as APIResponse<NutritionAPIFood>;
     }
     
+    const foodData = response.data as USDAFoodResponse;
     const food: NutritionAPIFood = {
-      fdcId: response.data.fdcId,
-      name: response.data.description,
-      nutrients: this.parseUSDANutrients(response.data.foodNutrients || []),
+      fdcId: foodData.fdcId,
+      name: foodData.description,
+      nutrients: this.parseUSDANutrients(foodData.foodNutrients || []),
       servingSize: 100,
       servingUnit: 'g'
     };
@@ -152,7 +187,7 @@ export class USDAService {
     return { ...response, data: food };
   }
   
-  private parseUSDANutrients(nutrients: any[]): { [key: string]: number } {
+  private parseUSDANutrients(nutrients: Array<{ nutrient: { id: number; name: string }; amount: number }>): { [key: string]: number } {
     const parsed: { [key: string]: number } = {};
     
     const nutrientMap: { [id: number]: string } = {
@@ -170,9 +205,11 @@ export class USDAService {
     };
     
     nutrients.forEach(nutrient => {
-      const key = nutrientMap[nutrient.nutrient?.id];
-      if (key && nutrient.amount) {
-        parsed[key] = nutrient.amount;
+      if (nutrient.nutrient?.id && nutrient.amount !== undefined) {
+        const key = nutrientMap[nutrient.nutrient.id];
+        if (key) {
+          parsed[key] = nutrient.amount;
+        }
       }
     });
     
@@ -182,12 +219,12 @@ export class USDAService {
 
 // Service Open Food Facts
 export class OpenFoodFactsService {
-  private async makeRequest(endpoint: string, params: Record<string, any>): Promise<APIResponse<any>> {
+  private async makeRequest(endpoint: string, params: Record<string, unknown>): Promise<APIResponse<unknown>> {
     const cacheKey = `off_${endpoint}_${JSON.stringify(params)}`;
     const cached = cache.get(cacheKey);
     
     if (cached) {
-      return { success: true, data: cached, cached: true, timestamp: new Date() };
+      return { success: true, data: cached as OpenFoodFactsResponse, cached: true, timestamp: new Date() };
     }
     
     try {
@@ -206,7 +243,7 @@ export class OpenFoodFactsService {
       const data = await response.json();
       cache.set(cacheKey, data);
       
-      return { success: true, data, cached: false, timestamp: new Date() };
+      return { success: true, data: data as OpenFoodFactsResponse, cached: false, timestamp: new Date() };
     } catch (error) {
       console.error('Open Food Facts API error:', error);
       return { 
@@ -231,7 +268,8 @@ export class OpenFoodFactsService {
       return response as APIResponse<NutritionAPIFood[]>;
     }
     
-    const foods: NutritionAPIFood[] = response.data.products?.map((product: any) => ({
+    const responseData = response.data as OpenFoodFactsResponse;
+    const foods: NutritionAPIFood[] = responseData.products?.map((product: OpenFoodFactsProduct) => ({
       code: product.code,
       name: product.product_name || 'Produit sans nom',
       nutrients: this.parseOFFNutrients(product.nutriments || {}),
@@ -242,7 +280,7 @@ export class OpenFoodFactsService {
     return { ...response, data: foods };
   }
   
-  private parseOFFNutrients(nutriments: any): { [key: string]: number } {
+  private parseOFFNutrients(nutriments: Record<string, number>): { [key: string]: number } {
     return {
       calories: nutriments.energy_kcal_100g || nutriments['energy-kcal_100g'] || 0,
       protein: nutriments.proteins_100g || 0,
